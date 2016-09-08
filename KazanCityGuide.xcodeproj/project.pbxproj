@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DAC2740154FBF212DDBF033A /* libPods-KazanCityGuide.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B7D0AE873DA08655D29CD3 /* libPods-KazanCityGuide.a */; };
 		E1EC400D1D6D865600F364F9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E1EC400C1D6D865600F364F9 /* main.m */; };
 		E1EC40101D6D865600F364F9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E1EC400F1D6D865600F364F9 /* AppDelegate.m */; };
 		E1EC40131D6D865600F364F9 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E1EC40121D6D865600F364F9 /* ViewController.m */; };
@@ -36,6 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		14E4DEA684BC3DACC2B2E115 /* Pods-KazanCityGuide.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KazanCityGuide.release.xcconfig"; path = "Pods/Target Support Files/Pods-KazanCityGuide/Pods-KazanCityGuide.release.xcconfig"; sourceTree = "<group>"; };
+		91B7D0AE873DA08655D29CD3 /* libPods-KazanCityGuide.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-KazanCityGuide.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1EC40081D6D865600F364F9 /* KazanCityGuide.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KazanCityGuide.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1EC400C1D6D865600F364F9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E1EC400E1D6D865600F364F9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -53,6 +56,7 @@
 		E1EC402F1D6D865600F364F9 /* KazanCityGuideUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KazanCityGuideUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1EC40331D6D865600F364F9 /* KazanCityGuideUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KazanCityGuideUITests.m; sourceTree = "<group>"; };
 		E1EC40351D6D865700F364F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E95A04C97F44965C981FC2D5 /* Pods-KazanCityGuide.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KazanCityGuide.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KazanCityGuide/Pods-KazanCityGuide.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +64,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAC2740154FBF212DDBF033A /* libPods-KazanCityGuide.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,6 +85,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		97D0C1CFF4EA3D0C49F17C74 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				91B7D0AE873DA08655D29CD3 /* libPods-KazanCityGuide.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C64462B61110155808FB9925 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E95A04C97F44965C981FC2D5 /* Pods-KazanCityGuide.debug.xcconfig */,
+				14E4DEA684BC3DACC2B2E115 /* Pods-KazanCityGuide.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		E1EC3FFF1D6D865600F364F9 = {
 			isa = PBXGroup;
 			children = (
@@ -87,6 +109,8 @@
 				E1EC40271D6D865600F364F9 /* KazanCityGuideTests */,
 				E1EC40321D6D865600F364F9 /* KazanCityGuideUITests */,
 				E1EC40091D6D865600F364F9 /* Products */,
+				C64462B61110155808FB9925 /* Pods */,
+				97D0C1CFF4EA3D0C49F17C74 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -150,9 +174,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E1EC40381D6D865700F364F9 /* Build configuration list for PBXNativeTarget "KazanCityGuide" */;
 			buildPhases = (
+				454F9CC47E737146508CE598 /* [CP] Check Pods Manifest.lock */,
 				E1EC40041D6D865600F364F9 /* Sources */,
 				E1EC40051D6D865600F364F9 /* Frameworks */,
 				E1EC40061D6D865600F364F9 /* Resources */,
+				35FE5C62F1E399C81FCBFF58 /* [CP] Embed Pods Frameworks */,
+				E2DA90794992BEE58CBE4859 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -267,6 +294,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		35FE5C62F1E399C81FCBFF58 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-KazanCityGuide/Pods-KazanCityGuide-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		454F9CC47E737146508CE598 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		E2DA90794992BEE58CBE4859 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-KazanCityGuide/Pods-KazanCityGuide-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		E1EC40041D6D865600F364F9 /* Sources */ = {
@@ -415,6 +490,7 @@
 		};
 		E1EC40391D6D865700F364F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E95A04C97F44965C981FC2D5 /* Pods-KazanCityGuide.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = KazanCityGuide/Info.plist;
@@ -426,6 +502,7 @@
 		};
 		E1EC403A1D6D865700F364F9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 14E4DEA684BC3DACC2B2E115 /* Pods-KazanCityGuide.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = KazanCityGuide/Info.plist;
@@ -500,6 +577,7 @@
 				E1EC403A1D6D865700F364F9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E1EC403B1D6D865700F364F9 /* Build configuration list for PBXNativeTarget "KazanCityGuideTests" */ = {
 			isa = XCConfigurationList;
@@ -508,6 +586,7 @@
 				E1EC403D1D6D865700F364F9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E1EC403E1D6D865700F364F9 /* Build configuration list for PBXNativeTarget "KazanCityGuideUITests" */ = {
 			isa = XCConfigurationList;
@@ -516,6 +595,7 @@
 				E1EC40401D6D865700F364F9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
