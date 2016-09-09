@@ -8,6 +8,7 @@
 
 #import "MapViewController.h"
 #import "CustomAnnotationView.h"
+#import "CustomCalloutView.h"
 
 @interface MapViewController () <MGLMapViewDelegate>
 @property (weak, nonatomic) IBOutlet MGLMapView *mapView;
@@ -22,6 +23,7 @@
     MGLPointAnnotation *testPoint = [[MGLPointAnnotation alloc] init];
     testPoint.coordinate = CLLocationCoordinate2DMake(55.787389, 49.121610);
     testPoint.title = @"Test point";
+    testPoint.subtitle = [NSString stringWithFormat:@"%f ; %f", testPoint.coordinate.latitude, testPoint.coordinate.longitude];
     
     [_mapView addAnnotation:testPoint];
     
@@ -73,6 +75,23 @@
     }
     
     return annotationView;
+}
+
+-(UIView<MGLCalloutView> *)mapView:(MGLMapView *)mapView calloutViewForAnnotation:(id<MGLAnnotation>)annotation {
+    // Only show callouts for `Hello world!` annotation
+    if ([annotation respondsToSelector:@selector(title)])
+    {
+        // Instantiate and return our custom callout view
+        CustomCalloutView *calloutView = [[CustomCalloutView alloc] init];
+        calloutView.representedObject = annotation;
+        return calloutView;
+    }
+    return nil;
+}
+
+-(void)mapView:(MGLMapView *)mapView tapOnCalloutForAnnotation:(id<MGLAnnotation>)annotation {
+    [mapView deselectAnnotation:annotation animated:YES];
+    
 }
 
 /*

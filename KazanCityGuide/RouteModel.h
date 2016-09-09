@@ -1,5 +1,5 @@
 //
-//  Route.h
+//  RouteModel.h
 //  KazanCityGuide
 //
 //  Created by Daniil Novoselov on 09.09.16.
@@ -16,7 +16,7 @@ typedef enum {
     POPULAR
 }tagType;
 
-@interface Route : NSObject
+@interface RouteModel : NSObject
 
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSString *distance;

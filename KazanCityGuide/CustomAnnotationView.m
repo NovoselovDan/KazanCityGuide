@@ -30,5 +30,11 @@
     animation.duration = 0.1;
     self.layer.borderWidth = selected ? 3 : 1;
     [self.layer addAnimation:animation forKey:@"borderWidth"];
+    
+//    CABasicAnimation *anim = [CABasicAnimation animationWithKeyPath:@"backgroundColor"];
+//    animation.duration = 1.0;
+//    self.layer.backgroundColor = selected ? [UIColor redColor].CGColor : [UIColor colorWithHue:220/360.0 saturation:0.5 brightness:1.0 alpha:1.0].CGColor;
+//    [self.layer addAnimation:anim forKey:@"backgroundColor"];
+    
 }
 @end

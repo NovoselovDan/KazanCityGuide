@@ -10,16 +10,17 @@
 		DAC2740154FBF212DDBF033A /* libPods-KazanCityGuide.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B7D0AE873DA08655D29CD3 /* libPods-KazanCityGuide.a */; };
 		E1A28E6B1D81E674007724F1 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E1A28E6A1D81E674007724F1 /* MapViewController.m */; };
 		E1A28E6F1D82F8BC007724F1 /* NetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E1A28E6E1D82F8BC007724F1 /* NetManager.m */; };
-		E1A28E741D82FE3E007724F1 /* Route.m in Sources */ = {isa = PBXBuildFile; fileRef = E1A28E731D82FE3E007724F1 /* Route.m */; };
+		E1A28E741D82FE3E007724F1 /* RouteModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E1A28E731D82FE3E007724F1 /* RouteModel.m */; };
 		E1A28E771D8301CD007724F1 /* RoutePoint.m in Sources */ = {isa = PBXBuildFile; fileRef = E1A28E761D8301CD007724F1 /* RoutePoint.m */; };
 		E1A28E7E1D8303EB007724F1 /* RouteCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E1A28E7C1D8303EB007724F1 /* RouteCollectionViewCell.m */; };
 		E1A28E7F1D8303EB007724F1 /* RouteCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1A28E7D1D8303EB007724F1 /* RouteCollectionViewCell.xib */; };
 		E1A28E831D8309F9007724F1 /* CustomAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = E1A28E821D8309F9007724F1 /* CustomAnnotationView.m */; };
+		E1A28E861D830D1F007724F1 /* CustomCalloutView.m in Sources */ = {isa = PBXBuildFile; fileRef = E1A28E851D830D1F007724F1 /* CustomCalloutView.m */; };
+		E1E5D2DD1D834A9100E15749 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1E5D2DC1D834A9100E15749 /* Assets.xcassets */; };
 		E1EC400D1D6D865600F364F9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E1EC400C1D6D865600F364F9 /* main.m */; };
 		E1EC40101D6D865600F364F9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E1EC400F1D6D865600F364F9 /* AppDelegate.m */; };
 		E1EC40161D6D865600F364F9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1EC40141D6D865600F364F9 /* Main.storyboard */; };
 		E1EC40191D6D865600F364F9 /* KazanCityGuide.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E1EC40171D6D865600F364F9 /* KazanCityGuide.xcdatamodeld */; };
-		E1EC401B1D6D865600F364F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1EC401A1D6D865600F364F9 /* Assets.xcassets */; };
 		E1EC401E1D6D865600F364F9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1EC401C1D6D865600F364F9 /* LaunchScreen.storyboard */; };
 		E1EC40291D6D865600F364F9 /* KazanCityGuideTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E1EC40281D6D865600F364F9 /* KazanCityGuideTests.m */; };
 		E1EC40341D6D865600F364F9 /* KazanCityGuideUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = E1EC40331D6D865600F364F9 /* KazanCityGuideUITests.m */; };
@@ -49,8 +50,8 @@
 		E1A28E6A1D81E674007724F1 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		E1A28E6D1D82F8BC007724F1 /* NetManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetManager.h; sourceTree = "<group>"; };
 		E1A28E6E1D82F8BC007724F1 /* NetManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetManager.m; sourceTree = "<group>"; };
-		E1A28E721D82FE3E007724F1 /* Route.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Route.h; sourceTree = "<group>"; };
-		E1A28E731D82FE3E007724F1 /* Route.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Route.m; sourceTree = "<group>"; };
+		E1A28E721D82FE3E007724F1 /* RouteModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteModel.h; sourceTree = "<group>"; };
+		E1A28E731D82FE3E007724F1 /* RouteModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RouteModel.m; sourceTree = "<group>"; };
 		E1A28E751D8301CD007724F1 /* RoutePoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoutePoint.h; sourceTree = "<group>"; };
 		E1A28E761D8301CD007724F1 /* RoutePoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoutePoint.m; sourceTree = "<group>"; };
 		E1A28E7B1D8303EB007724F1 /* RouteCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteCollectionViewCell.h; sourceTree = "<group>"; };
@@ -58,13 +59,15 @@
 		E1A28E7D1D8303EB007724F1 /* RouteCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RouteCollectionViewCell.xib; sourceTree = "<group>"; };
 		E1A28E811D8309F9007724F1 /* CustomAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomAnnotationView.h; sourceTree = "<group>"; };
 		E1A28E821D8309F9007724F1 /* CustomAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomAnnotationView.m; sourceTree = "<group>"; };
+		E1A28E841D830D1F007724F1 /* CustomCalloutView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCalloutView.h; sourceTree = "<group>"; };
+		E1A28E851D830D1F007724F1 /* CustomCalloutView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCalloutView.m; sourceTree = "<group>"; };
+		E1E5D2DC1D834A9100E15749 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../Assets.xcassets; sourceTree = "<group>"; };
 		E1EC40081D6D865600F364F9 /* KazanCityGuide.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KazanCityGuide.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1EC400C1D6D865600F364F9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E1EC400E1D6D865600F364F9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E1EC400F1D6D865600F364F9 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		E1EC40151D6D865600F364F9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E1EC40181D6D865600F364F9 /* KazanCityGuide.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = KazanCityGuide.xcdatamodel; sourceTree = "<group>"; };
-		E1EC401A1D6D865600F364F9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E1EC401D1D6D865600F364F9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E1EC401F1D6D865600F364F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E1EC40241D6D865600F364F9 /* KazanCityGuideTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KazanCityGuideTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -126,6 +129,8 @@
 				E1A28E6A1D81E674007724F1 /* MapViewController.m */,
 				E1A28E811D8309F9007724F1 /* CustomAnnotationView.h */,
 				E1A28E821D8309F9007724F1 /* CustomAnnotationView.m */,
+				E1A28E841D830D1F007724F1 /* CustomCalloutView.h */,
+				E1A28E851D830D1F007724F1 /* CustomCalloutView.m */,
 			);
 			name = Map;
 			sourceTree = "<group>";
@@ -152,8 +157,8 @@
 			children = (
 				E1A28E6D1D82F8BC007724F1 /* NetManager.h */,
 				E1A28E6E1D82F8BC007724F1 /* NetManager.m */,
-				E1A28E721D82FE3E007724F1 /* Route.h */,
-				E1A28E731D82FE3E007724F1 /* Route.m */,
+				E1A28E721D82FE3E007724F1 /* RouteModel.h */,
+				E1A28E731D82FE3E007724F1 /* RouteModel.m */,
 				E1A28E751D8301CD007724F1 /* RoutePoint.h */,
 				E1A28E761D8301CD007724F1 /* RoutePoint.m */,
 			);
@@ -209,8 +214,8 @@
 		E1EC400B1D6D865600F364F9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				E1E5D2DC1D834A9100E15749 /* Assets.xcassets */,
 				E1EC40171D6D865600F364F9 /* KazanCityGuide.xcdatamodeld */,
-				E1EC401A1D6D865600F364F9 /* Assets.xcassets */,
 				E1EC401F1D6D865600F364F9 /* Info.plist */,
 				E1EC400C1D6D865600F364F9 /* main.m */,
 			);
@@ -343,8 +348,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				E1EC401E1D6D865600F364F9 /* LaunchScreen.storyboard in Resources */,
-				E1EC401B1D6D865600F364F9 /* Assets.xcassets in Resources */,
 				E1A28E7F1D8303EB007724F1 /* RouteCollectionViewCell.xib in Resources */,
+				E1E5D2DD1D834A9100E15749 /* Assets.xcassets in Resources */,
 				E1EC40161D6D865600F364F9 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -424,7 +429,8 @@
 				E1A28E7E1D8303EB007724F1 /* RouteCollectionViewCell.m in Sources */,
 				E1A28E771D8301CD007724F1 /* RoutePoint.m in Sources */,
 				E1A28E6B1D81E674007724F1 /* MapViewController.m in Sources */,
-				E1A28E741D82FE3E007724F1 /* Route.m in Sources */,
+				E1A28E861D830D1F007724F1 /* CustomCalloutView.m in Sources */,
+				E1A28E741D82FE3E007724F1 /* RouteModel.m in Sources */,
 				E1EC400D1D6D865600F364F9 /* main.m in Sources */,
 				E1EC40191D6D865600F364F9 /* KazanCityGuide.xcdatamodeld in Sources */,
 			);
