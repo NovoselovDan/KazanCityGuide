@@ -7,6 +7,7 @@
 //
 
 #import "CustomCalloutView.h"
+#import "RoutePointAnnotation.h"
 
 static CGFloat const tipHeight = 10.0;
 static CGFloat const tipWidth = 20.0;
@@ -22,6 +23,7 @@ static CGFloat const tipWidth = 20.0;
     __unused UIView *_leftAccessoryView;/* unused */
     __unused UIView *_rightAccessoryView;/* unused */
     __weak id <MGLCalloutViewDelegate> _delegate;
+    RoutePointAnnotation *pointAnnotation;
 }
 
 @synthesize representedObject = _representedObject;
@@ -29,6 +31,13 @@ static CGFloat const tipWidth = 20.0;
 @synthesize rightAccessoryView = _rightAccessoryView;/* unused */
 @synthesize delegate = _delegate;
 
+- (instancetype)initWithAnnotation:(id<MGLAnnotation>)annotation {
+    self = [super init];
+    if (self) {
+        pointAnnotation = annotation;
+    }
+    return self;
+}
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -45,60 +54,6 @@ static CGFloat const tipWidth = 20.0;
         mainBody.layer.masksToBounds = YES;
         mainBody.layer.borderColor = [self backgroundColorForCallout].CGColor;
         mainBody.layer.borderWidth = 1.0;
-        //Img
-        [mainBody setImage:[UIImage imageNamed:@"TestImage"] forState:UIControlStateNormal];
-        
-        //Gradient
-        CGFloat gradientHeight = 60.0;
-
-        CAGradientLayer *theViewGradient = [CAGradientLayer layer];
-        theViewGradient.colors = [NSArray arrayWithObjects: (id)[UIColor clearColor].CGColor, (id)[self gradientColor].CGColor, nil];
-        theViewGradient.frame = CGRectMake(0, mainBody.bounds.size.height - gradientHeight, mainBody.bounds.size.width, gradientHeight);
-        
-        [mainBody.layer addSublayer:theViewGradient];
-        
-        //Text Label View
-        UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 110, 144, 13)];
-        textLabel.font = [UIFont fontWithName:@".SFUIDisplay-Semibold" size:11.0];
-        textLabel.textColor = [UIColor whiteColor];
-        textLabel.text = @"Прогулка по ул. Баумана";
-        textLabel.textAlignment = NSTextAlignmentCenter;
-        
-        [mainBody addSubview:textLabel];
-        
-        //Route Time
-        CGFloat wSize = 21.0, hSize = wSize;
-        UIImageView *timerView = [[UIImageView alloc] initWithFrame:CGRectMake(8, mainBody.bounds.size.height - hSize - 8,
-                                                                               wSize, hSize)];
-        [timerView setImage:[UIImage imageNamed:@"Timer"]];
-        [mainBody addSubview:timerView];
-        
-        wSize = 42.0; hSize = 13.0;
-        UILabel *timerLabel = [[UILabel alloc] initWithFrame:CGRectMake(timerView.frame.origin.x + timerView.bounds.size.width + 5,
-                                                                        mainBody.bounds.size.height - hSize - 11.0,
-                                                                        wSize, hSize)];
-        timerLabel.font = [UIFont fontWithName:@".SFUIDisplay-Heavy" size:11.0];
-        timerLabel.textColor = [UIColor whiteColor];
-        timerLabel.text = @"1,5ч";
-        [mainBody addSubview:timerLabel];
-        
-        
-        //Route Distance
-        wSize = 17.0; hSize = 21.0;
-        UIImageView *distanceView = [[UIImageView alloc] initWithFrame:CGRectMake(mainBody.bounds.size.width/2 + 8,
-                                                                                  mainBody.bounds.size.height - hSize - 8,
-                                                                                  wSize, hSize)];
-        [distanceView setImage:[UIImage imageNamed:@"Distance"]];
-        [mainBody addSubview:distanceView];
-        
-        wSize = 41.0; hSize = 13.0;
-        UILabel *distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(distanceView.frame.origin.x + distanceView.bounds.size.width + 5,
-                                                                           mainBody.bounds.size.height - hSize - 11, wSize, hSize)];
-        distanceLabel.font = [UIFont fontWithName:@".SFUIDisplay-Heavy" size:11.0];
-        distanceLabel.textColor = [UIColor whiteColor];
-        distanceLabel.text = @"900м";
-        [mainBody addSubview:distanceLabel];
-        
         self.mainBody = mainBody;
 
         [self addSubview:self.mainBody];
@@ -112,11 +67,68 @@ static CGFloat const tipWidth = 20.0;
 - (void)presentCalloutFromRect:(CGRect)rect inView:(UIView *)view constrainedToView:(UIView *)constrainedView animated:(BOOL)animated
 {
     // Do not show a callout if there is no title set for the annotation
-    if (![self.representedObject respondsToSelector:@selector(title)])
-    {
-        return;
-    }
+//    if (![self.representedObject respondsToSelector:@selector(title)])
+//    {
+//        return;
+//    }
     
+    Route *route = pointAnnotation.routePoint.route;
+    
+    //Img
+    [_mainBody setImage:route.image forState:UIControlStateNormal];
+    
+    //Gradient
+    CGFloat gradientHeight = 60.0;
+    
+    CAGradientLayer *theViewGradient = [CAGradientLayer layer];
+    theViewGradient.colors = [NSArray arrayWithObjects: (id)[UIColor clearColor].CGColor, (id)[self gradientColor].CGColor, nil];
+    theViewGradient.frame = CGRectMake(0, _mainBody.bounds.size.height - gradientHeight, _mainBody.bounds.size.width, gradientHeight);
+    
+    [_mainBody.layer addSublayer:theViewGradient];
+    
+    //Text Label View
+    UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 110, 144, 13)];
+    textLabel.font = [UIFont fontWithName:@".SFUIDisplay-Semibold" size:11.0];
+    textLabel.textColor = [UIColor whiteColor];
+    textLabel.text = route.title;
+    textLabel.textAlignment = NSTextAlignmentCenter;
+    
+    [_mainBody addSubview:textLabel];
+    
+    //Route Time
+    CGFloat wSize = 21.0, hSize = wSize;
+    UIImageView *timerView = [[UIImageView alloc] initWithFrame:CGRectMake(8, _mainBody.bounds.size.height - hSize - 8,
+                                                                           wSize, hSize)];
+    [timerView setImage:[UIImage imageNamed:@"Timer"]];
+    [_mainBody addSubview:timerView];
+    
+    wSize = 42.0; hSize = 13.0;
+    UILabel *timerLabel = [[UILabel alloc] initWithFrame:CGRectMake(timerView.frame.origin.x + timerView.bounds.size.width + 5,
+                                                                    _mainBody.bounds.size.height - hSize - 11.0,
+                                                                    wSize, hSize)];
+    timerLabel.font = [UIFont fontWithName:@".SFUIDisplay-Heavy" size:11.0];
+    timerLabel.textColor = [UIColor whiteColor];
+    timerLabel.text = route.time;
+    [_mainBody addSubview:timerLabel];
+    
+    
+    //Route Distance
+    wSize = 17.0; hSize = 21.0;
+    UIImageView *distanceView = [[UIImageView alloc] initWithFrame:CGRectMake(_mainBody.bounds.size.width/2 + 8,
+                                                                              _mainBody.bounds.size.height - hSize - 8,
+                                                                              wSize, hSize)];
+    [distanceView setImage:[UIImage imageNamed:@"Distance"]];
+    [_mainBody addSubview:distanceView];
+    
+    wSize = 41.0; hSize = 13.0;
+    UILabel *distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(distanceView.frame.origin.x + distanceView.bounds.size.width + 5,
+                                                                       _mainBody.bounds.size.height - hSize - 11, wSize, hSize)];
+    distanceLabel.font = [UIFont fontWithName:@".SFUIDisplay-Heavy" size:11.0];
+    distanceLabel.textColor = [UIColor whiteColor];
+    distanceLabel.text = route.distance;
+    [_mainBody addSubview:distanceLabel];
+    
+
     [view addSubview:self];
     
     // Prepare title label

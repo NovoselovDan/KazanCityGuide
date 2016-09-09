@@ -11,10 +11,11 @@
 #import "CustomCalloutView.h"
 #import "Route.h"
 #import "RoutePoint.h"
+#import "RoutePointAnnotation.h"
 
 @interface MapViewController () <MGLMapViewDelegate>
 @property (weak, nonatomic) IBOutlet MGLMapView *mapView;
-@property (strong, nonatomic) NSArray *routeModels;
+@property (strong, nonatomic) NSArray *routes;
 @end
 
 @implementation MapViewController
@@ -22,7 +23,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self mapViewSetup];
-    [self LoadTestModel];
+    [self GenerateTestModel];
+    [self ExtractRoutes];
     
     MGLPointAnnotation *testPoint = [[MGLPointAnnotation alloc] init];
     testPoint.coordinate = CLLocationCoordinate2DMake(55.782389, 49.129910);
@@ -49,19 +51,37 @@
     NSLog(@"AFTER WORK:\nMAP VIEW USER LOCATION: %@", _mapView.showsUserLocation? @"ON" : @"OFF");
 }
 
-- (void)LoadTestModel {
+- (void)GenerateTestModel {
     Route *model = [[Route alloc] init];
-    model.name = @"Прогулка по ул. Баумана";
+    model.title = @"Прогулка по ул. Баумана";
     model.distance = @"0,9км";
     model.time = @"1,5ч";
     model.rate = @4.5;
     model.text = @"Обзорная экскурсия по центральной улице города. Пройдя её Вы ознакомитесь с рядом достопримечательностей Казани, которые в сумме своей и формируют ту неповторимую атмосферу города.";
     model.image = [UIImage imageNamed:@"TestImage"];
-//    model.tag = None;
+    model.tag = None;
 
     RoutePoint *point = [[RoutePoint alloc] init];
     point.coord = CLLocationCoordinate2DMake(55.787389, 49.121610);
+    point.title = @"Часы на ул. Баумана";
+    point.text = @"Исәнмесез! Рады видть Вас в Казани! Место на котором Вы находитесь называется \"Площадь имени Габдуллы Тукая\" – названа в честь татарского поэта. Сами казанцы называют эту площадь \"Кольцо\" название повелось оттого, что в своё время в этом месте заканчивался маршрут нескольких трамваев и существовали так называемые разворотные кольца. Ныне трамвайных путей уже не существует, но это название сохранилось и отразилось на названии расположенного через дорогу торгового центра. Сейчас площадь является общественным центром города, местом сосредоточения ряда торговых и развлекательных заведений. Например, одно из расположенных рядом зданий (на нём написано ГУМ), как можно догадаться - это торговый центр. Его объем образован объединением нескольких соседних зданий. Но, не смотря на декор их фасадов, только одно из них является историческим. К слову, когда-то в нём располагался один из лучших ресторанов в городе, конкурировавший с другим, мимо которого Вы ещё пройдёте.";
+    point.route = model;
+    model.points = [NSArray arrayWithObject:point];
     
+    if (!_routes) {
+        _routes = [NSArray arrayWithObject:model];
+    }
+}
+- (void)ExtractRoutes {
+    NSMutableArray *annotations = [NSMutableArray new];
+    for (Route *curRoute in _routes) {
+        RoutePointAnnotation *pointAnnotation = [[RoutePointAnnotation alloc] initWithRoutePoint:[curRoute firstPoint]];
+        [annotations addObject:pointAnnotation];
+        
+//        NSLog(@"CURRENT ROUTE: %@", curRoute.name);
+//        NSLog(@"POINT ANNOTATION PARENT: %@", pointAnnotation.routePoint.route.name);
+    }
+    [_mapView addAnnotations:annotations];
 }
 
 #pragma mark - MGLMapView delegate methods
@@ -88,8 +108,7 @@
         annotationView.frame = CGRectMake(0, 0, 14, 14);
         
         // Set the annotation view’s background color to a value determined by its longitude.
-//        CGFloat hue = (CGFloat)annotation.coordinate.longitude / 100;
-        CGFloat hue = (242/360.0);
+        CGFloat hue = [annotation isKindOfClass:[RoutePointAnnotation class]] ? (242/360.0) : 0.3;
         annotationView.backgroundColor = [UIColor colorWithHue:hue saturation:0.5 brightness:1 alpha:1];
     }
     
@@ -97,19 +116,23 @@
 }
 
 -(UIView<MGLCalloutView> *)mapView:(MGLMapView *)mapView calloutViewForAnnotation:(id<MGLAnnotation>)annotation {
-    // Only show callouts for `Hello world!` annotation
-    if ([annotation respondsToSelector:@selector(title)])
+// Если у annotation нет title'a то вообще не работает!!!
+//    //Only show callouts for `Hello world!` annotation
+//    if ([annotation respondsToSelector:@selector(title)])
+    if ([annotation isKindOfClass:[RoutePointAnnotation class]])
     {
         // Instantiate and return our custom callout view
-        CustomCalloutView *calloutView = [[CustomCalloutView alloc] init];
+        CustomCalloutView *calloutView = [[CustomCalloutView alloc] initWithAnnotation:annotation];
         calloutView.representedObject = annotation;
-//        calloutView.model = 
         return calloutView;
     }
     return nil;
 }
 
+
 -(void)mapView:(MGLMapView *)mapView tapOnCalloutForAnnotation:(id<MGLAnnotation>)annotation {
+    MGLPointAnnotation *ann = annotation;
+    NSLog(@"DESELECTION ANNOTATION: %@", ann.title);
     [mapView deselectAnnotation:annotation animated:YES];
     
 }

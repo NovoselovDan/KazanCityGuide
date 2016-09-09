@@ -10,4 +10,10 @@
 
 @implementation Route
 
+-(id)firstPoint {
+    if (_points.count > 0) {
+        return [_points firstObject];
+    }
+    return nil;
+}
 @end

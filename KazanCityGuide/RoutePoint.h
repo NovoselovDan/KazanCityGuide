@@ -19,6 +19,4 @@
 @property (strong, nonatomic) NSString *text;
 @property (weak, nonatomic) Route *route;
 
-
-
 @end
