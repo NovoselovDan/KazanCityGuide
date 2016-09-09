@@ -8,9 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		DAC2740154FBF212DDBF033A /* libPods-KazanCityGuide.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B7D0AE873DA08655D29CD3 /* libPods-KazanCityGuide.a */; };
+		E1800FBB1D835D790095F5EF /* Route.m in Sources */ = {isa = PBXBuildFile; fileRef = E1800FBA1D835D790095F5EF /* Route.m */; };
 		E1A28E6B1D81E674007724F1 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E1A28E6A1D81E674007724F1 /* MapViewController.m */; };
 		E1A28E6F1D82F8BC007724F1 /* NetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E1A28E6E1D82F8BC007724F1 /* NetManager.m */; };
-		E1A28E741D82FE3E007724F1 /* RouteModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E1A28E731D82FE3E007724F1 /* RouteModel.m */; };
 		E1A28E771D8301CD007724F1 /* RoutePoint.m in Sources */ = {isa = PBXBuildFile; fileRef = E1A28E761D8301CD007724F1 /* RoutePoint.m */; };
 		E1A28E7E1D8303EB007724F1 /* RouteCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E1A28E7C1D8303EB007724F1 /* RouteCollectionViewCell.m */; };
 		E1A28E7F1D8303EB007724F1 /* RouteCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1A28E7D1D8303EB007724F1 /* RouteCollectionViewCell.xib */; };
@@ -46,12 +46,12 @@
 /* Begin PBXFileReference section */
 		14E4DEA684BC3DACC2B2E115 /* Pods-KazanCityGuide.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KazanCityGuide.release.xcconfig"; path = "Pods/Target Support Files/Pods-KazanCityGuide/Pods-KazanCityGuide.release.xcconfig"; sourceTree = "<group>"; };
 		91B7D0AE873DA08655D29CD3 /* libPods-KazanCityGuide.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-KazanCityGuide.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E1800FB91D835D790095F5EF /* Route.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Route.h; sourceTree = "<group>"; };
+		E1800FBA1D835D790095F5EF /* Route.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Route.m; sourceTree = "<group>"; };
 		E1A28E691D81E674007724F1 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		E1A28E6A1D81E674007724F1 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		E1A28E6D1D82F8BC007724F1 /* NetManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetManager.h; sourceTree = "<group>"; };
 		E1A28E6E1D82F8BC007724F1 /* NetManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetManager.m; sourceTree = "<group>"; };
-		E1A28E721D82FE3E007724F1 /* RouteModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteModel.h; sourceTree = "<group>"; };
-		E1A28E731D82FE3E007724F1 /* RouteModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RouteModel.m; sourceTree = "<group>"; };
 		E1A28E751D8301CD007724F1 /* RoutePoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoutePoint.h; sourceTree = "<group>"; };
 		E1A28E761D8301CD007724F1 /* RoutePoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoutePoint.m; sourceTree = "<group>"; };
 		E1A28E7B1D8303EB007724F1 /* RouteCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteCollectionViewCell.h; sourceTree = "<group>"; };
@@ -157,10 +157,10 @@
 			children = (
 				E1A28E6D1D82F8BC007724F1 /* NetManager.h */,
 				E1A28E6E1D82F8BC007724F1 /* NetManager.m */,
-				E1A28E721D82FE3E007724F1 /* RouteModel.h */,
-				E1A28E731D82FE3E007724F1 /* RouteModel.m */,
 				E1A28E751D8301CD007724F1 /* RoutePoint.h */,
 				E1A28E761D8301CD007724F1 /* RoutePoint.m */,
+				E1800FB91D835D790095F5EF /* Route.h */,
+				E1800FBA1D835D790095F5EF /* Route.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -428,9 +428,9 @@
 				E1A28E6F1D82F8BC007724F1 /* NetManager.m in Sources */,
 				E1A28E7E1D8303EB007724F1 /* RouteCollectionViewCell.m in Sources */,
 				E1A28E771D8301CD007724F1 /* RoutePoint.m in Sources */,
+				E1800FBB1D835D790095F5EF /* Route.m in Sources */,
 				E1A28E6B1D81E674007724F1 /* MapViewController.m in Sources */,
 				E1A28E861D830D1F007724F1 /* CustomCalloutView.m in Sources */,
-				E1A28E741D82FE3E007724F1 /* RouteModel.m in Sources */,
 				E1EC400D1D6D865600F364F9 /* main.m in Sources */,
 				E1EC40191D6D865600F364F9 /* KazanCityGuide.xcdatamodeld in Sources */,
 			);

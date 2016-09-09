@@ -7,11 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "RouteModel.h"
 @import Mapbox;
 
 @interface CustomCalloutView : UIView <MGLCalloutView>
 
-@property (strong, nonatomic) RouteModel *model;
+//@property (strong, nonatomic) RouteModel *model;
 
 @end

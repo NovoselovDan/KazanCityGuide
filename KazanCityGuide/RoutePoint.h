@@ -7,18 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Route.h"
 @import CoreLocation;
 @import Mapbox;
+
 
 @interface RoutePoint : NSObject
 
 @property (assign, nonatomic) CLLocationCoordinate2D coord;
-
-@property (assign, nonatomic) double latitude;
-@property (assign, nonatomic) double longitude;
-
 @property (strong, nonatomic) NSString *title;
 @property (strong, nonatomic) NSString *text;
+@property (weak, nonatomic) Route *route;
 
 
 

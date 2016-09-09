@@ -9,9 +9,12 @@
 #import "MapViewController.h"
 #import "CustomAnnotationView.h"
 #import "CustomCalloutView.h"
+#import "Route.h"
+#import "RoutePoint.h"
 
 @interface MapViewController () <MGLMapViewDelegate>
 @property (weak, nonatomic) IBOutlet MGLMapView *mapView;
+@property (strong, nonatomic) NSArray *routeModels;
 @end
 
 @implementation MapViewController
@@ -19,9 +22,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self mapViewSetup];
+    [self LoadTestModel];
     
     MGLPointAnnotation *testPoint = [[MGLPointAnnotation alloc] init];
-    testPoint.coordinate = CLLocationCoordinate2DMake(55.787389, 49.121610);
+    testPoint.coordinate = CLLocationCoordinate2DMake(55.782389, 49.129910);
     testPoint.title = @"Test point";
     testPoint.subtitle = [NSString stringWithFormat:@"%f ; %f", testPoint.coordinate.latitude, testPoint.coordinate.longitude];
     
@@ -43,6 +47,21 @@
     _mapView.styleURL = [NSURL URLWithString:@"mapbox://styles/mapbox/dark-v9"];
     
     NSLog(@"AFTER WORK:\nMAP VIEW USER LOCATION: %@", _mapView.showsUserLocation? @"ON" : @"OFF");
+}
+
+- (void)LoadTestModel {
+    Route *model = [[Route alloc] init];
+    model.name = @"Прогулка по ул. Баумана";
+    model.distance = @"0,9км";
+    model.time = @"1,5ч";
+    model.rate = @4.5;
+    model.text = @"Обзорная экскурсия по центральной улице города. Пройдя её Вы ознакомитесь с рядом достопримечательностей Казани, которые в сумме своей и формируют ту неповторимую атмосферу города.";
+    model.image = [UIImage imageNamed:@"TestImage"];
+//    model.tag = None;
+
+    RoutePoint *point = [[RoutePoint alloc] init];
+    point.coord = CLLocationCoordinate2DMake(55.787389, 49.121610);
+    
 }
 
 #pragma mark - MGLMapView delegate methods
@@ -84,6 +103,7 @@
         // Instantiate and return our custom callout view
         CustomCalloutView *calloutView = [[CustomCalloutView alloc] init];
         calloutView.representedObject = annotation;
+//        calloutView.model = 
         return calloutView;
     }
     return nil;
