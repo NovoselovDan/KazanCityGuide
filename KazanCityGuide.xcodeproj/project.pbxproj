@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		DAC2740154FBF212DDBF033A /* libPods-KazanCityGuide.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B7D0AE873DA08655D29CD3 /* libPods-KazanCityGuide.a */; };
 		E179248C1D83872500478827 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E179248B1D83872500478827 /* MenuViewController.m */; };
+		E17924901D83E8C400478827 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E179248F1D83E8C400478827 /* DetailViewController.m */; };
 		E1800FBB1D835D790095F5EF /* Route.m in Sources */ = {isa = PBXBuildFile; fileRef = E1800FBA1D835D790095F5EF /* Route.m */; };
 		E1800FBE1D8364400095F5EF /* RoutePointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = E1800FBD1D8364400095F5EF /* RoutePointAnnotation.m */; };
 		E1A28E6B1D81E674007724F1 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E1A28E6A1D81E674007724F1 /* MapViewController.m */; };
@@ -50,6 +51,8 @@
 		91B7D0AE873DA08655D29CD3 /* libPods-KazanCityGuide.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-KazanCityGuide.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E179248A1D83872500478827 /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
 		E179248B1D83872500478827 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
+		E179248E1D83E8C400478827 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
+		E179248F1D83E8C400478827 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		E1800FB91D835D790095F5EF /* Route.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Route.h; sourceTree = "<group>"; };
 		E1800FBA1D835D790095F5EF /* Route.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Route.m; sourceTree = "<group>"; };
 		E1800FBC1D8364400095F5EF /* RoutePointAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoutePointAnnotation.h; sourceTree = "<group>"; };
@@ -147,6 +150,8 @@
 				E1A28E801D8303F4007724F1 /* Route Cell */,
 				E179248A1D83872500478827 /* MenuViewController.h */,
 				E179248B1D83872500478827 /* MenuViewController.m */,
+				E179248E1D83E8C400478827 /* DetailViewController.h */,
+				E179248F1D83E8C400478827 /* DetailViewController.m */,
 			);
 			name = Menu;
 			sourceTree = "<group>";
@@ -442,6 +447,7 @@
 				E1800FBB1D835D790095F5EF /* Route.m in Sources */,
 				E179248C1D83872500478827 /* MenuViewController.m in Sources */,
 				E1A28E6B1D81E674007724F1 /* MapViewController.m in Sources */,
+				E17924901D83E8C400478827 /* DetailViewController.m in Sources */,
 				E1A28E861D830D1F007724F1 /* CustomCalloutView.m in Sources */,
 				E1EC400D1D6D865600F364F9 /* main.m in Sources */,
 				E1EC40191D6D865600F364F9 /* KazanCityGuide.xcdatamodeld in Sources */,
