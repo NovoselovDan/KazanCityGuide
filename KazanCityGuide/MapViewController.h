@@ -10,5 +10,6 @@
 @import Mapbox;
 
 @interface MapViewController : UIViewController
+@property (strong, nonatomic) NSArray *routes;
 
 @end

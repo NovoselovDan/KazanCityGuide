@@ -12,10 +12,14 @@
 #import "Route.h"
 #import "RoutePoint.h"
 #import "RoutePointAnnotation.h"
+#import "MenuViewController.h"
 
 @interface MapViewController () <MGLMapViewDelegate>
 @property (weak, nonatomic) IBOutlet MGLMapView *mapView;
-@property (strong, nonatomic) NSArray *routes;
+@property (weak, nonatomic) IBOutlet UIButton *menuButton;
+@property (weak, nonatomic) IBOutlet UIButton *centerToUserButton;
+@property (weak, nonatomic) IBOutlet UIButton *plusButton;
+@property (weak, nonatomic) IBOutlet UIButton *minusButton;
 @end
 
 @implementation MapViewController
@@ -40,7 +44,48 @@
     [super didReceiveMemoryWarning];
 }
 
+- (IBAction)menuPressed:(id)sender {
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UIBlurEffect *blurEffcet = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+    UIVisualEffectView *blurEffView = [[UIVisualEffectView alloc] initWithEffect:blurEffcet];
+    blurEffView.frame = self.view.bounds;
+    
+    UINavigationController *vc = [sb instantiateViewControllerWithIdentifier:@"navVC"];
+    vc.view.backgroundColor = [UIColor clearColor];
+    [vc.view insertSubview:blurEffView atIndex:0];
+    vc.modalPresentationStyle = UIModalPresentationOverFullScreen;
+    
+    MenuViewController *mvc = [vc.viewControllers lastObject];
+    mvc.routes = _routes;
+    [self presentViewController:vc animated:YES completion:nil];
+}
+- (IBAction)toUserPressed:(id)sender {
+    CLLocation *loc1 = [[CLLocation alloc] initWithLatitude:_mapView.camera.centerCoordinate.latitude
+                                                  longitude:_mapView.camera.centerCoordinate.longitude];
+    CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:_mapView.userLocation.coordinate.latitude
+                                                  longitude:_mapView.userLocation.coordinate.longitude];
+    CLLocationDistance distance = [loc1 distanceFromLocation:loc2];
+    
+    MGLMapCamera *camera = [MGLMapCamera cameraLookingAtCenterCoordinate:_mapView.userLocation.coordinate
+                                                            fromDistance:_mapView.camera.altitude
+                                                                   pitch:0
+                                                                 heading:0];
+    if (distance < 10000)
+        [_mapView flyToCamera:camera completionHandler:nil];
+    else
+        [_mapView setCamera:camera animated:NO];
+}
+- (IBAction)plusPressed:(id)sender {
+    [_mapView setZoomLevel:_mapView.zoomLevel+0.5 animated:YES];
+}
+- (IBAction)minusPressed:(id)sender {
+    [_mapView setZoomLevel:_mapView.zoomLevel-0.5 animated:YES];
+}
+
+
 - (void)mapViewSetup {
+    [self preferredStatusBarStyle];
+
     _mapView.showsUserLocation = YES;
     
     _mapView.latitude = 55.783108;
@@ -50,7 +95,6 @@
     
     NSLog(@"AFTER WORK:\nMAP VIEW USER LOCATION: %@", _mapView.showsUserLocation? @"ON" : @"OFF");
 }
-
 - (void)GenerateTestModel {
     Route *model = [[Route alloc] init];
     model.title = @"Прогулка по ул. Баумана";
@@ -108,7 +152,7 @@
         annotationView.frame = CGRectMake(0, 0, 14, 14);
         
         // Set the annotation view’s background color to a value determined by its longitude.
-        CGFloat hue = [annotation isKindOfClass:[RoutePointAnnotation class]] ? (242/360.0) : 0.3;
+        CGFloat hue = [annotation isKindOfClass:[RoutePointAnnotation class]] ? (242/360.0) : 0.75;
         annotationView.backgroundColor = [UIColor colorWithHue:hue saturation:0.5 brightness:1 alpha:1];
     }
     
@@ -135,6 +179,10 @@
     NSLog(@"DESELECTION ANNOTATION: %@", ann.title);
     [mapView deselectAnnotation:annotation animated:YES];
     
+}
+
+-(UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
 }
 
 /*

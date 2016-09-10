@@ -12,6 +12,5 @@
 @interface CustomCalloutView : UIView <MGLCalloutView>
 
 - (instancetype)initWithAnnotation:(id<MGLAnnotation>)annotation;
-//@property (strong, nonatomic) RouteModel *model;
 
 @end

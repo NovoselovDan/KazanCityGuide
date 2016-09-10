@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Route.h"
 
 @interface RouteCollectionViewCell : UICollectionViewCell
+@property (nonatomic, weak) Route *route;
+
+- (void)configureWithRoute:(Route *)route;
 
 @end
