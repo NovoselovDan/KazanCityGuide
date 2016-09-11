@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -156,18 +157,18 @@
                                 <exclude reference="pe9-R0-0gU"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="8F8-mG-lu4"/>
-                                <exclude reference="AL2-Pw-cbq"/>
-                                <exclude reference="YtP-fk-Flp"/>
-                                <exclude reference="uyb-fX-pdC"/>
-                                <exclude reference="asx-0o-0dU"/>
-                                <exclude reference="kmU-5f-aZe"/>
-                                <exclude reference="y9g-MK-ASY"/>
-                                <exclude reference="PEg-57-a6Z"/>
-                                <exclude reference="ne6-HL-ic4"/>
                                 <exclude reference="Ea2-kn-DxZ"/>
                                 <exclude reference="U9h-cV-0vW"/>
                                 <exclude reference="vlv-Id-S09"/>
+                                <exclude reference="asx-0o-0dU"/>
+                                <exclude reference="kmU-5f-aZe"/>
+                                <exclude reference="PEg-57-a6Z"/>
+                                <exclude reference="ne6-HL-ic4"/>
+                                <exclude reference="y9g-MK-ASY"/>
+                                <exclude reference="uyb-fX-pdC"/>
+                                <exclude reference="8F8-mG-lu4"/>
+                                <exclude reference="AL2-Pw-cbq"/>
+                                <exclude reference="YtP-fk-Flp"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -179,18 +180,18 @@
                                 <include reference="pe9-R0-0gU"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="8F8-mG-lu4"/>
-                                <include reference="AL2-Pw-cbq"/>
-                                <include reference="YtP-fk-Flp"/>
-                                <include reference="uyb-fX-pdC"/>
-                                <include reference="asx-0o-0dU"/>
-                                <include reference="kmU-5f-aZe"/>
-                                <include reference="y9g-MK-ASY"/>
-                                <include reference="PEg-57-a6Z"/>
-                                <include reference="ne6-HL-ic4"/>
                                 <include reference="Ea2-kn-DxZ"/>
                                 <include reference="U9h-cV-0vW"/>
                                 <include reference="vlv-Id-S09"/>
+                                <include reference="asx-0o-0dU"/>
+                                <include reference="kmU-5f-aZe"/>
+                                <include reference="PEg-57-a6Z"/>
+                                <include reference="ne6-HL-ic4"/>
+                                <include reference="y9g-MK-ASY"/>
+                                <include reference="uyb-fX-pdC"/>
+                                <include reference="8F8-mG-lu4"/>
+                                <include reference="AL2-Pw-cbq"/>
+                                <include reference="YtP-fk-Flp"/>
                             </mask>
                         </variation>
                     </view>
@@ -215,6 +216,7 @@
                         <viewControllerLayoutGuide type="bottom" id="v9A-W9-mUD"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="PPn-8o-UC6">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RfZ-iw-0zz" userLabel="HelpView">
@@ -292,13 +294,13 @@
                                 <exclude reference="naD-Gh-53f"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="sRe-WH-nQT"/>
                                 <exclude reference="5KE-1g-AgM"/>
                                 <exclude reference="9XH-da-ew1"/>
                                 <exclude reference="rBv-t8-BhK"/>
                                 <exclude reference="Bgw-CM-gra"/>
                                 <exclude reference="fZr-y1-q5k"/>
                                 <exclude reference="ntQ-v8-C8Y"/>
-                                <exclude reference="sRe-WH-nQT"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -307,13 +309,13 @@
                                 <include reference="naD-Gh-53f"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="sRe-WH-nQT"/>
                                 <include reference="5KE-1g-AgM"/>
                                 <include reference="9XH-da-ew1"/>
                                 <include reference="rBv-t8-BhK"/>
                                 <include reference="Bgw-CM-gra"/>
                                 <include reference="fZr-y1-q5k"/>
                                 <include reference="ntQ-v8-C8Y"/>
-                                <include reference="sRe-WH-nQT"/>
                             </mask>
                         </variation>
                     </view>
@@ -339,6 +341,7 @@
                         <viewControllerLayoutGuide type="bottom" id="ekP-VE-NqC"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Lgm-id-bRU">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AcH-ZE-rgu" customClass="MGLMapView">
@@ -389,7 +392,7 @@
                                 </variation>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                        <color key="backgroundColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="W8f-KI-jdA" firstAttribute="top" secondItem="dR7-ka-yMs" secondAttribute="bottom" id="23T-b1-Y6Q"/>
                             <constraint firstItem="W8f-KI-jdA" firstAttribute="leading" secondItem="Lgm-id-bRU" secondAttribute="leading" id="8Ra-Yn-VkJ"/>
@@ -423,6 +426,13 @@
                                 <exclude reference="dR7-ka-yMs"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="DYl-KN-wZt"/>
+                                <exclude reference="U4r-6h-0As"/>
+                                <exclude reference="j4n-5L-z3q"/>
+                                <exclude reference="RkY-Ct-dr3"/>
+                                <exclude reference="SVp-4r-Dzw"/>
+                                <exclude reference="ovO-zO-8dc"/>
+                                <exclude reference="u2g-X6-C6V"/>
                                 <exclude reference="Mmz-wT-Kd6"/>
                                 <exclude reference="SRG-DZ-tOI"/>
                                 <exclude reference="eeC-fc-iZi"/>
@@ -436,13 +446,6 @@
                                 <exclude reference="ZiB-ae-9wx"/>
                                 <exclude reference="fPx-09-uRv"/>
                                 <exclude reference="reI-sG-32l"/>
-                                <exclude reference="RkY-Ct-dr3"/>
-                                <exclude reference="SVp-4r-Dzw"/>
-                                <exclude reference="ovO-zO-8dc"/>
-                                <exclude reference="u2g-X6-C6V"/>
-                                <exclude reference="DYl-KN-wZt"/>
-                                <exclude reference="U4r-6h-0As"/>
-                                <exclude reference="j4n-5L-z3q"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -452,6 +455,13 @@
                                 <include reference="dR7-ka-yMs"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="DYl-KN-wZt"/>
+                                <exclude reference="U4r-6h-0As"/>
+                                <include reference="j4n-5L-z3q"/>
+                                <include reference="RkY-Ct-dr3"/>
+                                <exclude reference="SVp-4r-Dzw"/>
+                                <exclude reference="ovO-zO-8dc"/>
+                                <include reference="u2g-X6-C6V"/>
                                 <include reference="Mmz-wT-Kd6"/>
                                 <include reference="SRG-DZ-tOI"/>
                                 <include reference="eeC-fc-iZi"/>
@@ -465,13 +475,6 @@
                                 <exclude reference="ZiB-ae-9wx"/>
                                 <exclude reference="fPx-09-uRv"/>
                                 <include reference="reI-sG-32l"/>
-                                <include reference="RkY-Ct-dr3"/>
-                                <exclude reference="SVp-4r-Dzw"/>
-                                <exclude reference="ovO-zO-8dc"/>
-                                <include reference="u2g-X6-C6V"/>
-                                <exclude reference="DYl-KN-wZt"/>
-                                <exclude reference="U4r-6h-0As"/>
-                                <include reference="j4n-5L-z3q"/>
                             </mask>
                         </variation>
                     </view>

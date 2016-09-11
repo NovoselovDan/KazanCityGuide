@@ -34,13 +34,14 @@
     [self.collectionVIew registerClass:[RouteCollectionViewCell class] forCellWithReuseIdentifier:@"routeCell"];
     
 }
--(void)viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
 }
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
+    NSNumber *value = [NSNumber numberWithInt:UIInterfaceOrientationPortrait];
+    [[UIDevice currentDevice] setValue:value forKey:@"orientation"];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -77,6 +78,7 @@
     [btn addSubview:imgView];
     UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, 55, 20)];
     lab.text = @"Карта";
+    lab.textColor = [self tintColor];
     [btn addSubview:lab];
     [btn addTarget:self action:@selector(mapButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *barBtn = [[UIBarButtonItem alloc] initWithCustomView:btn];
@@ -89,10 +91,10 @@
     imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 2, 20, 17)];
     [imgView setImage:[UIImage imageNamed:@"Weather"]];
     [buttonView addSubview:imgView];
-    UILabel *buttonLabel = [[UILabel alloc] initWithFrame:CGRectMake(23, 1, 34, 18)];
+    UILabel *buttonLabel = [[UILabel alloc] initWithFrame:CGRectMake(23, 0, 34, 20)];
     buttonLabel.text = @"23°";
     buttonLabel.font = [UIFont fontWithName:@".SFUIText-Regular" size:17.0];
-    buttonLabel.tintColor = [self tintColor];
+    buttonLabel.textColor = [self tintColor];
     [buttonView addSubview:buttonLabel];
     
     UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithCustomView:buttonView];
@@ -101,13 +103,19 @@
     //Title
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 120, 30)];
     label.text = @"Казань";
-    label.tintColor = [self tintColor];
+    label.textColor = [self tintColor];
     label.font = [UIFont fontWithName:@".SFUIDisplay-Light" size:26.0];
     label.textAlignment = NSTextAlignmentCenter;
     [self.navigationItem setTitleView:label];
     
 }
-
+//
+//- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+//    return UIInterfaceOrientationMaskPortrait;
+//}
+//- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
+//    return UIInterfaceOrientationPortrait;
+//}
 - (UIColor *)backgroundColor {
     return [UIColor colorWithHue:240/360.0 saturation:0.13 brightness:0.24 alpha:1.0];
 }
@@ -116,15 +124,16 @@
 }
 
 #pragma mark UICollectionViewDataSource
--(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return 1;
 }
 
--(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return _routes.count;
 }
 
--(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     RouteCollectionViewCell *cell =(RouteCollectionViewCell *) [collectionView dequeueReusableCellWithReuseIdentifier:@"routeCell" forIndexPath:indexPath];
     [cell configureWithRoute:[_routes objectAtIndex:indexPath.row]];
     return cell;
@@ -143,6 +152,21 @@
 //        
 //    }];
 }
+
+#pragma mark - UICollectionViewDelegateFlowLayout
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
+    CGFloat cellSide = (int)(screenWidth - 2*20 - 15) / 2;
+    NSLog(@"cellSide: %f", cellSide);
+    return CGSizeMake(cellSide, cellSide);
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+    
+}
+
+//- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
 
 /*
 #pragma mark - Navigation

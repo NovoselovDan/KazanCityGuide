@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 
-@interface MenuViewController : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource>
+@interface MenuViewController : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
 @property (strong, nonatomic) NSArray *routes;
 

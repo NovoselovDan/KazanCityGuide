@@ -50,14 +50,15 @@
     UIVisualEffectView *blurEffView = [[UIVisualEffectView alloc] initWithEffect:blurEffcet];
     blurEffView.frame = self.view.bounds;
     
-    UINavigationController *vc = [sb instantiateViewControllerWithIdentifier:@"navVC"];
-    vc.view.backgroundColor = [UIColor clearColor];
-    [vc.view insertSubview:blurEffView atIndex:0];
-    vc.modalPresentationStyle = UIModalPresentationOverFullScreen;
+    UINavigationController *navVC = [sb instantiateViewControllerWithIdentifier:@"navVC"];
+    navVC.view.backgroundColor = [UIColor clearColor];
+    [navVC.view insertSubview:blurEffView atIndex:0];
+    navVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
     
-    MenuViewController *mvc = [vc.viewControllers lastObject];
+    
+    MenuViewController *mvc = [navVC.viewControllers lastObject];
     mvc.routes = _routes;
-    [self presentViewController:vc animated:YES completion:nil];
+    [self presentViewController:navVC animated:YES completion:nil];
 }
 - (IBAction)toUserPressed:(id)sender {
     CLLocation *loc1 = [[CLLocation alloc] initWithLatitude:_mapView.camera.centerCoordinate.latitude

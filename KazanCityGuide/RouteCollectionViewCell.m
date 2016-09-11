@@ -40,12 +40,13 @@
         [self addSubview:_imageView];
         
         //Title
-        CGFloat wSize = 144.0;
+        CGFloat offset = 8.0;
+        CGFloat wSize = self.bounds.size.width - offset*2;
         CGFloat hSize = 13.0;
-        _title = [[UILabel alloc] initWithFrame:CGRectMake(8, self.bounds.size.height - hSize - 37, wSize, hSize)];
+        _title = [[UILabel alloc] initWithFrame:CGRectMake(offset, self.bounds.size.height - hSize - 37, wSize, hSize)];
         _title.font = [UIFont fontWithName:@".SFUIDisplay-Semibold" size:11.0];
         _title.textColor = [UIColor whiteColor];
-        _title.textAlignment = NSTextAlignmentCenter;
+        _title.textAlignment = NSTextAlignmentLeft;
         [self addSubview:_title];
         
         //Time
@@ -54,7 +55,8 @@
         [_timerView setImage:[UIImage imageNamed:@"Timer"]];
         [self addSubview:_timerView];
         
-        wSize = 42.0; hSize = 13.0;
+        wSize = (int)(self.bounds.size.width/2 - _timerView.frame.origin.x - _timerView.frame.size.width - 5 - 5);
+        hSize = 13.0;
         _timerLabel = [[UILabel alloc] initWithFrame:CGRectMake(_timerView.frame.origin.x + _timerView.bounds.size.width + 5,
                                                                 self.bounds.size.height - hSize - 11.0,
                                                                 wSize, hSize)];
@@ -70,10 +72,15 @@
         [_distanceView setImage:[UIImage imageNamed:@"Distance"]];
         [self addSubview:_distanceView];
         
-        wSize = 41.0; hSize = 13.0;
-        _distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(_distanceView.frame.origin.x + _distanceView.bounds.size.width + 5,
+        wSize = self.frame.size.width/2;
+        hSize = 13.0;
+//        NSLog(@"wSize: %f", wSize);
+//        NSLog(@"wTrue: %f", self.frame.size.width/2);
+        _distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(_distanceView.frame.origin.x + _distanceView.frame.size.width + 5,
                                                                    self.bounds.size.height - hSize - 11.0,
                                                                    wSize, hSize)];
+        NSLog(@"\n\t_distanceView frame:%@\n\t_distanceLabel frame:%@", NSStringFromCGRect(_distanceView.frame), NSStringFromCGRect(_distanceLabel.frame));
+        NSLog(@"frame: %@. self: %@", NSStringFromCGRect(frame), NSStringFromCGRect(self.frame));
         _distanceLabel.font = [UIFont fontWithName:@".SFUIDisplay-Heavy" size:11.0];
         _distanceLabel.textColor = [UIColor whiteColor];
         [self addSubview:_distanceLabel];
