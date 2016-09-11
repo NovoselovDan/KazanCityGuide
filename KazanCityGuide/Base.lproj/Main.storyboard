@@ -131,7 +131,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="ogK-2e-sS8" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="8F8-mG-lu4"/>
                             <constraint firstItem="ogK-2e-sS8" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="AL2-Pw-cbq">
@@ -487,10 +487,10 @@
             </objects>
             <point key="canvasLocation" x="1837.5" y="1145"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Fixed Navigation View Controller-->
         <scene sceneID="xhk-kb-tJz">
             <objects>
-                <navigationController storyboardIdentifier="navVC" automaticallyAdjustsScrollViewInsets="NO" id="JS2-Ig-Tb4" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="navVC" automaticallyAdjustsScrollViewInsets="NO" id="JS2-Ig-Tb4" customClass="FixedNavigationViewController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="zhG-YK-f2H">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>

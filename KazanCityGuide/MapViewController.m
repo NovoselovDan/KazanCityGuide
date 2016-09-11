@@ -46,13 +46,8 @@
 
 - (IBAction)menuPressed:(id)sender {
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    UIBlurEffect *blurEffcet = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
-    UIVisualEffectView *blurEffView = [[UIVisualEffectView alloc] initWithEffect:blurEffcet];
-    blurEffView.frame = self.view.bounds;
     
     UINavigationController *navVC = [sb instantiateViewControllerWithIdentifier:@"navVC"];
-    navVC.view.backgroundColor = [UIColor clearColor];
-    [navVC.view insertSubview:blurEffView atIndex:0];
     navVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
     
     

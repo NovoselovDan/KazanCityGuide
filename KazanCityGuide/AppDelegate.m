@@ -27,7 +27,6 @@
     [UINavigationBar appearance].barTintColor = [UIColor colorWithHue:240/360.0 saturation:0.13 brightness:0.24 alpha:1.0];
     [[UINavigationBar appearance] setTranslucent:NO];
     [[UINavigationBar appearance] setTintColor:[UIColor colorWithHue:240/360.0 saturation:0.02 brightness:96 alpha:1.0]];
-
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

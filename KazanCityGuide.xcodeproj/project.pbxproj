@@ -19,6 +19,7 @@
 		E1A28E7F1D8303EB007724F1 /* RouteCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1A28E7D1D8303EB007724F1 /* RouteCollectionViewCell.xib */; };
 		E1A28E831D8309F9007724F1 /* CustomAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = E1A28E821D8309F9007724F1 /* CustomAnnotationView.m */; };
 		E1A28E861D830D1F007724F1 /* CustomCalloutView.m in Sources */ = {isa = PBXBuildFile; fileRef = E1A28E851D830D1F007724F1 /* CustomCalloutView.m */; };
+		E1AAECF61D8601A700A1ECEF /* FixedNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E1AAECF51D8601A700A1ECEF /* FixedNavigationViewController.m */; };
 		E1E5D2DD1D834A9100E15749 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1E5D2DC1D834A9100E15749 /* Assets.xcassets */; };
 		E1EC400D1D6D865600F364F9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E1EC400C1D6D865600F364F9 /* main.m */; };
 		E1EC40101D6D865600F364F9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E1EC400F1D6D865600F364F9 /* AppDelegate.m */; };
@@ -70,6 +71,8 @@
 		E1A28E821D8309F9007724F1 /* CustomAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomAnnotationView.m; sourceTree = "<group>"; };
 		E1A28E841D830D1F007724F1 /* CustomCalloutView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCalloutView.h; sourceTree = "<group>"; };
 		E1A28E851D830D1F007724F1 /* CustomCalloutView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCalloutView.m; sourceTree = "<group>"; };
+		E1AAECF41D8601A700A1ECEF /* FixedNavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FixedNavigationViewController.h; sourceTree = "<group>"; };
+		E1AAECF51D8601A700A1ECEF /* FixedNavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FixedNavigationViewController.m; sourceTree = "<group>"; };
 		E1E5D2DC1D834A9100E15749 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../Assets.xcassets; sourceTree = "<group>"; };
 		E1EC40081D6D865600F364F9 /* KazanCityGuide.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KazanCityGuide.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1EC400C1D6D865600F364F9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -221,6 +224,8 @@
 				E1A28E681D81E4FE007724F1 /* Menu */,
 				E1EC400E1D6D865600F364F9 /* AppDelegate.h */,
 				E1EC400F1D6D865600F364F9 /* AppDelegate.m */,
+				E1AAECF41D8601A700A1ECEF /* FixedNavigationViewController.h */,
+				E1AAECF51D8601A700A1ECEF /* FixedNavigationViewController.m */,
 				E1EC400B1D6D865600F364F9 /* Supporting Files */,
 			);
 			path = KazanCityGuide;
@@ -441,6 +446,7 @@
 				E1A28E831D8309F9007724F1 /* CustomAnnotationView.m in Sources */,
 				E1EC40101D6D865600F364F9 /* AppDelegate.m in Sources */,
 				E1800FBE1D8364400095F5EF /* RoutePointAnnotation.m in Sources */,
+				E1AAECF61D8601A700A1ECEF /* FixedNavigationViewController.m in Sources */,
 				E1A28E6F1D82F8BC007724F1 /* NetManager.m in Sources */,
 				E1A28E7E1D8303EB007724F1 /* RouteCollectionViewCell.m in Sources */,
 				E1A28E771D8301CD007724F1 /* RoutePoint.m in Sources */,
