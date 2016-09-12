@@ -478,9 +478,12 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="distanceLabel" destination="DTq-dH-ONO" id="fJe-X6-C61"/>
+                <outlet property="distanceSubtitle" destination="K13-bL-Cqw" id="yI6-Jh-in3"/>
                 <outlet property="ratingLabel" destination="b3W-Is-eZq" id="1G0-LI-G2U"/>
+                <outlet property="ratingSubtitle" destination="9xd-mp-FEJ" id="LMI-fT-Xyx"/>
                 <outlet property="text" destination="FwD-IP-61d" id="dhY-Lw-UFq"/>
                 <outlet property="timeLabel" destination="M3r-GY-2UH" id="ivx-iU-au6"/>
+                <outlet property="timeSubtitle" destination="LwC-Ni-cB5" id="AbP-Bi-ezJ"/>
             </connections>
             <point key="canvasLocation" x="327" y="231"/>
         </tableViewCell>

@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Route.h"
 
 @interface RouteInfoTableViewCell : UITableViewCell
 
+- (void)configureWithRoute:(Route *)route;
+- (CGFloat)height;
++ (CGFloat)heightForRoute:(Route *)route;
 @end

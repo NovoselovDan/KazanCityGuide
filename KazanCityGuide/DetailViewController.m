@@ -195,7 +195,7 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
-        return 400.0;
+        return [RouteInfoTableViewCell heightForRoute:_route];
     }
     return 40.0;
 }
@@ -205,10 +205,7 @@
     if (cell == nil) {
         cell = [[RouteInfoTableViewCell alloc] init];
     }
-    CGRect frame = cell.frame;
-    frame.size.height = 400;
-    cell.frame = frame;
-    
+    [cell configureWithRoute:_route];
     
     return cell;
 }
