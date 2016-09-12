@@ -55,7 +55,7 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
--(BOOL) shouldAutorotate {
+- (BOOL) shouldAutorotate {
     return YES;
 }
 
@@ -63,7 +63,7 @@
     return UIInterfaceOrientationPortrait;
 }
 
--(NSUInteger)supportedInterfaceOrientations {
+- (NSUInteger)supportedInterfaceOrientations {
     if ([self.visibleViewController isKindOfClass:[MenuViewController class]]) {
         return UIInterfaceOrientationMaskPortrait;
     }

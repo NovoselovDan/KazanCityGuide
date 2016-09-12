@@ -11,6 +11,7 @@
 #import "CustomCalloutView.h"
 #import "CustomAnnotationView.h"
 #import "RouteInfoTableViewCell.h"
+#import "FeedbackTableViewCell.h"
 @import Mapbox;
 
 @interface DetailViewController () <MGLMapViewDelegate, UITableViewDelegate, UITableViewDataSource>
@@ -139,8 +140,11 @@
 }
 
 - (void)tableViewSetup {
+    self.tableView.backgroundColor = [UIColor colorWithHue:240/360.0 saturation:0.13 brightness:0.24 alpha:1.0];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.allowsSelection = NO;
     [self.tableView registerNib:[UINib nibWithNibName:@"RouteInfoTableViewCell" bundle:nil] forCellReuseIdentifier:@"infoCell"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"FeedbackTableViewCell" bundle:nil] forCellReuseIdentifier:@"feedbackCell"];
 }
 #pragma mark - MGLMapView delegate methods
 - (BOOL)mapView:(MGLMapView *)mapView annotationCanShowCallout:(id<MGLAnnotation>)annotation {
@@ -190,24 +194,33 @@
     return 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//    return 1 + _route.feedbacks.count;
-    return 1;
+    return 1 + _route.feedbacks.count;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
         return [RouteInfoTableViewCell heightForRoute:_route];
+    } else {
+        return [FeedbackTableViewCell heightForFeedback:[_route.feedbacks objectAtIndex:indexPath.row - 1]];
     }
     return 40.0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    RouteInfoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"infoCell"];
-    if (cell == nil) {
-        cell = [[RouteInfoTableViewCell alloc] init];
+    if (indexPath.row == 0) {
+        RouteInfoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"infoCell"];
+        if (cell == nil) {
+            cell = [[RouteInfoTableViewCell alloc] init];
+        }
+        [cell configureWithRoute:_route];
+        return cell;
+    } else {
+        FeedbackTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"feedbackCell"];
+        if (cell == nil) {
+            cell = [[FeedbackTableViewCell alloc] init];
+        }
+        [cell configureWithFeedback:[_route.feedbacks objectAtIndex:indexPath.row - 1]];
+        return cell;
     }
-    [cell configureWithRoute:_route];
-    
-    return cell;
 }
 
 /*

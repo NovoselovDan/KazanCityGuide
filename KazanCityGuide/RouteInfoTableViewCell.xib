@@ -400,7 +400,6 @@
                         </variation>
                     </view>
                 </subviews>
-                <color key="backgroundColor" red="0.15756386518478394" green="0.15660014748573303" blue="0.18277008831501007" alpha="1" colorSpace="calibratedRGB"/>
                 <constraints>
                     <constraint firstItem="CuZ-2D-kQ8" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="4Y3-Ty-YhH"/>
                     <constraint firstItem="FwD-IP-61d" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="18" id="8Pg-e7-xbi"/>
@@ -478,7 +477,6 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="distanceLabel" destination="DTq-dH-ONO" id="fJe-X6-C61"/>
-                <outlet property="distanceSubtitle" destination="K13-bL-Cqw" id="yI6-Jh-in3"/>
                 <outlet property="ratingLabel" destination="b3W-Is-eZq" id="1G0-LI-G2U"/>
                 <outlet property="ratingSubtitle" destination="9xd-mp-FEJ" id="LMI-fT-Xyx"/>
                 <outlet property="text" destination="FwD-IP-61d" id="dhY-Lw-UFq"/>

@@ -31,7 +31,7 @@
     height +=textHeight;
     height +=18;
     
-    NSLog(@"Height: %f", height);
+//    NSLog(@"Height: %f", height);
     return height;
 
 }
@@ -54,13 +54,6 @@
     return height;
 }
 
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-        [self designSetup];
-    }
-    return self;
-}
 
 - (void)configureWithRoute:(Route *)route {
     _route = route;
@@ -72,6 +65,8 @@
 }
 
 - (void)designSetup {
+    self.backgroundColor = [UIColor colorWithHue:240/360.0 saturation:0.13 brightness:0.24 alpha:1.0];
+    
     //Labels & Subtitles
     UIFont *labelFont = [UIFont fontWithName:@".SFUIDisplay-Regular" size:18.0];
     UIFont *subtitleFont = [UIFont fontWithName:@".SFUIText-Light" size:14.0];
@@ -95,6 +90,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    [self designSetup];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

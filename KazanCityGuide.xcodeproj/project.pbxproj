@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		DAC2740154FBF212DDBF033A /* libPods-KazanCityGuide.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B7D0AE873DA08655D29CD3 /* libPods-KazanCityGuide.a */; };
+		E1346A9A1D8642C6005A29E4 /* FeedbackTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E1346A981D8642C6005A29E4 /* FeedbackTableViewCell.m */; };
+		E1346A9B1D8642C6005A29E4 /* FeedbackTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1346A991D8642C6005A29E4 /* FeedbackTableViewCell.xib */; };
+		E1346A9E1D864433005A29E4 /* RatingVIew.m in Sources */ = {isa = PBXBuildFile; fileRef = E1346A9D1D864433005A29E4 /* RatingVIew.m */; };
 		E179248C1D83872500478827 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E179248B1D83872500478827 /* MenuViewController.m */; };
 		E17924901D83E8C400478827 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E179248F1D83E8C400478827 /* DetailViewController.m */; };
 		E1800FBB1D835D790095F5EF /* Route.m in Sources */ = {isa = PBXBuildFile; fileRef = E1800FBA1D835D790095F5EF /* Route.m */; };
@@ -54,6 +57,11 @@
 /* Begin PBXFileReference section */
 		14E4DEA684BC3DACC2B2E115 /* Pods-KazanCityGuide.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KazanCityGuide.release.xcconfig"; path = "Pods/Target Support Files/Pods-KazanCityGuide/Pods-KazanCityGuide.release.xcconfig"; sourceTree = "<group>"; };
 		91B7D0AE873DA08655D29CD3 /* libPods-KazanCityGuide.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-KazanCityGuide.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E1346A971D8642C6005A29E4 /* FeedbackTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedbackTableViewCell.h; sourceTree = "<group>"; };
+		E1346A981D8642C6005A29E4 /* FeedbackTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedbackTableViewCell.m; sourceTree = "<group>"; };
+		E1346A991D8642C6005A29E4 /* FeedbackTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedbackTableViewCell.xib; sourceTree = "<group>"; };
+		E1346A9C1D864433005A29E4 /* RatingVIew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RatingVIew.h; sourceTree = "<group>"; };
+		E1346A9D1D864433005A29E4 /* RatingVIew.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RatingVIew.m; sourceTree = "<group>"; };
 		E179248A1D83872500478827 /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
 		E179248B1D83872500478827 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
 		E179248E1D83E8C400478827 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
@@ -215,6 +223,11 @@
 				E1AAECF71D861AB900A1ECEF /* RouteInfoTableViewCell.h */,
 				E1AAECF81D861AB900A1ECEF /* RouteInfoTableViewCell.m */,
 				E1AAECF91D861AB900A1ECEF /* RouteInfoTableViewCell.xib */,
+				E1346A971D8642C6005A29E4 /* FeedbackTableViewCell.h */,
+				E1346A981D8642C6005A29E4 /* FeedbackTableViewCell.m */,
+				E1346A991D8642C6005A29E4 /* FeedbackTableViewCell.xib */,
+				E1346A9C1D864433005A29E4 /* RatingVIew.h */,
+				E1346A9D1D864433005A29E4 /* RatingVIew.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -393,6 +406,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1346A9B1D8642C6005A29E4 /* FeedbackTableViewCell.xib in Resources */,
 				E1EC401E1D6D865600F364F9 /* LaunchScreen.storyboard in Resources */,
 				E1A28E7F1D8303EB007724F1 /* RouteCollectionViewCell.xib in Resources */,
 				E1E5D2DD1D834A9100E15749 /* Assets.xcassets in Resources */,
@@ -475,9 +489,11 @@
 				E1800FBE1D8364400095F5EF /* RoutePointAnnotation.m in Sources */,
 				E1AAECF61D8601A700A1ECEF /* FixedNavigationViewController.m in Sources */,
 				E1A28E6F1D82F8BC007724F1 /* NetManager.m in Sources */,
+				E1346A9E1D864433005A29E4 /* RatingVIew.m in Sources */,
 				E1AAED011D86238400A1ECEF /* TESTModelManager.m in Sources */,
 				E1AAECFA1D861AB900A1ECEF /* RouteInfoTableViewCell.m in Sources */,
 				E1A28E7E1D8303EB007724F1 /* RouteCollectionViewCell.m in Sources */,
+				E1346A9A1D8642C6005A29E4 /* FeedbackTableViewCell.m in Sources */,
 				E1A28E771D8301CD007724F1 /* RoutePoint.m in Sources */,
 				E1800FBB1D835D790095F5EF /* Route.m in Sources */,
 				E179248C1D83872500478827 /* MenuViewController.m in Sources */,
