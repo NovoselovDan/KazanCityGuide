@@ -7,6 +7,8 @@
 //
 
 #import "DetailViewController.h"
+#import "PointViewController.h"
+#import "FixedNavigationViewController.h"
 #import "RoutePointAnnotation.h"
 #import "CustomCalloutView.h"
 #import "CustomAnnotationView.h"
@@ -83,8 +85,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-
 - (IBAction)okPressed:(id)sender {
     _mapView.userInteractionEnabled = YES;
     [self.navigationController setNavigationBarHidden:!(self.navigationController.navigationBar.hidden) animated:YES];
@@ -149,6 +149,7 @@
 }
 - (IBAction)minusPressed:(id)sender {
     [_mapView setZoomLevel:_mapView.zoomLevel-0.5 animated:YES];
+    [self pushPointViewControllerWithAnnotation:routePointAnnotation];
 }
 
 - (void)navigationItemSetup {
@@ -227,47 +228,58 @@
     
 }
 - (void)drawPolyline {
-//    if (currentPolyline) {
-//        [_mapView removeAnnotation:currentPolyline];
-//    }
-    dispatch_queue_t backgroundQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    dispatch_async(backgroundQueue, ^(void)
-                   {
-                       CLLocationCoordinate2D coordinates[2];
-                       coordinates[0] = CLLocationCoordinate2DMake(routePointAnnotation.coordinate.latitude, routePointAnnotation.coordinate.longitude);
-                       coordinates[1] = CLLocationCoordinate2DMake(_mapView.userLocation.coordinate.latitude, _mapView.userLocation.coordinate.longitude);
-                       
-                       // Create our polyline with the formatted coordinates array
-                       MGLPolyline *polyline = [MGLPolyline polylineWithCoordinates:coordinates count:2];
-                       polyline.title = @"Путь до первой точки";
-                       
-                       // Add the polyline to the map, back on the main thread
-                       // Use weak reference to self to prevent retain cycle
-                       __weak typeof(self) weakSelf = self;
-                       dispatch_async(dispatch_get_main_queue(), ^(void)
-                                      {
-                                          NSLog(@"Polyline        : %@", currentPolyline);
-//                                          [weakSelf.mapView removeAnnotation:currentPolyline];
-                                          [weakSelf.mapView addAnnotation:polyline];
-                                          if (currentPolyline) {
-//                                              for (id<MGLAnnotation> annot in weakSelf.mapView.annotations) {
-//                                                  if ([annot isKindOfClass:[MGLPolyline class]]) {
-//                                                      MGLPolyline *polyL = (MGLPolyline *)annot;
-//                                                      if ([polyL isEqual:currentPolyline]) {
-//                                                          NSLog(@"removed");
-//                                                          [weakSelf.mapView removeAnnotation:annot];
-//                                                      }
-//                                                  }
-//                                              }
-                                              [weakSelf.mapView removeAnnotation:currentPolyline];
-                                          }
-                                              currentPolyline = polyline;
-                                          NSLog(@"Polylines in view: %@\n\n", weakSelf.mapView.annotations);
-
-//                                          [weakSelf.mapView addAnnotation:currentPolyline];
-//                                          [weakSelf.mapView showAnnotations:@[currentPolyline] animated:NO];
-                                      });
-                   });
+    {
+        //    dispatch_queue_t backgroundQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        //    dispatch_async(backgroundQueue, ^(void)
+        //                   {
+        //                       CLLocationCoordinate2D coordinates[2];
+        //                       coordinates[0] = CLLocationCoordinate2DMake(routePointAnnotation.coordinate.latitude, routePointAnnotation.coordinate.longitude);
+        //                       coordinates[1] = CLLocationCoordinate2DMake(_mapView.userLocation.coordinate.latitude, _mapView.userLocation.coordinate.longitude);
+        //
+        //                       // Create our polyline with the formatted coordinates array
+        //                       MGLPolyline *polyline = [MGLPolyline polylineWithCoordinates:coordinates count:2];
+        //                       polyline.title = @"Путь до первой точки";
+        //
+        //                       // Add the polyline to the map, back on the main thread
+        //                       // Use weak reference to self to prevent retain cycle
+        //                       __weak typeof(self) weakSelf = self;
+        //                       dispatch_async(dispatch_get_main_queue(), ^(void)
+        //                                      {
+        //                                          NSLog(@"Polyline        : %@", currentPolyline);
+        ////                                          [weakSelf.mapView removeAnnotation:currentPolyline];
+        //                                          [weakSelf.mapView addAnnotation:polyline];
+        //                                          if (currentPolyline) {
+        ////                                              for (id<MGLAnnotation> annot in weakSelf.mapView.annotations) {
+        ////                                                  if ([annot isKindOfClass:[MGLPolyline class]]) {
+        ////                                                      MGLPolyline *polyL = (MGLPolyline *)annot;
+        ////                                                      if ([polyL isEqual:currentPolyline]) {
+        ////                                                          NSLog(@"removed");
+        ////                                                          [weakSelf.mapView removeAnnotation:annot];
+        ////                                                      }
+        ////                                                  }
+        ////                                              }
+        //                                              [weakSelf.mapView removeAnnotation:currentPolyline];
+        //                                          }
+        //                                              currentPolyline = polyline;
+        //                                          NSLog(@"Polylines in view: %@\n\n", weakSelf.mapView.annotations);
+        //
+        ////                                          [weakSelf.mapView addAnnotation:currentPolyline];
+        ////                                          [weakSelf.mapView showAnnotations:@[currentPolyline] animated:NO];
+        //                                      });
+        //                   });
+    }
+    CLLocationCoordinate2D coordinates[] = {
+        routePointAnnotation.coordinate,
+        _mapView.userLocation.coordinate
+    };
+    NSUInteger numberOfCoordinates = sizeof(coordinates) / sizeof(CLLocationCoordinate2D);
+    
+    if (self.mapView.annotations.count > 1) {
+        [self.mapView removeAnnotation:[self.mapView.annotations lastObject]];
+    }
+    MGLPolyline *polyline = [MGLPolyline polylineWithCoordinates:coordinates
+                                                           count:numberOfCoordinates];
+    [self.mapView addAnnotation:polyline];
 }
 - (int)distanceFromCoordinate:(CLLocationCoordinate2D)coordinate {
     CLLocation *loc1 = [[CLLocation alloc] initWithLatitude:coordinate.latitude
@@ -383,6 +395,22 @@
     [self adjustCamera];
 }
 
+#pragma mark - Point View Controller
+
+- (void)pushPointViewControllerWithAnnotation:(RoutePointAnnotation *)annotation {
+    
+    
+//    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    PointViewController *pointVC = [[PointViewController alloc] init];
+    [pointVC configureWithRoutePoint:routePointAnnotation.routePoint];
+    self.modalPresentationStyle = UIModalPresentationOverFullScreen;
+    [self presentViewController:pointVC animated:YES completion:nil];
+    
+//    UINavigationController *navVC = [[FixedNavigationViewController alloc] initWithRootViewController:pointVC];
+//    navVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
+//    [self presentViewController:navVC animated:YES completion:nil];
+
+}
 /*
 #pragma mark - Navigation
 
