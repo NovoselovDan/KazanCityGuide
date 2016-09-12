@@ -20,6 +20,10 @@
 		E1A28E831D8309F9007724F1 /* CustomAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = E1A28E821D8309F9007724F1 /* CustomAnnotationView.m */; };
 		E1A28E861D830D1F007724F1 /* CustomCalloutView.m in Sources */ = {isa = PBXBuildFile; fileRef = E1A28E851D830D1F007724F1 /* CustomCalloutView.m */; };
 		E1AAECF61D8601A700A1ECEF /* FixedNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E1AAECF51D8601A700A1ECEF /* FixedNavigationViewController.m */; };
+		E1AAECFA1D861AB900A1ECEF /* RouteInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E1AAECF81D861AB900A1ECEF /* RouteInfoTableViewCell.m */; };
+		E1AAECFB1D861AB900A1ECEF /* RouteInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1AAECF91D861AB900A1ECEF /* RouteInfoTableViewCell.xib */; };
+		E1AAECFE1D86224E00A1ECEF /* RouteFeedback.m in Sources */ = {isa = PBXBuildFile; fileRef = E1AAECFD1D86224E00A1ECEF /* RouteFeedback.m */; };
+		E1AAED011D86238400A1ECEF /* TESTModelManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E1AAED001D86238400A1ECEF /* TESTModelManager.m */; };
 		E1E5D2DD1D834A9100E15749 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1E5D2DC1D834A9100E15749 /* Assets.xcassets */; };
 		E1EC400D1D6D865600F364F9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E1EC400C1D6D865600F364F9 /* main.m */; };
 		E1EC40101D6D865600F364F9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E1EC400F1D6D865600F364F9 /* AppDelegate.m */; };
@@ -73,6 +77,13 @@
 		E1A28E851D830D1F007724F1 /* CustomCalloutView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCalloutView.m; sourceTree = "<group>"; };
 		E1AAECF41D8601A700A1ECEF /* FixedNavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FixedNavigationViewController.h; sourceTree = "<group>"; };
 		E1AAECF51D8601A700A1ECEF /* FixedNavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FixedNavigationViewController.m; sourceTree = "<group>"; };
+		E1AAECF71D861AB900A1ECEF /* RouteInfoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteInfoTableViewCell.h; sourceTree = "<group>"; };
+		E1AAECF81D861AB900A1ECEF /* RouteInfoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RouteInfoTableViewCell.m; sourceTree = "<group>"; };
+		E1AAECF91D861AB900A1ECEF /* RouteInfoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RouteInfoTableViewCell.xib; sourceTree = "<group>"; };
+		E1AAECFC1D86224E00A1ECEF /* RouteFeedback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteFeedback.h; sourceTree = "<group>"; };
+		E1AAECFD1D86224E00A1ECEF /* RouteFeedback.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RouteFeedback.m; sourceTree = "<group>"; };
+		E1AAECFF1D86238400A1ECEF /* TESTModelManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TESTModelManager.h; sourceTree = "<group>"; };
+		E1AAED001D86238400A1ECEF /* TESTModelManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TESTModelManager.m; sourceTree = "<group>"; };
 		E1E5D2DC1D834A9100E15749 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../Assets.xcassets; sourceTree = "<group>"; };
 		E1EC40081D6D865600F364F9 /* KazanCityGuide.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KazanCityGuide.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1EC400C1D6D865600F364F9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -150,7 +161,7 @@
 		E1A28E681D81E4FE007724F1 /* Menu */ = {
 			isa = PBXGroup;
 			children = (
-				E1A28E801D8303F4007724F1 /* Route Cell */,
+				E1A28E801D8303F4007724F1 /* Cells */,
 				E179248A1D83872500478827 /* MenuViewController.h */,
 				E179248B1D83872500478827 /* MenuViewController.m */,
 				E179248E1D83E8C400478827 /* DetailViewController.h */,
@@ -179,18 +190,25 @@
 				E1A28E761D8301CD007724F1 /* RoutePoint.m */,
 				E1800FBC1D8364400095F5EF /* RoutePointAnnotation.h */,
 				E1800FBD1D8364400095F5EF /* RoutePointAnnotation.m */,
+				E1AAECFC1D86224E00A1ECEF /* RouteFeedback.h */,
+				E1AAECFD1D86224E00A1ECEF /* RouteFeedback.m */,
+				E1AAECFF1D86238400A1ECEF /* TESTModelManager.h */,
+				E1AAED001D86238400A1ECEF /* TESTModelManager.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
 		};
-		E1A28E801D8303F4007724F1 /* Route Cell */ = {
+		E1A28E801D8303F4007724F1 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
 				E1A28E7B1D8303EB007724F1 /* RouteCollectionViewCell.h */,
 				E1A28E7C1D8303EB007724F1 /* RouteCollectionViewCell.m */,
 				E1A28E7D1D8303EB007724F1 /* RouteCollectionViewCell.xib */,
+				E1AAECF71D861AB900A1ECEF /* RouteInfoTableViewCell.h */,
+				E1AAECF81D861AB900A1ECEF /* RouteInfoTableViewCell.m */,
+				E1AAECF91D861AB900A1ECEF /* RouteInfoTableViewCell.xib */,
 			);
-			name = "Route Cell";
+			name = Cells;
 			sourceTree = "<group>";
 		};
 		E1EC3FFF1D6D865600F364F9 = {
@@ -370,6 +388,7 @@
 				E1EC401E1D6D865600F364F9 /* LaunchScreen.storyboard in Resources */,
 				E1A28E7F1D8303EB007724F1 /* RouteCollectionViewCell.xib in Resources */,
 				E1E5D2DD1D834A9100E15749 /* Assets.xcassets in Resources */,
+				E1AAECFB1D861AB900A1ECEF /* RouteInfoTableViewCell.xib in Resources */,
 				E1EC40161D6D865600F364F9 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -448,6 +467,8 @@
 				E1800FBE1D8364400095F5EF /* RoutePointAnnotation.m in Sources */,
 				E1AAECF61D8601A700A1ECEF /* FixedNavigationViewController.m in Sources */,
 				E1A28E6F1D82F8BC007724F1 /* NetManager.m in Sources */,
+				E1AAED011D86238400A1ECEF /* TESTModelManager.m in Sources */,
+				E1AAECFA1D861AB900A1ECEF /* RouteInfoTableViewCell.m in Sources */,
 				E1A28E7E1D8303EB007724F1 /* RouteCollectionViewCell.m in Sources */,
 				E1A28E771D8301CD007724F1 /* RoutePoint.m in Sources */,
 				E1800FBB1D835D790095F5EF /* Route.m in Sources */,
@@ -456,6 +477,7 @@
 				E17924901D83E8C400478827 /* DetailViewController.m in Sources */,
 				E1A28E861D830D1F007724F1 /* CustomCalloutView.m in Sources */,
 				E1EC400D1D6D865600F364F9 /* main.m in Sources */,
+				E1AAECFE1D86224E00A1ECEF /* RouteFeedback.m in Sources */,
 				E1EC40191D6D865600F364F9 /* KazanCityGuide.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

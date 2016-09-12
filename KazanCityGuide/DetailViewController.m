@@ -10,22 +10,29 @@
 #import "RoutePointAnnotation.h"
 #import "CustomCalloutView.h"
 #import "CustomAnnotationView.h"
+#import "RouteInfoTableViewCell.h"
 @import Mapbox;
 
-@interface DetailViewController () <MGLMapViewDelegate>
+@interface DetailViewController () <MGLMapViewDelegate, UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong)Route *route;
 @property (weak, nonatomic) IBOutlet MGLMapView *mapView;
+@property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @end
 
 @implementation DetailViewController {
     dispatch_once_t token;
 }
-
+- (void)configureWithRoute:(Route *)route {
+    _route = route;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self mapViewSetup];
-//    [self navigationItemSetup];
-    // Do any additional setup after loading the view.
+    [self tableViewSetup];
+    
+    _subtitleLabel.font = [UIFont fontWithName:@".SFUIText-Semibold" size:10.0];
+    _subtitleLabel.textColor = [UIColor colorWithWhite:1.0 alpha:0.6];
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -35,13 +42,25 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-- (void)configureWithRoute:(Route *)route {
-    _route = route;
-}
-
 
 - (void)navigationItemSetup {
-    self.navigationController.navigationBar.topItem.title = @"Назад";
+    if ([self.navigationController.viewControllers[0] isKindOfClass:[self class]]) {
+        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        btn.frame = CGRectMake(0, 0, 75, 20);
+        UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 2, 17, 17)];
+        [imgView setImage:[UIImage imageNamed:@"Map"]];
+        [btn addSubview:imgView];
+        UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, 55, 20)];
+        lab.text = @"Карта";
+        lab.textColor = [self tintColor];
+        [btn addSubview:lab];
+        [btn addTarget:self action:@selector(mapButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+        UIBarButtonItem *barBtn = [[UIBarButtonItem alloc] initWithCustomView:btn];
+        self.navigationItem.leftBarButtonItem = barBtn;
+        self.navigationItem.leftBarButtonItem.tintColor = [self tintColor];
+    } else {
+        self.navigationController.navigationBar.topItem.title = @"Назад";
+    }
 
     UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 210, 20)];
     title.text = _route.title;
@@ -50,9 +69,13 @@
     title.font = [UIFont fontWithName:@".SFUIText-Semibold" size:17.0];
     [self.navigationItem setTitleView:title];
 }
+- (IBAction)mapButtonTapped:(id)sender {
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+}
 - (UIColor *)tintColor {
     return [UIColor colorWithHue:240/360.0 saturation:0.02 brightness:96 alpha:1.0];
 }
+
 - (void)mapViewSetup {
     _mapView.showsUserLocation = YES;
     
@@ -65,12 +88,7 @@
     [_mapView addAnnotation:pointAnnotation];
 }
 - (void)adjustCamera {
-    RoutePointAnnotation *pointAnnotation = [[RoutePointAnnotation alloc] initWithRoutePoint:[_route firstPoint]];
-    CLLocation *loc1 = [[CLLocation alloc] initWithLatitude:pointAnnotation.coordinate.latitude
-                                                  longitude:pointAnnotation.coordinate.longitude];
-    CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:_mapView.userLocation.coordinate.latitude
-                                                  longitude:_mapView.userLocation.coordinate.longitude];
-    CLLocationDistance distance = [loc2 distanceFromLocation:loc1];
+    CLLocationDistance distance = [self distance];
     
     MGLMapCamera *camera = [MGLMapCamera cameraLookingAtCenterCoordinate:_mapView.userLocation.coordinate
                                                             fromDistance:distance
@@ -111,9 +129,20 @@
                        
                    });
 }
+- (int)distance {
+    RoutePointAnnotation *pointAnnotation = [[RoutePointAnnotation alloc] initWithRoutePoint:[_route firstPoint]];
+    CLLocation *loc1 = [[CLLocation alloc] initWithLatitude:pointAnnotation.coordinate.latitude
+                                                  longitude:pointAnnotation.coordinate.longitude];
+    CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:_mapView.userLocation.coordinate.latitude
+                                                  longitude:_mapView.userLocation.coordinate.longitude];
+    return [loc2 distanceFromLocation:loc1];
+}
 
+- (void)tableViewSetup {
+    self.tableView.allowsSelection = NO;
+    [self.tableView registerNib:[UINib nibWithNibName:@"RouteInfoTableViewCell" bundle:nil] forCellReuseIdentifier:@"infoCell"];
+}
 #pragma mark - MGLMapView delegate methods
-
 - (BOOL)mapView:(MGLMapView *)mapView annotationCanShowCallout:(id<MGLAnnotation>)annotation {
     return NO;
 }
@@ -122,6 +151,8 @@
         [self adjustCamera];
         [self drawPolyline];
     });
+    _subtitleLabel.text = [NSString stringWithFormat:@"До начала маршрута %iм", [self distance]];
+
 }
 - (MGLAnnotationView *)mapView:(MGLMapView *)mapView viewForAnnotation:(id<MGLAnnotation>)annotation {
     // This example is only concerned with point annotations.
@@ -152,6 +183,34 @@
         return 0.5;
     }
     return 1;
+}
+
+#pragma mark - UITableView methods
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+//    return 1 + _route.feedbacks.count;
+    return 1;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == 0) {
+        return 400.0;
+    }
+    return 40.0;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    RouteInfoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"infoCell"];
+    if (cell == nil) {
+        cell = [[RouteInfoTableViewCell alloc] init];
+    }
+    CGRect frame = cell.frame;
+    frame.size.height = 400;
+    cell.frame = frame;
+    
+    
+    return cell;
 }
 
 /*

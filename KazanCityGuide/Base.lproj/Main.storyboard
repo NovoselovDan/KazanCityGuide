@@ -325,7 +325,6 @@
                         <outlet property="helpView" destination="RfZ-iw-0zz" id="sIM-Js-j18"/>
                         <outlet property="navigationItem" destination="f4P-pm-ydx" id="Qcj-MR-dZW"/>
                         <outlet property="segmentedControl" destination="tT5-XS-QCt" id="oVs-zQ-GjF"/>
-                        <segue destination="N9m-ub-lg8" kind="show" identifier="toDetail" id="f7R-og-xbd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8vW-70-YlS" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -370,6 +369,10 @@
                             <tableView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="W8f-KI-jdA">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <color key="backgroundColor" red="0.15747264029999999" green="0.15660199520000001" blue="0.18276996910000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="N9m-ub-lg8" id="sya-Kr-HbH"/>
+                                    <outlet property="delegate" destination="N9m-ub-lg8" id="DbP-XE-Nyf"/>
+                                </connections>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dR7-ka-yMs">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
@@ -391,12 +394,38 @@
                                     </mask>
                                 </variation>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="До начала маршрута" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F9J-YO-p4m">
+                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="180" id="0jk-d6-gxD"/>
+                                    <constraint firstAttribute="height" constant="12" id="Cef-mt-WT8"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="0jk-d6-gxD"/>
+                                        <exclude reference="Cef-mt-WT8"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="0jk-d6-gxD"/>
+                                        <include reference="Cef-mt-WT8"/>
+                                    </mask>
+                                </variation>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="W8f-KI-jdA" firstAttribute="top" secondItem="dR7-ka-yMs" secondAttribute="bottom" id="23T-b1-Y6Q"/>
                             <constraint firstItem="W8f-KI-jdA" firstAttribute="leading" secondItem="Lgm-id-bRU" secondAttribute="leading" id="8Ra-Yn-VkJ"/>
                             <constraint firstItem="ekP-VE-NqC" firstAttribute="top" secondItem="W8f-KI-jdA" secondAttribute="bottom" id="DYl-KN-wZt"/>
+                            <constraint firstItem="F9J-YO-p4m" firstAttribute="centerX" secondItem="Lgm-id-bRU" secondAttribute="centerX" id="GEz-Sg-4yx"/>
+                            <constraint firstItem="dR7-ka-yMs" firstAttribute="top" secondItem="F9J-YO-p4m" secondAttribute="top" id="JH7-70-vgs">
+                                <variation key="widthClass=compact" constant="-5"/>
+                            </constraint>
                             <constraint firstAttribute="trailing" secondItem="W8f-KI-jdA" secondAttribute="trailing" id="MD6-NF-xoB"/>
                             <constraint firstItem="AcH-ZE-rgu" firstAttribute="leading" secondItem="Lgm-id-bRU" secondAttribute="leading" id="Mmz-wT-Kd6"/>
                             <constraint firstItem="W8f-KI-jdA" firstAttribute="top" secondItem="85M-hh-F81" secondAttribute="bottom" constant="240" id="NmR-gr-9vw"/>
@@ -424,15 +453,18 @@
                                 <exclude reference="AcH-ZE-rgu"/>
                                 <exclude reference="W8f-KI-jdA"/>
                                 <exclude reference="dR7-ka-yMs"/>
+                                <exclude reference="F9J-YO-p4m"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="DYl-KN-wZt"/>
                                 <exclude reference="U4r-6h-0As"/>
                                 <exclude reference="j4n-5L-z3q"/>
+                                <exclude reference="JH7-70-vgs"/>
                                 <exclude reference="RkY-Ct-dr3"/>
                                 <exclude reference="SVp-4r-Dzw"/>
                                 <exclude reference="ovO-zO-8dc"/>
                                 <exclude reference="u2g-X6-C6V"/>
+                                <exclude reference="GEz-Sg-4yx"/>
                                 <exclude reference="Mmz-wT-Kd6"/>
                                 <exclude reference="SRG-DZ-tOI"/>
                                 <exclude reference="eeC-fc-iZi"/>
@@ -453,15 +485,18 @@
                                 <include reference="AcH-ZE-rgu"/>
                                 <include reference="W8f-KI-jdA"/>
                                 <include reference="dR7-ka-yMs"/>
+                                <include reference="F9J-YO-p4m"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="DYl-KN-wZt"/>
                                 <exclude reference="U4r-6h-0As"/>
                                 <include reference="j4n-5L-z3q"/>
+                                <include reference="JH7-70-vgs"/>
                                 <include reference="RkY-Ct-dr3"/>
                                 <exclude reference="SVp-4r-Dzw"/>
                                 <exclude reference="ovO-zO-8dc"/>
                                 <include reference="u2g-X6-C6V"/>
+                                <include reference="GEz-Sg-4yx"/>
                                 <include reference="Mmz-wT-Kd6"/>
                                 <include reference="SRG-DZ-tOI"/>
                                 <include reference="eeC-fc-iZi"/>
@@ -481,6 +516,8 @@
                     <navigationItem key="navigationItem" id="lK8-a1-l82"/>
                     <connections>
                         <outlet property="mapView" destination="AcH-ZE-rgu" id="ltr-0d-AtH"/>
+                        <outlet property="subtitleLabel" destination="F9J-YO-p4m" id="zee-x3-wOs"/>
+                        <outlet property="tableView" destination="W8f-KI-jdA" id="s1k-g6-b0x"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rDX-fs-LRY" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -23,6 +23,7 @@ typedef NS_ENUM(NSInteger, RouteTag) {
 @property (strong, nonatomic) NSString *text;
 @property (strong, nonatomic) UIImage *image;
 @property (strong, nonatomic) NSArray *points;
+@property (strong, nonatomic) NSArray *feedbacks;
 @property (assign, nonatomic) RouteTag tag;
 
 - (id)firstPoint;

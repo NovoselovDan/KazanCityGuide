@@ -13,6 +13,9 @@
 #import "RoutePoint.h"
 #import "RoutePointAnnotation.h"
 #import "MenuViewController.h"
+#import "DetailViewController.h"
+#import "FixedNavigationViewController.h"
+#import "TESTModelManager.h"
 
 @interface MapViewController () <MGLMapViewDelegate>
 @property (weak, nonatomic) IBOutlet MGLMapView *mapView;
@@ -30,12 +33,11 @@
     [self GenerateTestModel];
     [self ExtractRoutes];
     
-    MGLPointAnnotation *testPoint = [[MGLPointAnnotation alloc] init];
-    testPoint.coordinate = CLLocationCoordinate2DMake(55.782389, 49.129910);
-    testPoint.title = @"Test point";
-    testPoint.subtitle = [NSString stringWithFormat:@"%f ; %f", testPoint.coordinate.latitude, testPoint.coordinate.longitude];
-    
-    [_mapView addAnnotation:testPoint];
+//    MGLPointAnnotation *testPoint = [[MGLPointAnnotation alloc] init];
+//    testPoint.coordinate = CLLocationCoordinate2DMake(55.782389, 49.129910);
+//    testPoint.title = @"Test point";
+//    testPoint.subtitle = [NSString stringWithFormat:@"%f ; %f", testPoint.coordinate.latitude, testPoint.coordinate.longitude];
+//    [_mapView addAnnotation:testPoint];
     
     
 }
@@ -92,24 +94,8 @@
     NSLog(@"AFTER WORK:\nMAP VIEW USER LOCATION: %@", _mapView.showsUserLocation? @"ON" : @"OFF");
 }
 - (void)GenerateTestModel {
-    Route *model = [[Route alloc] init];
-    model.title = @"Прогулка по ул. Баумана";
-    model.distance = @"0,9км";
-    model.time = @"1,5ч";
-    model.rate = @4.5;
-    model.text = @"Обзорная экскурсия по центральной улице города. Пройдя её Вы ознакомитесь с рядом достопримечательностей Казани, которые в сумме своей и формируют ту неповторимую атмосферу города.";
-    model.image = [UIImage imageNamed:@"TestImage"];
-    model.tag = None;
-
-    RoutePoint *point = [[RoutePoint alloc] init];
-    point.coord = CLLocationCoordinate2DMake(55.787389, 49.121610);
-    point.title = @"Часы на ул. Баумана";
-    point.text = @"Исәнмесез! Рады видть Вас в Казани! Место на котором Вы находитесь называется \"Площадь имени Габдуллы Тукая\" – названа в честь татарского поэта. Сами казанцы называют эту площадь \"Кольцо\" название повелось оттого, что в своё время в этом месте заканчивался маршрут нескольких трамваев и существовали так называемые разворотные кольца. Ныне трамвайных путей уже не существует, но это название сохранилось и отразилось на названии расположенного через дорогу торгового центра. Сейчас площадь является общественным центром города, местом сосредоточения ряда торговых и развлекательных заведений. Например, одно из расположенных рядом зданий (на нём написано ГУМ), как можно догадаться - это торговый центр. Его объем образован объединением нескольких соседних зданий. Но, не смотря на декор их фасадов, только одно из них является историческим. К слову, когда-то в нём располагался один из лучших ресторанов в городе, конкурировавший с другим, мимо которого Вы ещё пройдёте.";
-    point.route = model;
-    model.points = [NSArray arrayWithObject:point];
-    
     if (!_routes) {
-        _routes = [NSArray arrayWithObject:model];
+        _routes = [NSArray arrayWithObject:[TESTModelManager getRoute]];
     }
 }
 - (void)ExtractRoutes {
@@ -171,10 +157,17 @@
 
 
 -(void)mapView:(MGLMapView *)mapView tapOnCalloutForAnnotation:(id<MGLAnnotation>)annotation {
-    MGLPointAnnotation *ann = annotation;
-    NSLog(@"DESELECTION ANNOTATION: %@", ann.title);
-    [mapView deselectAnnotation:annotation animated:YES];
+    RoutePointAnnotation *ann = annotation;
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    DetailViewController *dvc = [sb instantiateViewControllerWithIdentifier:@"detailVC"];
+    [dvc configureWithRoute:ann.routePoint.route];
     
+    UINavigationController *navVC = [[FixedNavigationViewController alloc] initWithRootViewController:dvc];
+    navVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
+    NSLog(@"nav vc view controllers: %@", navVC.viewControllers);
+    [self presentViewController:navVC animated:YES completion:nil];
+    NSLog(@"Route: %@", ann.routePoint.route.title);
+    [mapView deselectAnnotation:annotation animated:YES];
 }
 
 -(UIStatusBarStyle)preferredStatusBarStyle {
