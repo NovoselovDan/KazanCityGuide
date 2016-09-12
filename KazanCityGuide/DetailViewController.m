@@ -20,10 +20,24 @@
 @property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIButton *okButton;
+
+//Map Components
+@property (weak, nonatomic) IBOutlet UIView *mapComponentsView;
+
+@property (weak, nonatomic) IBOutlet UIButton *exitButton;
+@property (weak, nonatomic) IBOutlet UILabel *taskLabel;
+@property (weak, nonatomic) IBOutlet UILabel *mapSubtitleLabel;
+@property (weak, nonatomic) IBOutlet UIButton *centerButton;
+@property (weak, nonatomic) IBOutlet UIButton *plusButton;
+@property (weak, nonatomic) IBOutlet UIButton *minusButton;
+
+
 @end
 
 @implementation DetailViewController {
     dispatch_once_t token;
+    CGRect tableViewInitialFrame, okButtonInitialFrame, subtitbleInitialFrame;
+    NSArray *mapComponents, *detailComponents;
 }
 - (void)configureWithRoute:(Route *)route {
     _route = route;
@@ -33,12 +47,25 @@
     [self mapViewSetup];
     [self tableViewSetup];
     
-    _subtitleLabel.font = [UIFont fontWithName:@".SFUIText-Semibold" size:10.0];
-    _subtitleLabel.textColor = [UIColor colorWithWhite:1.0 alpha:0.6];
+    _subtitleLabel.font = _mapSubtitleLabel.font = [UIFont fontWithName:@".SFUIText-Semibold" size:10.0];
+    _subtitleLabel.textColor = _mapSubtitleLabel.textColor = [UIColor colorWithWhite:1.0 alpha:0.8];
+    
+    _taskLabel.font = [UIFont fontWithName:@".SFUIText-Medium" size:17.0];
+    _taskLabel.textColor = [self tintColor];
+    _taskLabel.shadowColor = [UIColor colorWithHue:242/360.0 saturation:0.47 brightness:1.0 alpha:1.0];
+    mapComponents = @[_exitButton, _taskLabel, _mapSubtitleLabel, _centerButton, _plusButton, _minusButton];
+    detailComponents = @[_okButton, _subtitleLabel, _tableView];
+    
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self navigationItemSetup];
+    if (!_mapView.hidden) {
+        for (UIView *view in mapComponents) {
+            [view setHidden:YES];
+            [view setAlpha:0.0];
+        }
+    }
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -47,43 +74,65 @@
 
 
 - (IBAction)okPressed:(id)sender {
+    _taskLabel.text = @"Следуйте к следующему месту";
     [self.navigationController setNavigationBarHidden:!(self.navigationController.navigationBar.hidden) animated:YES];
-    [UIView animateWithDuration:0.5
+    [UIView animateWithDuration:0.3
                           delay:0.0
                         options:UIViewAnimationOptionCurveEaseOut
                      animations:^{
-                         CGRect rect = _tableView.frame;
-                         rect.origin.y = [UIScreen mainScreen].bounds.size.height;
-                         _tableView.frame = rect;
-                         
-                         rect = _subtitleLabel.frame;
-                         rect.origin.y = [UIScreen mainScreen].bounds.size.height - rect.size.height - 8;
-                         _subtitleLabel.frame = rect;
-                         
-                         rect = _okButton.frame;
-                         rect.origin.y = [UIScreen mainScreen].bounds.size.height;
-                         _okButton.frame = rect;
-                     } completion:^(BOOL finished) {
-                         [_tableView setHidden:YES];
-                         [_okButton setHidden:YES];
-
-                         for (NSLayoutConstraint *constraint in [self.view constraints]) {
-                             if ([constraint.identifier isEqualToString:@"subtitleBottom"]) {
-                                 [constraint setActive:NO];
-                                 NSLog(@"subtitleBottom constraint desactivated");
-                             }
+                         for (UIView *view in detailComponents) {
+                             [view setAlpha:0.0];
                          }
-                         UILabel *lab = _subtitleLabel;
-                         NSArray *constraint =[NSLayoutConstraint constraintsWithVisualFormat:@"V:[lab]-8-|"
-                                                                                                  options:0
-                                                                                                  metrics:nil
-                                                                                                   views:NSDictionaryOfVariableBindings(lab)];
-                         NSLayoutConstraint *constr = constraint[0];
-                         constr.identifier = @"subtitleBottomToTheScreen";                         
-                         [self.view addConstraints:constraint];
-                         [self.view updateFocusIfNeeded];
-
+                         for (UIView *view in mapComponents) {
+                             [view setHidden:NO];
+                             [view setAlpha:1.0];
+                         }
+                     } completion:^(BOOL finished) {
+                         for (UIView *view in detailComponents) {
+                             [view setHidden:YES];
+                         }
                      }];
+}
+- (IBAction)exitPressed:(id)sender {
+    [self.navigationController setNavigationBarHidden:!(self.navigationController.navigationBar.hidden) animated:YES];
+    [UIView animateWithDuration:0.3
+                          delay:0.0
+                        options:UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                         for (UIView *view in mapComponents) {
+                             [view setAlpha:0.0];
+                         }
+                         for (UIView *view in detailComponents) {
+                             [view setHidden:NO];
+                             [view setAlpha:1.0];
+                         }
+                     } completion:^(BOOL finished) {
+                         for (UIView *view in mapComponents) {
+                             [view setHidden:YES];
+                         }
+                     }];
+}
+- (IBAction)centerPressed:(id)sender {
+    CLLocation *loc1 = [[CLLocation alloc] initWithLatitude:_mapView.camera.centerCoordinate.latitude
+                                                  longitude:_mapView.camera.centerCoordinate.longitude];
+    CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:_mapView.userLocation.coordinate.latitude
+                                                  longitude:_mapView.userLocation.coordinate.longitude];
+    CLLocationDistance distance = [loc1 distanceFromLocation:loc2];
+    
+    MGLMapCamera *camera = [MGLMapCamera cameraLookingAtCenterCoordinate:_mapView.userLocation.coordinate
+                                                            fromDistance:_mapView.camera.altitude
+                                                                   pitch:0
+                                                                 heading:0];
+    if (distance < 10000)
+        [_mapView flyToCamera:camera completionHandler:nil];
+    else
+        [_mapView setCamera:camera animated:NO];
+}
+- (IBAction)plusPresse:(id)sender {
+    [_mapView setZoomLevel:_mapView.zoomLevel+0.5 animated:YES];
+}
+- (IBAction)minusPressed:(id)sender {
+    [_mapView setZoomLevel:_mapView.zoomLevel-0.5 animated:YES];
 }
 
 - (void)navigationItemSetup {
@@ -197,8 +246,7 @@
         [self adjustCamera];
         [self drawPolyline];
     });
-    _subtitleLabel.text = [NSString stringWithFormat:@"До начала маршрута %iм", [self distance]];
-
+    _subtitleLabel.text = _mapSubtitleLabel.text = [NSString stringWithFormat:@"До начала маршрута %iм", [self distance]];
 }
 - (MGLAnnotationView *)mapView:(MGLMapView *)mapView viewForAnnotation:(id<MGLAnnotation>)annotation {
     // This example is only concerned with point annotations.

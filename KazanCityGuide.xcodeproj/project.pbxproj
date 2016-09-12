@@ -11,6 +11,7 @@
 		E1346A9A1D8642C6005A29E4 /* FeedbackTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E1346A981D8642C6005A29E4 /* FeedbackTableViewCell.m */; };
 		E1346A9B1D8642C6005A29E4 /* FeedbackTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1346A991D8642C6005A29E4 /* FeedbackTableViewCell.xib */; };
 		E1346A9E1D864433005A29E4 /* RatingVIew.m in Sources */ = {isa = PBXBuildFile; fileRef = E1346A9D1D864433005A29E4 /* RatingVIew.m */; };
+		E1346AA11D867367005A29E4 /* MapComponentsView.m in Sources */ = {isa = PBXBuildFile; fileRef = E1346AA01D867367005A29E4 /* MapComponentsView.m */; };
 		E179248C1D83872500478827 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E179248B1D83872500478827 /* MenuViewController.m */; };
 		E17924901D83E8C400478827 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E179248F1D83E8C400478827 /* DetailViewController.m */; };
 		E1800FBB1D835D790095F5EF /* Route.m in Sources */ = {isa = PBXBuildFile; fileRef = E1800FBA1D835D790095F5EF /* Route.m */; };
@@ -62,6 +63,8 @@
 		E1346A991D8642C6005A29E4 /* FeedbackTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedbackTableViewCell.xib; sourceTree = "<group>"; };
 		E1346A9C1D864433005A29E4 /* RatingVIew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RatingVIew.h; sourceTree = "<group>"; };
 		E1346A9D1D864433005A29E4 /* RatingVIew.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RatingVIew.m; sourceTree = "<group>"; };
+		E1346A9F1D867367005A29E4 /* MapComponentsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapComponentsView.h; sourceTree = "<group>"; };
+		E1346AA01D867367005A29E4 /* MapComponentsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapComponentsView.m; sourceTree = "<group>"; };
 		E179248A1D83872500478827 /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
 		E179248B1D83872500478827 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
 		E179248E1D83E8C400478827 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
@@ -228,6 +231,8 @@
 				E1346A991D8642C6005A29E4 /* FeedbackTableViewCell.xib */,
 				E1346A9C1D864433005A29E4 /* RatingVIew.h */,
 				E1346A9D1D864433005A29E4 /* RatingVIew.m */,
+				E1346A9F1D867367005A29E4 /* MapComponentsView.h */,
+				E1346AA01D867367005A29E4 /* MapComponentsView.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -497,6 +502,7 @@
 				E1A28E771D8301CD007724F1 /* RoutePoint.m in Sources */,
 				E1800FBB1D835D790095F5EF /* Route.m in Sources */,
 				E179248C1D83872500478827 /* MenuViewController.m in Sources */,
+				E1346AA11D867367005A29E4 /* MapComponentsView.m in Sources */,
 				E1A28E6B1D81E674007724F1 /* MapViewController.m in Sources */,
 				E17924901D83E8C400478827 /* DetailViewController.m in Sources */,
 				E1A28E861D830D1F007724F1 /* CustomCalloutView.m in Sources */,
