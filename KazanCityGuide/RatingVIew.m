@@ -13,7 +13,7 @@
 - (instancetype)initWithRating:(NSInteger)rating {
     self = [super initWithFrame:CGRectMake(0, 0, 67.0, 10.0)];
     if (self) {
-        NSLog(@"RatingView frame: %@", NSStringFromCGRect(self.frame));
+//        NSLog(@"RatingView frame: %@", NSStringFromCGRect(self.frame));
         UIImageView *starImgView;
         for (int i = 0; i < 5; i++) {
             starImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0+14*i, 0, 11, 10)];
@@ -25,7 +25,7 @@
 }
 
 - (void)setRating:(NSInteger)rating {
-    NSLog(@"RatingView frame: %@", NSStringFromCGRect(self.frame));
+//    NSLog(@"RatingView frame: %@", NSStringFromCGRect(self.frame));
     UIImageView *starImgView;
     for (int i = 0; i < 5; i++) {
         starImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0+14*i, 0, 11, 10)];

@@ -81,7 +81,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
-    NSLog(@"Text frame: %@", NSStringFromCGRect(_textLbl.frame));
+//    NSLog(@"Text frame: %@", NSStringFromCGRect(_textLbl.frame));
     [self designSetup];
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

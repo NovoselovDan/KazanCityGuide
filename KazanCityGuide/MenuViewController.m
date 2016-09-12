@@ -145,12 +145,7 @@
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     DetailViewController *dvc = [sb instantiateViewControllerWithIdentifier:@"detailVC"];
     [dvc configureWithRoute:route];
-    dvc.view.backgroundColor = [UIColor clearColor];
-//    dvc.modalPresentationStyle = UIModalPresentationPopover;
     [self.navigationController pushViewController:dvc animated:YES];
-//    [self.navigationController presentViewController:dvc animated:YES completion:^{
-//        
-//    }];
 }
 
 #pragma mark - UICollectionViewDelegateFlowLayout
@@ -162,9 +157,6 @@
     return CGSizeMake(cellSide, cellSide);
 }
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-    
-}
 
 //- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
 

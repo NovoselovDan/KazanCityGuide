@@ -41,6 +41,8 @@
     
     
 }
+- (void)viewDidAppear:(BOOL)animated {
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -58,20 +60,21 @@
     [self presentViewController:navVC animated:YES completion:nil];
 }
 - (IBAction)toUserPressed:(id)sender {
-    CLLocation *loc1 = [[CLLocation alloc] initWithLatitude:_mapView.camera.centerCoordinate.latitude
-                                                  longitude:_mapView.camera.centerCoordinate.longitude];
-    CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:_mapView.userLocation.coordinate.latitude
-                                                  longitude:_mapView.userLocation.coordinate.longitude];
-    CLLocationDistance distance = [loc1 distanceFromLocation:loc2];
-    
-    MGLMapCamera *camera = [MGLMapCamera cameraLookingAtCenterCoordinate:_mapView.userLocation.coordinate
-                                                            fromDistance:_mapView.camera.altitude
-                                                                   pitch:0
-                                                                 heading:0];
-    if (distance < 10000)
-        [_mapView flyToCamera:camera completionHandler:nil];
-    else
-        [_mapView setCamera:camera animated:NO];
+//    CLLocation *loc1 = [[CLLocation alloc] initWithLatitude:_mapView.camera.centerCoordinate.latitude
+//                                                  longitude:_mapView.camera.centerCoordinate.longitude];
+//    CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:_mapView.userLocation.coordinate.latitude
+//                                                  longitude:_mapView.userLocation.coordinate.longitude];
+//    CLLocationDistance distance = [loc1 distanceFromLocation:loc2];
+//    
+//    MGLMapCamera *camera = [MGLMapCamera cameraLookingAtCenterCoordinate:_mapView.userLocation.coordinate
+//                                                            fromDistance:_mapView.camera.altitude
+//                                                                   pitch:0
+//                                                                 heading:0];
+//    if (distance < 10000)
+//        [_mapView flyToCamera:camera completionHandler:nil];
+//    else
+//        [_mapView setCamera:camera animated:NO];
+    [_mapView setUserTrackingMode:MGLUserTrackingModeFollow animated:YES];
 }
 - (IBAction)plusPressed:(id)sender {
     [_mapView setZoomLevel:_mapView.zoomLevel+0.5 animated:YES];
@@ -91,7 +94,12 @@
     _mapView.zoomLevel = 10.8;
     _mapView.styleURL = [NSURL URLWithString:@"mapbox://styles/mapbox/dark-v9"];
     
-    NSLog(@"AFTER WORK:\nMAP VIEW USER LOCATION: %@", _mapView.showsUserLocation? @"ON" : @"OFF");
+    [_mapView.attributionButton setAlpha:0.0];
+    [_mapView.logoView setAlpha:0.5];
+    
+    [_mapView setUserTrackingMode:MGLUserTrackingModeFollowWithHeading animated:YES];
+    
+    //    NSLog(@"AFTER WORK:\nMAP VIEW USER LOCATION: %@", _mapView.showsUserLocation? @"ON" : @"OFF");
 }
 - (void)GenerateTestModel {
     if (!_routes) {
@@ -145,6 +153,7 @@
 // Если у annotation нет title'a то вообще не работает!!!
 //    //Only show callouts for `Hello world!` annotation
 //    if ([annotation respondsToSelector:@selector(title)])
+    NSLog(@"Called annotation: %@", annotation);
     if ([annotation isKindOfClass:[RoutePointAnnotation class]])
     {
         // Instantiate and return our custom callout view
@@ -157,17 +166,22 @@
 
 
 -(void)mapView:(MGLMapView *)mapView tapOnCalloutForAnnotation:(id<MGLAnnotation>)annotation {
-    RoutePointAnnotation *ann = annotation;
-    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    DetailViewController *dvc = [sb instantiateViewControllerWithIdentifier:@"detailVC"];
-    [dvc configureWithRoute:ann.routePoint.route];
-    
-    UINavigationController *navVC = [[FixedNavigationViewController alloc] initWithRootViewController:dvc];
-    navVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
-    NSLog(@"nav vc view controllers: %@", navVC.viewControllers);
-    [self presentViewController:navVC animated:YES completion:nil];
-    NSLog(@"Route: %@", ann.routePoint.route.title);
+    if ([annotation isKindOfClass:[RoutePointAnnotation class]]) {
+        RoutePointAnnotation *ann = annotation;
+        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        DetailViewController *dvc = [sb instantiateViewControllerWithIdentifier:@"detailVC"];
+        [dvc configureWithRoute:ann.routePoint.route];
+        
+        UINavigationController *navVC = [[FixedNavigationViewController alloc] initWithRootViewController:dvc];
+        navVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
+        [self presentViewController:navVC animated:YES completion:nil];
+        
+        NSLog(@"Route opened: %@", ann.routePoint.route.title);
+    }
     [mapView deselectAnnotation:annotation animated:YES];
+}
+
+-(void)mapView:(MGLMapView *)mapView didUpdateUserLocation:(MGLUserLocation *)userLocation {
 }
 
 -(UIStatusBarStyle)preferredStatusBarStyle {

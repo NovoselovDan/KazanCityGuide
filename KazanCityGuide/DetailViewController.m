@@ -14,6 +14,9 @@
 #import "FeedbackTableViewCell.h"
 @import Mapbox;
 
+#define ToRadian(x) ((x) * M_PI/180)
+#define ToDegrees(x) ((x) * 180/M_PI)
+
 @interface DetailViewController () <MGLMapViewDelegate, UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong)Route *route;
 @property (weak, nonatomic) IBOutlet MGLMapView *mapView;
@@ -34,18 +37,22 @@
 
 @end
 
+
 @implementation DetailViewController {
     dispatch_once_t token;
     CGRect tableViewInitialFrame, okButtonInitialFrame, subtitbleInitialFrame;
     NSArray *mapComponents, *detailComponents;
+    RoutePointAnnotation *routePointAnnotation;
+    MGLPolyline *currentPolyline;
 }
 - (void)configureWithRoute:(Route *)route {
     _route = route;
+    routePointAnnotation = [[RoutePointAnnotation alloc] initWithRoutePoint:[_route firstPoint]];
+
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self mapViewSetup];
-    [self tableViewSetup];
+    token = 0;
     
     _subtitleLabel.font = _mapSubtitleLabel.font = [UIFont fontWithName:@".SFUIText-Semibold" size:10.0];
     _subtitleLabel.textColor = _mapSubtitleLabel.textColor = [UIColor colorWithWhite:1.0 alpha:0.8];
@@ -53,6 +60,8 @@
     _taskLabel.font = [UIFont fontWithName:@".SFUIText-Medium" size:17.0];
     _taskLabel.textColor = [self tintColor];
     _taskLabel.shadowColor = [UIColor colorWithHue:242/360.0 saturation:0.47 brightness:1.0 alpha:1.0];
+    _taskLabel.text = @"Следуйте к следующему месту";
+    
     mapComponents = @[_exitButton, _taskLabel, _mapSubtitleLabel, _centerButton, _plusButton, _minusButton];
     detailComponents = @[_okButton, _subtitleLabel, _tableView];
     
@@ -60,6 +69,9 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self navigationItemSetup];
+    [self mapViewSetup];
+    [self tableViewSetup];
+    
     if (!_mapView.hidden) {
         for (UIView *view in mapComponents) {
             [view setHidden:YES];
@@ -74,7 +86,7 @@
 
 
 - (IBAction)okPressed:(id)sender {
-    _taskLabel.text = @"Следуйте к следующему месту";
+    _mapView.userInteractionEnabled = YES;
     [self.navigationController setNavigationBarHidden:!(self.navigationController.navigationBar.hidden) animated:YES];
     [UIView animateWithDuration:0.3
                           delay:0.0
@@ -91,9 +103,11 @@
                          for (UIView *view in detailComponents) {
                              [view setHidden:YES];
                          }
+                         [self adjustCamera];
                      }];
 }
 - (IBAction)exitPressed:(id)sender {
+    _mapView.userInteractionEnabled = NO;
     [self.navigationController setNavigationBarHidden:!(self.navigationController.navigationBar.hidden) animated:YES];
     [UIView animateWithDuration:0.3
                           delay:0.0
@@ -110,23 +124,25 @@
                          for (UIView *view in mapComponents) {
                              [view setHidden:YES];
                          }
+                         [self adjustCamera];
                      }];
 }
 - (IBAction)centerPressed:(id)sender {
-    CLLocation *loc1 = [[CLLocation alloc] initWithLatitude:_mapView.camera.centerCoordinate.latitude
-                                                  longitude:_mapView.camera.centerCoordinate.longitude];
-    CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:_mapView.userLocation.coordinate.latitude
-                                                  longitude:_mapView.userLocation.coordinate.longitude];
-    CLLocationDistance distance = [loc1 distanceFromLocation:loc2];
-    
-    MGLMapCamera *camera = [MGLMapCamera cameraLookingAtCenterCoordinate:_mapView.userLocation.coordinate
-                                                            fromDistance:_mapView.camera.altitude
-                                                                   pitch:0
-                                                                 heading:0];
-    if (distance < 10000)
-        [_mapView flyToCamera:camera completionHandler:nil];
-    else
-        [_mapView setCamera:camera animated:NO];
+//    CLLocation *loc1 = [[CLLocation alloc] initWithLatitude:_mapView.camera.centerCoordinate.latitude
+//                                                  longitude:_mapView.camera.centerCoordinate.longitude];
+//    CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:_mapView.userLocation.coordinate.latitude
+//                                                  longitude:_mapView.userLocation.coordinate.longitude];
+//    CLLocationDistance distance = [loc1 distanceFromLocation:loc2];
+//    
+//    MGLMapCamera *camera = [MGLMapCamera cameraLookingAtCenterCoordinate:_mapView.userLocation.coordinate
+//                                                            fromDistance:_mapView.camera.altitude
+//                                                                   pitch:0
+//                                                                 heading:0];
+//    if (distance < 10000)
+//        [_mapView flyToCamera:camera completionHandler:nil];
+//    else
+//        [_mapView setCamera:camera animated:NO];
+    [_mapView setUserTrackingMode:MGLUserTrackingModeFollowWithHeading animated:YES];
 }
 - (IBAction)plusPresse:(id)sender {
     [_mapView setZoomLevel:_mapView.zoomLevel+0.5 animated:YES];
@@ -170,19 +186,38 @@
 
 - (void)mapViewSetup {
     _mapView.showsUserLocation = YES;
-    
-    RoutePointAnnotation *pointAnnotation = [[RoutePointAnnotation alloc] initWithRoutePoint:[_route firstPoint]];
-    _mapView.centerCoordinate = pointAnnotation.coordinate;
+    _mapView.userInteractionEnabled = NO;
     _mapView.zoomLevel = 8.8;
     _mapView.styleURL = [NSURL URLWithString:@"mapbox://styles/mapbox/dark-v9"];
-    //    _mapView.userInteractionEnabled = NO;
-    
+    [_mapView.attributionButton setAlpha:0.0];
+    [_mapView.logoView setAlpha:0.5];
+
+    RoutePointAnnotation *pointAnnotation = [[RoutePointAnnotation alloc] initWithRoutePoint:[_route firstPoint]];
+    _mapView.centerCoordinate = pointAnnotation.coordinate;
     [_mapView addAnnotation:pointAnnotation];
 }
 - (void)adjustCamera {
-    CLLocationDistance distance = [self distance];
+    [_mapView resetNorth];
+    CLLocationDistance distance = [self distanceFromCoordinate:routePointAnnotation.coordinate];
+    NSLog(@"mapview insets: %@", NSStringFromUIEdgeInsets(_mapView.contentInset));
+    if (_taskLabel.hidden) {
+//        [_mapView setContentInset:UIEdgeInsetsMake(self.navigationController.navigationBar.frame.size.height, 0,
+//                                                   [UIScreen mainScreen].bounds.size.height - _okButton.frame.origin.y, 0) animated:YES];
+        [_mapView setContentInset:UIEdgeInsetsMake(0, 0, [UIScreen mainScreen].bounds.size.height - 300, 0) animated:NO];
+        distance *= 6;
+    } else {
+        [_mapView setContentInset:UIEdgeInsetsMake(20, 0, 0, 4) animated:YES];
+        distance *= 4;
+    }
+    NSLog(@"mapview insets edited: %@", NSStringFromUIEdgeInsets(_mapView.contentInset));
+
     
-    MGLMapCamera *camera = [MGLMapCamera cameraLookingAtCenterCoordinate:_mapView.userLocation.coordinate
+//    NSLog(@"adjusting distance: %f", distance);
+//    NSLog(@"user's location: %@", _mapView.userLocation);
+    CLLocationCoordinate2D midpoint = [[self class] midpointBetweenCoordinate:routePointAnnotation.coordinate
+                                                                andCoordinate:_mapView.userLocation.coordinate];
+    
+    MGLMapCamera *camera = [MGLMapCamera cameraLookingAtCenterCoordinate:midpoint
                                                             fromDistance:distance
                                                                    pitch:0
                                                                  heading:0];
@@ -192,42 +227,70 @@
     
 }
 - (void)drawPolyline {
+//    if (currentPolyline) {
+//        [_mapView removeAnnotation:currentPolyline];
+//    }
     dispatch_queue_t backgroundQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(backgroundQueue, ^(void)
                    {
-                       RoutePointAnnotation *pointAnnotation = [[RoutePointAnnotation alloc] initWithRoutePoint:[_route firstPoint]];
                        CLLocationCoordinate2D coordinates[2];
-                       coordinates[0] = CLLocationCoordinate2DMake(pointAnnotation.coordinate.latitude, pointAnnotation.coordinate.longitude);
+                       coordinates[0] = CLLocationCoordinate2DMake(routePointAnnotation.coordinate.latitude, routePointAnnotation.coordinate.longitude);
                        coordinates[1] = CLLocationCoordinate2DMake(_mapView.userLocation.coordinate.latitude, _mapView.userLocation.coordinate.longitude);
-                       
                        
                        // Create our polyline with the formatted coordinates array
                        MGLPolyline *polyline = [MGLPolyline polylineWithCoordinates:coordinates count:2];
-                       // Optionally set the title of the polyline, which can be used for:
-                       //  - Callout view
-                       //  - Object identification
-                       // In this case, set it to the name included in the GeoJSON
-                       polyline.title = @"Путь до первой точки"; // "Crema to Council Crest"
+                       polyline.title = @"Путь до первой точки";
                        
                        // Add the polyline to the map, back on the main thread
                        // Use weak reference to self to prevent retain cycle
                        __weak typeof(self) weakSelf = self;
                        dispatch_async(dispatch_get_main_queue(), ^(void)
                                       {
-                                                                         [weakSelf.mapView addAnnotation:polyline];
-                                          [weakSelf.mapView showAnnotations:@[polyline] animated:YES];
+                                          NSLog(@"Polyline        : %@", currentPolyline);
+//                                          [weakSelf.mapView removeAnnotation:currentPolyline];
+                                          [weakSelf.mapView addAnnotation:polyline];
+                                          if (currentPolyline) {
+//                                              for (id<MGLAnnotation> annot in weakSelf.mapView.annotations) {
+//                                                  if ([annot isKindOfClass:[MGLPolyline class]]) {
+//                                                      MGLPolyline *polyL = (MGLPolyline *)annot;
+//                                                      if ([polyL isEqual:currentPolyline]) {
+//                                                          NSLog(@"removed");
+//                                                          [weakSelf.mapView removeAnnotation:annot];
+//                                                      }
+//                                                  }
+//                                              }
+                                              [weakSelf.mapView removeAnnotation:currentPolyline];
+                                          }
+                                              currentPolyline = polyline;
+                                          NSLog(@"Polylines in view: %@\n\n", weakSelf.mapView.annotations);
+
+//                                          [weakSelf.mapView addAnnotation:currentPolyline];
+//                                          [weakSelf.mapView showAnnotations:@[currentPolyline] animated:NO];
                                       });
-                       
-                       
                    });
 }
-- (int)distance {
-    RoutePointAnnotation *pointAnnotation = [[RoutePointAnnotation alloc] initWithRoutePoint:[_route firstPoint]];
-    CLLocation *loc1 = [[CLLocation alloc] initWithLatitude:pointAnnotation.coordinate.latitude
-                                                  longitude:pointAnnotation.coordinate.longitude];
+- (int)distanceFromCoordinate:(CLLocationCoordinate2D)coordinate {
+    CLLocation *loc1 = [[CLLocation alloc] initWithLatitude:coordinate.latitude
+                                                  longitude:coordinate.longitude];
     CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:_mapView.userLocation.coordinate.latitude
                                                   longitude:_mapView.userLocation.coordinate.longitude];
     return [loc2 distanceFromLocation:loc1];
+}
++ (CLLocationCoordinate2D)midpointBetweenCoordinate:(CLLocationCoordinate2D)c1 andCoordinate:(CLLocationCoordinate2D)c2
+{
+    c1.latitude = ToRadian(c1.latitude);
+    c2.latitude = ToRadian(c2.latitude);
+    CLLocationDegrees dLon = ToRadian(c2.longitude - c1.longitude);
+    CLLocationDegrees bx = cos(c2.latitude) * cos(dLon);
+    CLLocationDegrees by = cos(c2.latitude) * sin(dLon);
+    CLLocationDegrees latitude = atan2(sin(c1.latitude) + sin(c2.latitude), sqrt((cos(c1.latitude) + bx) * (cos(c1.latitude) + bx) + by*by));
+    CLLocationDegrees longitude = ToRadian(c1.longitude) + atan2(by, cos(c1.latitude) + bx);
+    
+    CLLocationCoordinate2D midpointCoordinate;
+    midpointCoordinate.longitude = ToDegrees(longitude);
+    midpointCoordinate.latitude = ToDegrees(latitude);
+    
+    return midpointCoordinate;
 }
 
 - (void)tableViewSetup {
@@ -244,9 +307,10 @@
 - (void)mapView:(MGLMapView *)mapView didUpdateUserLocation:(MGLUserLocation *)userLocation {
     dispatch_once(&token, ^{
         [self adjustCamera];
-        [self drawPolyline];
     });
-    _subtitleLabel.text = _mapSubtitleLabel.text = [NSString stringWithFormat:@"До начала маршрута %iм", [self distance]];
+    [self drawPolyline];
+    _subtitleLabel.text = _mapSubtitleLabel.text = [NSString stringWithFormat:@"До начала маршрута %iм",
+                                                    [self distanceFromCoordinate:routePointAnnotation.coordinate]];
 }
 - (MGLAnnotationView *)mapView:(MGLMapView *)mapView viewForAnnotation:(id<MGLAnnotation>)annotation {
     // This example is only concerned with point annotations.
@@ -311,6 +375,12 @@
         [cell configureWithFeedback:[_route.feedbacks objectAtIndex:indexPath.row - 1]];
         return cell;
     }
+}
+
+#pragma mark - Rotation
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+//    NSLog(@"ROTATED! TableView height: %f", _tableView.frame.size.height);
+    [self adjustCamera];
 }
 
 /*
