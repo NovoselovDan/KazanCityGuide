@@ -22,9 +22,10 @@
 
 @implementation RouteInfoTableViewCell
 + (CGFloat)heightForRoute:(Route *)route {
+    CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
     CGFloat height = 0;
     height = 90;
-    int width = 320 - 8*2;
+    int width = screenWidth - 8*2;
     float textHeight = [self getHeightForText:route.text
                                      withFont:[UIFont fontWithName:@".SFUIText-Regular" size:15.0]
                                      andWidth:width];

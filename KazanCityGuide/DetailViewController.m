@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet MGLMapView *mapView;
 @property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIButton *okButton;
 @end
 
 @implementation DetailViewController {
@@ -42,6 +43,47 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+- (IBAction)okPressed:(id)sender {
+    [self.navigationController setNavigationBarHidden:!(self.navigationController.navigationBar.hidden) animated:YES];
+    [UIView animateWithDuration:0.5
+                          delay:0.0
+                        options:UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                         CGRect rect = _tableView.frame;
+                         rect.origin.y = [UIScreen mainScreen].bounds.size.height;
+                         _tableView.frame = rect;
+                         
+                         rect = _subtitleLabel.frame;
+                         rect.origin.y = [UIScreen mainScreen].bounds.size.height - rect.size.height - 8;
+                         _subtitleLabel.frame = rect;
+                         
+                         rect = _okButton.frame;
+                         rect.origin.y = [UIScreen mainScreen].bounds.size.height;
+                         _okButton.frame = rect;
+                     } completion:^(BOOL finished) {
+                         [_tableView setHidden:YES];
+                         [_okButton setHidden:YES];
+
+                         for (NSLayoutConstraint *constraint in [self.view constraints]) {
+                             if ([constraint.identifier isEqualToString:@"subtitleBottom"]) {
+                                 [constraint setActive:NO];
+                                 NSLog(@"subtitleBottom constraint desactivated");
+                             }
+                         }
+                         UILabel *lab = _subtitleLabel;
+                         NSArray *constraint =[NSLayoutConstraint constraintsWithVisualFormat:@"V:[lab]-8-|"
+                                                                                                  options:0
+                                                                                                  metrics:nil
+                                                                                                   views:NSDictionaryOfVariableBindings(lab)];
+                         NSLayoutConstraint *constr = constraint[0];
+                         constr.identifier = @"subtitleBottomToTheScreen";                         
+                         [self.view addConstraints:constraint];
+                         [self.view updateFocusIfNeeded];
+
+                     }];
 }
 
 - (void)navigationItemSetup {
