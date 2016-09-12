@@ -79,8 +79,8 @@
         _distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(_distanceView.frame.origin.x + _distanceView.frame.size.width + 5,
                                                                    self.bounds.size.height - hSize - 11.0,
                                                                    wSize, hSize)];
-        NSLog(@"\n\t_distanceView frame:%@\n\t_distanceLabel frame:%@", NSStringFromCGRect(_distanceView.frame), NSStringFromCGRect(_distanceLabel.frame));
-        NSLog(@"frame: %@. self: %@", NSStringFromCGRect(frame), NSStringFromCGRect(self.frame));
+//        NSLog(@"\n\t_distanceView frame:%@\n\t_distanceLabel frame:%@", NSStringFromCGRect(_distanceView.frame), NSStringFromCGRect(_distanceLabel.frame));
+//        NSLog(@"frame: %@. self: %@", NSStringFromCGRect(frame), NSStringFromCGRect(self.frame));
         _distanceLabel.font = [UIFont fontWithName:@".SFUIDisplay-Heavy" size:11.0];
         _distanceLabel.textColor = [UIColor whiteColor];
         [self addSubview:_distanceLabel];

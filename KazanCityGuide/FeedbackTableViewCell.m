@@ -21,7 +21,8 @@
 
 @implementation FeedbackTableViewCell
 + (CGFloat)heightForFeedback:(RouteFeedback *)feedback {
-    CGFloat width = 320 - 28*2;
+    CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
+    CGFloat width = screenWidth - 28*2;
     CGFloat height = 0;
     
     height += 26.0;

@@ -158,7 +158,7 @@
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
     CGFloat cellSide = (int)(screenWidth - 2*20 - 15) / 2;
-    NSLog(@"cellSide: %f", cellSide);
+//    NSLog(@"cellSide: %f", cellSide);
     return CGSizeMake(cellSide, cellSide);
 }
 

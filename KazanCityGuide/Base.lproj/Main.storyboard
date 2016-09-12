@@ -347,7 +347,9 @@
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="250" id="z2d-PX-U6R"/>
+                                    <constraint firstAttribute="height" constant="250" id="z2d-PX-U6R">
+                                        <variation key="widthClass=compact" constant="290"/>
+                                    </constraint>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="showsUserLocation" value="YES"/>
@@ -435,7 +437,9 @@
                             <constraint firstItem="dR7-ka-yMs" firstAttribute="top" secondItem="W8f-KI-jdA" secondAttribute="top" id="SVp-4r-Dzw">
                                 <variation key="widthClass=compact" constant="-26"/>
                             </constraint>
-                            <constraint firstItem="W8f-KI-jdA" firstAttribute="top" secondItem="AcH-ZE-rgu" secondAttribute="bottom" id="SZl-Rw-bgq"/>
+                            <constraint firstItem="W8f-KI-jdA" firstAttribute="top" secondItem="AcH-ZE-rgu" secondAttribute="bottom" id="SZl-Rw-bgq">
+                                <variation key="widthClass=compact" constant="-40"/>
+                            </constraint>
                             <constraint firstItem="W8f-KI-jdA" firstAttribute="leading" secondItem="Lgm-id-bRU" secondAttribute="leading" id="Tpf-1c-FDp"/>
                             <constraint firstItem="ekP-VE-NqC" firstAttribute="top" secondItem="W8f-KI-jdA" secondAttribute="bottom" id="U4r-6h-0As"/>
                             <constraint firstAttribute="trailing" secondItem="W8f-KI-jdA" secondAttribute="trailing" id="VXq-Wj-yTf"/>
