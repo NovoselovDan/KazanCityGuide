@@ -10,10 +10,10 @@
 
 @interface PointViewController () <UIGestureRecognizerDelegate>
 
-@property (nonatomic, strong) UIScrollView *scrollView;
-@property (nonatomic, strong) UILabel *titleLabel;
-@property (nonatomic, strong) UILabel *textBlockLabel;
-@property (nonatomic, strong) UIButton *actionButton;
+//@property (nonatomic, strong) UIScrollView *scrollView;
+//@property (nonatomic, strong) UILabel *titleLabel;
+//@property (nonatomic, strong) UILabel *textBlockLabel;
+//@property (nonatomic, strong) UIButton *actionButton;
 
 @property (nonatomic, strong) RoutePoint *routePoint;
 @end
@@ -97,13 +97,57 @@
 }
 
 - (void)buildInterface {
+    //UIScrollview
+    CGFloat padding = 44.0;
+    UIView *popupView = [[UIView alloc] initWithFrame:CGRectMake(padding, 64,
+                                                                          [UIScreen mainScreen].bounds.size.width - padding*2,
+                                                                          [UIScreen mainScreen].bounds.size.height - padding - 64)];
+    popupView.layer.cornerRadius = 8.0;
+    popupView.layer.masksToBounds = YES;
+    popupView.layer.borderColor = [UIColor colorWithWhite:1.0 alpha:0.2].CGColor;
+    popupView.layer.borderWidth = 1.0;
+    popupView.backgroundColor = [UIColor colorWithHue:240/360.0 saturation:0.13 brightness:0.24 alpha:1.0];
+    
+
+    [self.view addSubview:popupView];
+    popupView.translatesAutoresizingMaskIntoConstraints = NO;
+//    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(padding)-[popupView]-(padding)-|"
+//                                                                      options:0
+//                                                                      metrics:@{@"padding" : [NSNumber numberWithDouble:padding]}
+//                                                                        views:NSDictionaryOfVariableBindings(popupView)]];
+//    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(padding)-[popupView(==350)]-(padding)-|"
+//                                                                      options:NSLayoutFormatAlignAllCenterY
+//                                                                      metrics:@{@"padding" : [NSNumber numberWithInt:([UIScreen mainScreen].bounds.size.height - 350)/2]}
+//                                                                        views:NSDictionaryOfVariableBindings(popupView)]];
+    
     
     //Title
     
     //Text block
     
     //Action button
+    CGFloat height = 50.0;
+    UIButton *actionButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    actionButton.frame = CGRectMake(0, popupView.bounds.size.height - height, popupView.bounds.size.width, height);
+    actionButton.backgroundColor = [UIColor clearColor];
+    [actionButton setTitle:@"Задание" forState:UIControlStateNormal];
+    [actionButton setTitleColor:[UIColor colorWithHue:242/360.0 saturation:0.47 brightness:1.0 alpha:1.0] forState:UIControlStateNormal];
+    actionButton.titleLabel.bounds = CGRectMake(0, 0, 140, 20);
+//    actionButton.titleLabel.text = @"Задание";
+    actionButton.titleLabel.textColor = [UIColor colorWithHue:242/360.0 saturation:0.47 brightness:1.0 alpha:1.0];
+    actionButton.titleLabel.font = [UIFont fontWithName:@".SFUIText-Regular" size:17.0];
+    actionButton.titleLabel.textAlignment = NSTextAlignmentCenter;
     
+    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(1, 0, actionButton.frame.size.width - 2, 1)];
+    line.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
+    [actionButton addSubview:line];
+    
+    [popupView addSubview:actionButton];
+    
+}
+
+- (UIColor *)tintColor {
+    return [UIColor whiteColor];
 }
 
 - (CGFloat)textBlockHeight {

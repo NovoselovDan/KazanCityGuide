@@ -74,7 +74,7 @@
 //        [_mapView flyToCamera:camera completionHandler:nil];
 //    else
 //        [_mapView setCamera:camera animated:NO];
-    [_mapView setUserTrackingMode:MGLUserTrackingModeFollow animated:YES];
+    [_mapView setUserTrackingMode:MGLUserTrackingModeFollowWithCourse animated:YES];
 }
 - (IBAction)plusPressed:(id)sender {
     [_mapView setZoomLevel:_mapView.zoomLevel+0.5 animated:YES];
