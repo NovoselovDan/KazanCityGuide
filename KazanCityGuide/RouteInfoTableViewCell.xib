@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -11,14 +12,12 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="160"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="159"/>
+                <frame key="frameInset" width="320" height="159"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CuZ-2D-kQ8">
-                        <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DistanceBig" translatesAutoresizingMaskIntoConstraints="NO" id="m5z-4G-J2Y">
-                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="32" id="lnh-a0-ce2"/>
                                     <constraint firstAttribute="width" constant="26" id="qEe-pg-9Tg"/>
@@ -37,12 +36,11 @@
                                 </variation>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="distance" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="61" translatesAutoresizingMaskIntoConstraints="NO" id="DTq-dH-ONO">
-                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="22" id="mpe-HA-gzW"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <color key="textColor" red="0.93257433180000004" green="0.92641973499999997" blue="0.95468211169999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="0.93257433180000004" green="0.92641973499999997" blue="0.95468211169999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="default">
                                     <mask key="constraints">
@@ -56,12 +54,11 @@
                                 </variation>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ДЛИНА" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K13-bL-Cqw">
-                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="17" id="byU-rB-XT6"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" red="0.93257433180000004" green="0.92641973499999997" blue="0.95468211169999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
+                                <color key="textColor" red="0.93257433180000004" green="0.92641973499999997" blue="0.95468211169999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="default">
                                     <mask key="constraints">
@@ -127,10 +124,8 @@
                         </variation>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SkH-NG-W9G">
-                        <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TimerBig" translatesAutoresizingMaskIntoConstraints="NO" id="drd-h8-RTZ">
-                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="32" id="mjo-qz-VIL"/>
                                     <constraint firstAttribute="width" constant="32" id="nVi-49-Pgq"/>
@@ -149,12 +144,11 @@
                                 </variation>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="52" translatesAutoresizingMaskIntoConstraints="NO" id="M3r-GY-2UH">
-                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="wib-zp-bij"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <color key="textColor" red="0.93257433176040649" green="0.92641973495483398" blue="0.9546821117401123" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="0.93257433176040649" green="0.92641973495483398" blue="0.9546821117401123" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="default">
                                     <mask key="constraints">
@@ -168,12 +162,11 @@
                                 </variation>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ВРЕМЯ" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LwC-Ni-cB5">
-                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="17" id="hsX-a7-i8Y"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" red="0.93257433180000004" green="0.92641973499999997" blue="0.95468211169999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                                <color key="textColor" red="0.93257433180000004" green="0.92641973499999997" blue="0.95468211169999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="default">
                                     <mask key="constraints">
@@ -245,10 +238,8 @@
                         </variation>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="01y-33-SPj">
-                        <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="RatingBig" translatesAutoresizingMaskIntoConstraints="NO" id="aH2-Nz-cXt">
-                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="32" id="0pE-5c-hff"/>
                                     <constraint firstAttribute="width" constant="34" id="8PB-Wv-qwS"/>
@@ -267,12 +258,11 @@
                                 </variation>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="rating" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="45" translatesAutoresizingMaskIntoConstraints="NO" id="b3W-Is-eZq">
-                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="22" id="6JU-PW-ySX"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <color key="textColor" red="0.93257433180000004" green="0.92641973499999997" blue="0.95468211169999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="0.93257433180000004" green="0.92641973499999997" blue="0.95468211169999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="default">
                                     <mask key="constraints">
@@ -286,12 +276,11 @@
                                 </variation>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="РЕЙТИНГ" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9xd-mp-FEJ">
-                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="17" id="bzY-Lp-jGB"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" red="0.93257433180000004" green="0.92641973499999997" blue="0.95468211169999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                <color key="textColor" red="0.93257433180000004" green="0.92641973499999997" blue="0.95468211169999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="default">
                                     <mask key="constraints">
@@ -357,8 +346,7 @@
                         </variation>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yMA-no-bKV" userLabel="dividor">
-                        <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                        <color key="backgroundColor" red="0.53455072641372681" green="0.53453469276428223" blue="0.53454381227493286" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.53455072641372681" green="0.53453469276428223" blue="0.53454381227493286" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="1" id="CSP-2X-AxS"/>
                         </constraints>
@@ -374,14 +362,12 @@
                         </variation>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FwD-IP-61d">
-                        <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p4U-lm-3eH" userLabel="dividor">
-                        <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                        <color key="backgroundColor" red="0.53455072640000001" green="0.53453469279999999" blue="0.53454381230000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.53455072640000001" green="0.53453469279999999" blue="0.53454381230000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="1" id="jK6-qZ-byv"/>
                             <constraint firstAttribute="height" constant="1" id="sHW-be-2tc"/>
@@ -428,22 +414,22 @@
                         <exclude reference="p4U-lm-3eH"/>
                     </mask>
                     <mask key="constraints">
-                        <exclude reference="VS0-io-hbE"/>
-                        <exclude reference="Xe7-Ho-BHX"/>
-                        <exclude reference="FsV-R6-00v"/>
-                        <exclude reference="Poj-Pe-8Hg"/>
-                        <exclude reference="qzT-UH-pLG"/>
                         <exclude reference="8Pg-e7-xbi"/>
                         <exclude reference="ZTI-wK-Nau"/>
                         <exclude reference="lZP-pv-sZU"/>
+                        <exclude reference="Q8k-e5-r68"/>
+                        <exclude reference="oHF-9V-NAq"/>
                         <exclude reference="4Y3-Ty-YhH"/>
                         <exclude reference="lDq-RH-dkC"/>
+                        <exclude reference="VS0-io-hbE"/>
+                        <exclude reference="Xe7-Ho-BHX"/>
                         <exclude reference="SQS-TC-ISx"/>
                         <exclude reference="bIa-Td-rhY"/>
                         <exclude reference="nff-wB-HR2"/>
                         <exclude reference="phz-00-Aci"/>
-                        <exclude reference="Q8k-e5-r68"/>
-                        <exclude reference="oHF-9V-NAq"/>
+                        <exclude reference="FsV-R6-00v"/>
+                        <exclude reference="Poj-Pe-8Hg"/>
+                        <exclude reference="qzT-UH-pLG"/>
                     </mask>
                 </variation>
                 <variation key="widthClass=compact">
@@ -456,27 +442,28 @@
                         <include reference="p4U-lm-3eH"/>
                     </mask>
                     <mask key="constraints">
-                        <include reference="VS0-io-hbE"/>
-                        <include reference="Xe7-Ho-BHX"/>
-                        <include reference="FsV-R6-00v"/>
-                        <include reference="Poj-Pe-8Hg"/>
-                        <include reference="qzT-UH-pLG"/>
                         <include reference="8Pg-e7-xbi"/>
                         <include reference="ZTI-wK-Nau"/>
                         <include reference="lZP-pv-sZU"/>
+                        <include reference="Q8k-e5-r68"/>
+                        <include reference="oHF-9V-NAq"/>
                         <include reference="4Y3-Ty-YhH"/>
                         <include reference="lDq-RH-dkC"/>
+                        <include reference="VS0-io-hbE"/>
+                        <include reference="Xe7-Ho-BHX"/>
                         <include reference="SQS-TC-ISx"/>
                         <include reference="bIa-Td-rhY"/>
                         <include reference="nff-wB-HR2"/>
                         <include reference="phz-00-Aci"/>
-                        <include reference="Q8k-e5-r68"/>
-                        <include reference="oHF-9V-NAq"/>
+                        <include reference="FsV-R6-00v"/>
+                        <include reference="Poj-Pe-8Hg"/>
+                        <include reference="qzT-UH-pLG"/>
                     </mask>
                 </variation>
             </tableViewCellContentView>
             <connections>
                 <outlet property="distanceLabel" destination="DTq-dH-ONO" id="fJe-X6-C61"/>
+                <outlet property="distanceSubtitle" destination="K13-bL-Cqw" id="Oms-ZP-NaD"/>
                 <outlet property="ratingLabel" destination="b3W-Is-eZq" id="1G0-LI-G2U"/>
                 <outlet property="ratingSubtitle" destination="9xd-mp-FEJ" id="LMI-fT-Xyx"/>
                 <outlet property="text" destination="FwD-IP-61d" id="dhY-Lw-UFq"/>

@@ -10,6 +10,8 @@
 #import "DetailViewController.h"
 #import "RouteCollectionViewCell.h"
 
+#import "PointViewController.h"
+
 @interface MenuViewController ()
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigationItem;
 @property (weak, nonatomic) IBOutlet UIView *helpView;
@@ -146,6 +148,11 @@
     DetailViewController *dvc = [sb instantiateViewControllerWithIdentifier:@"detailVC"];
     [dvc configureWithRoute:route];
     [self.navigationController pushViewController:dvc animated:YES];
+    
+//    PointViewController *pointVC = [[PointViewController alloc] init];
+//    [pointVC configureWithRoutePoint:route.firstPoint];
+//    pointVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
+//    [self.navigationController presentViewController:pointVC animated:YES completion:nil];
 }
 
 #pragma mark - UICollectionViewDelegateFlowLayout

@@ -46,20 +46,26 @@
     NSArray *mapComponents, *detailComponents;
     RoutePointAnnotation *routePointAnnotation;
     MGLPolyline *currentPolyline;
+    //Route handling
+    int currentPointIndex;
+    BOOL annotationViewShowed;
 }
 - (void)configureWithRoute:(Route *)route {
     _route = route;
     routePointAnnotation = [[RoutePointAnnotation alloc] initWithRoutePoint:[_route firstPoint]];
-
+    currentPointIndex = (_route.points.count > 0) ? 0 : -1;
+    annotationViewShowed = NO;
+    
+    NSLog(@"DetailVC configuring completed!: %@", _route);
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     token = 0;
     
-    _subtitleLabel.font = _mapSubtitleLabel.font = [UIFont fontWithName:@".SFUIText-Semibold" size:10.0];
+    _subtitleLabel.font = _mapSubtitleLabel.font = [UIFont systemFontOfSize:10.0 weight:UIFontWeightSemibold];
     _subtitleLabel.textColor = _mapSubtitleLabel.textColor = [UIColor colorWithWhite:1.0 alpha:0.8];
     
-    _taskLabel.font = [UIFont fontWithName:@".SFUIText-Medium" size:17.0];
+    _taskLabel.font = [UIFont systemFontOfSize:17.0 weight:UIFontWeightMedium];
     _taskLabel.textColor = [self tintColor];
     _taskLabel.shadowColor = [UIColor colorWithHue:242/360.0 saturation:0.47 brightness:1.0 alpha:1.0];
     _taskLabel.text = @"Следуйте к следующему месту";
@@ -70,6 +76,7 @@
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    NSLog(@"Hello vc");
     [self navigationItemSetup];
     [self mapViewSetup];
     [self tableViewSetup];
@@ -86,46 +93,10 @@
     // Dispose of any resources that can be recreated.
 }
 - (IBAction)okPressed:(id)sender {
-    _mapView.userInteractionEnabled = YES;
-    [self.navigationController setNavigationBarHidden:!(self.navigationController.navigationBar.hidden) animated:YES];
-    [UIView animateWithDuration:0.3
-                          delay:0.0
-                        options:UIViewAnimationOptionCurveEaseOut
-                     animations:^{
-                         for (UIView *view in detailComponents) {
-                             [view setAlpha:0.0];
-                         }
-                         for (UIView *view in mapComponents) {
-                             [view setHidden:NO];
-                             [view setAlpha:1.0];
-                         }
-                     } completion:^(BOOL finished) {
-                         for (UIView *view in detailComponents) {
-                             [view setHidden:YES];
-                         }
-                         [self adjustCamera];
-                     }];
+    [self hideMenuElements];
 }
 - (IBAction)exitPressed:(id)sender {
-    _mapView.userInteractionEnabled = NO;
-    [self.navigationController setNavigationBarHidden:!(self.navigationController.navigationBar.hidden) animated:YES];
-    [UIView animateWithDuration:0.3
-                          delay:0.0
-                        options:UIViewAnimationOptionCurveEaseOut
-                     animations:^{
-                         for (UIView *view in mapComponents) {
-                             [view setAlpha:0.0];
-                         }
-                         for (UIView *view in detailComponents) {
-                             [view setHidden:NO];
-                             [view setAlpha:1.0];
-                         }
-                     } completion:^(BOOL finished) {
-                         for (UIView *view in mapComponents) {
-                             [view setHidden:YES];
-                         }
-                         [self adjustCamera];
-                     }];
+    [self showMenuElements];
 }
 - (IBAction)centerPressed:(id)sender {
 //    CLLocation *loc1 = [[CLLocation alloc] initWithLatitude:_mapView.camera.centerCoordinate.latitude
@@ -149,7 +120,7 @@
 }
 - (IBAction)minusPressed:(id)sender {
     [_mapView setZoomLevel:_mapView.zoomLevel-0.5 animated:YES];
-    [self pushPointViewControllerWithAnnotation:routePointAnnotation];
+//    [self pushPointViewControllerWithAnnotation:routePointAnnotation];
 }
 
 - (void)navigationItemSetup {
@@ -187,7 +158,8 @@
 
 - (void)mapViewSetup {
     _mapView.showsUserLocation = YES;
-    _mapView.userInteractionEnabled = NO;
+//    _mapView.userInteractionEnabled = NO;
+    _mapView.zoomEnabled = NO;
     _mapView.zoomLevel = 8.8;
     _mapView.styleURL = [NSURL URLWithString:@"mapbox://styles/mapbox/dark-v9"];
     [_mapView.attributionButton setAlpha:0.0];
@@ -281,7 +253,7 @@
                                                            count:numberOfCoordinates];
     [self.mapView addAnnotation:polyline];
 }
-- (int)distanceFromCoordinate:(CLLocationCoordinate2D)coordinate {
+- (float)distanceFromCoordinate:(CLLocationCoordinate2D)coordinate {
     CLLocation *loc1 = [[CLLocation alloc] initWithLatitude:coordinate.latitude
                                                   longitude:coordinate.longitude];
     CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:_mapView.userLocation.coordinate.latitude
@@ -312,6 +284,56 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"RouteInfoTableViewCell" bundle:nil] forCellReuseIdentifier:@"infoCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"FeedbackTableViewCell" bundle:nil] forCellReuseIdentifier:@"feedbackCell"];
 }
+
+- (void)hideMenuElements {
+//    _mapView.userInteractionEnabled = YES;
+    _mapView.zoomEnabled = YES;
+    [self.navigationController setNavigationBarHidden:!(self.navigationController.navigationBar.hidden) animated:YES];
+    [UIView animateWithDuration:0.3
+                          delay:0.0
+                        options:UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                         for (UIView *view in detailComponents) {
+                             [view setAlpha:0.0];
+                         }
+                         for (UIView *view in mapComponents) {
+                             [view setHidden:NO];
+                             [view setAlpha:1.0];
+                         }
+                     } completion:^(BOOL finished) {
+                         for (UIView *view in detailComponents) {
+                             [view setHidden:YES];
+                         }
+                         [self adjustCamera];
+                     }];
+}
+- (void)showMenuElements {
+//    _mapView.userInteractionEnabled = NO;
+    _mapView.zoomEnabled = NO;
+    [self.navigationController setNavigationBarHidden:!(self.navigationController.navigationBar.hidden) animated:YES];
+    [UIView animateWithDuration:0.3
+                          delay:0.0
+                        options:UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                         for (UIView *view in mapComponents) {
+                             [view setAlpha:0.0];
+                         }
+                         for (UIView *view in detailComponents) {
+                             [view setHidden:NO];
+                             [view setAlpha:1.0];
+                         }
+                     } completion:^(BOOL finished) {
+                         for (UIView *view in mapComponents) {
+                             [view setHidden:YES];
+                         }
+                         [self adjustCamera];
+                     }];
+
+}
+
+#pragma mark - Route handling
+
+
 #pragma mark - MGLMapView delegate methods
 - (BOOL)mapView:(MGLMapView *)mapView annotationCanShowCallout:(id<MGLAnnotation>)annotation {
     return NO;
@@ -321,8 +343,13 @@
         [self adjustCamera];
     });
     [self drawPolyline];
-    _subtitleLabel.text = _mapSubtitleLabel.text = [NSString stringWithFormat:@"До начала маршрута %iм",
-                                                    [self distanceFromCoordinate:routePointAnnotation.coordinate]];
+    float distance = [self distanceFromCoordinate:routePointAnnotation.coordinate];
+    _subtitleLabel.text = _mapSubtitleLabel.text = [NSString stringWithFormat:@"До начала маршрута %fм",
+                                                    distance];
+    if (distance < 1 && !annotationViewShowed) {
+        [self pushPointViewControllerWithAnnotation:routePointAnnotation];
+        annotationViewShowed = YES;
+    }
 }
 - (MGLAnnotationView *)mapView:(MGLMapView *)mapView viewForAnnotation:(id<MGLAnnotation>)annotation {
     // This example is only concerned with point annotations.
@@ -364,27 +391,33 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
-        return [RouteInfoTableViewCell heightForRoute:_route];
+        NSLog(@"Height for row at index path... height for info");
+        return [RouteInfoTableViewCell heightForRoute:self.route];
     } else {
+        NSLog(@"Height for row at index path... height for feedback");
         return [FeedbackTableViewCell heightForFeedback:[_route.feedbacks objectAtIndex:indexPath.row - 1]];
     }
     return 40.0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"Cell for row at index path..");
     if (indexPath.row == 0) {
         RouteInfoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"infoCell"];
         if (cell == nil) {
             cell = [[RouteInfoTableViewCell alloc] init];
         }
         [cell configureWithRoute:_route];
+        NSLog(@"returning infoCell");
         return cell;
     } else {
         FeedbackTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"feedbackCell"];
         if (cell == nil) {
             cell = [[FeedbackTableViewCell alloc] init];
         }
+        NSLog(@"configuring feedbackCell");
         [cell configureWithFeedback:[_route.feedbacks objectAtIndex:indexPath.row - 1]];
+        NSLog(@"returning feedbackCell");
         return cell;
     }
 }
@@ -398,8 +431,6 @@
 #pragma mark - Point View Controller
 
 - (void)pushPointViewControllerWithAnnotation:(RoutePointAnnotation *)annotation {
-    
-    
 //    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     PointViewController *pointVC = [[PointViewController alloc] init];
     [pointVC configureWithRoutePoint:routePointAnnotation.routePoint];

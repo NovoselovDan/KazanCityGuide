@@ -63,12 +63,12 @@
     return UIInterfaceOrientationPortrait;
 }
 
-- (NSUInteger)supportedInterfaceOrientations {
-    if ([self.visibleViewController isKindOfClass:[MenuViewController class]]) {
-        return UIInterfaceOrientationMaskPortrait;
-    }
-    return UIInterfaceOrientationMaskAllButUpsideDown;
-}
+//- (NSUInteger)supportedInterfaceOrientations {
+//    if ([self.visibleViewController isKindOfClass:[MenuViewController class]]) {
+//        return UIInterfaceOrientationMaskPortrait;
+//    }
+//    return UIInterfaceOrientationMaskAllButUpsideDown;
+//}
 
 /*
 #pragma mark - Navigation

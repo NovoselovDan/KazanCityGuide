@@ -22,15 +22,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(50, 50, 100, 100)];
-//    view.backgroundColor = [UIColor yellowColor];
-//    view.accessibilityIdentifier = @"my view 1";
-//    [self.view addSubview:view];
-//    
-//    view = [[UIView alloc] initWithFrame:CGRectMake(200, 50, 100, 100)];
-//    view.backgroundColor = [UIColor greenColor];
-//    view.accessibilityIdentifier = @"my view 2";
-//    [self.view addSubview:view];
 }
 
 - (void)configureWithRoutePoint:(RoutePoint *)routePoint {
@@ -55,10 +46,10 @@
 - (void)addBlurBackground {
     
     UIButton *bgButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    bgButton.backgroundColor = [UIColor clearColor];
+    bgButton.backgroundColor = [UIColor colorWithWhite:0.8 alpha:0.4];
 //    [bgButton setAlpha:0.0];
     bgButton.frame = [UIScreen mainScreen].bounds;
-    [bgButton addTarget:self action:@selector(buttonPressed) forControlEvents:UIControlEventTouchDragInside];
+    [bgButton addTarget:self action:@selector(buttonPressed) forControlEvents:UIControlEventTouchUpInside];
     
     UIBlurEffect *blurEffcet = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
     UIVisualEffectView *blurEffView = [[UIVisualEffectView alloc] initWithEffect:blurEffcet];
@@ -78,7 +69,8 @@
                                                                         views:NSDictionaryOfVariableBindings(blurEffView)]];
     }
     
-    [self.view insertSubview:bgButton atIndex:0];
+//    [self.view insertSubview:bgButton atIndex:0];
+    [self.view addSubview:bgButton];
     bgButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[bgButton]|"
                                                                       options:0
@@ -88,6 +80,8 @@
                                                                       options:0
                                                                       metrics:nil
                                                                         views:NSDictionaryOfVariableBindings(bgButton)]];
+
+//    [self.view insertSubview:bgButton atIndex:0];
 //    [UIView animateWithDuration:0.1 animations:^{
 //        [bgButton setAlpha:1.0];
 //    }];
@@ -137,6 +131,7 @@
     actionButton.titleLabel.textColor = [UIColor colorWithHue:242/360.0 saturation:0.47 brightness:1.0 alpha:1.0];
     actionButton.titleLabel.font = [UIFont fontWithName:@".SFUIText-Regular" size:17.0];
     actionButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+    [actionButton addTarget:self action:@selector(buttonPressed) forControlEvents:UIControlEventTouchUpInside];
     
     UIView *line = [[UIView alloc] initWithFrame:CGRectMake(1, 0, actionButton.frame.size.width - 2, 1)];
     line.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
@@ -187,6 +182,7 @@
 //        
 //    }];
     }
+    NSLog(@"Dismissing Point View Controller");
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

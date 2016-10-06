@@ -108,10 +108,10 @@
 }
 - (void)ExtractRoutes {
     NSMutableArray *annotations = [NSMutableArray new];
+    
     for (Route *curRoute in _routes) {
         RoutePointAnnotation *pointAnnotation = [[RoutePointAnnotation alloc] initWithRoutePoint:[curRoute firstPoint]];
         [annotations addObject:pointAnnotation];
-        
 //        NSLog(@"CURRENT ROUTE: %@", curRoute.name);
 //        NSLog(@"POINT ANNOTATION PARENT: %@", pointAnnotation.routePoint.route.name);
     }
@@ -131,8 +131,10 @@
     }
     
     // Use the point annotation’s longitude value (as a string) as the reuse identifier for its view.
+    NSLog(@"view for annotation okay 1");
     NSString *reuseIdentifier = [NSString stringWithFormat:@"%f", annotation.coordinate.longitude];
-    
+    NSLog(@"view for annotation okay 2");
+
     // For better performance, always try to reuse existing annotations.
     CustomAnnotationView *annotationView = [mapView dequeueReusableAnnotationViewWithIdentifier:reuseIdentifier];
     

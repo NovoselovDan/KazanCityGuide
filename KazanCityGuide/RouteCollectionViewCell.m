@@ -44,7 +44,7 @@
         CGFloat wSize = self.bounds.size.width - offset*2;
         CGFloat hSize = 13.0;
         _title = [[UILabel alloc] initWithFrame:CGRectMake(offset, self.bounds.size.height - hSize - 37, wSize, hSize)];
-        _title.font = [UIFont fontWithName:@".SFUIDisplay-Semibold" size:11.0];
+        _title.font = [UIFont systemFontOfSize:11.0 weight:UIFontWeightSemibold];
         _title.textColor = [UIColor whiteColor];
         _title.textAlignment = NSTextAlignmentLeft;
         [self addSubview:_title];
@@ -60,7 +60,7 @@
         _timerLabel = [[UILabel alloc] initWithFrame:CGRectMake(_timerView.frame.origin.x + _timerView.bounds.size.width + 5,
                                                                 self.bounds.size.height - hSize - 11.0,
                                                                 wSize, hSize)];
-        _timerLabel.font = [UIFont fontWithName:@".SFUIDisplay-Heavy" size:11.0];
+        _timerLabel.font = [UIFont systemFontOfSize:11.0 weight:UIFontWeightHeavy];
         _timerLabel.textColor = [UIColor whiteColor];
         [self addSubview:_timerLabel];
         
@@ -81,7 +81,7 @@
                                                                    wSize, hSize)];
 //        NSLog(@"\n\t_distanceView frame:%@\n\t_distanceLabel frame:%@", NSStringFromCGRect(_distanceView.frame), NSStringFromCGRect(_distanceLabel.frame));
 //        NSLog(@"frame: %@. self: %@", NSStringFromCGRect(frame), NSStringFromCGRect(self.frame));
-        _distanceLabel.font = [UIFont fontWithName:@".SFUIDisplay-Heavy" size:11.0];
+        _distanceLabel.font = [UIFont systemFontOfSize:11.0 weight:UIFontWeightHeavy];
         _distanceLabel.textColor = [UIColor whiteColor];
         [self addSubview:_distanceLabel];
     }

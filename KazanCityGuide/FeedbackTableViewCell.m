@@ -26,7 +26,7 @@
     CGFloat height = 0;
     
     height += 26.0;
-    height += [self getHeightForText:feedback.text withFont:[UIFont fontWithName:@".SFUIText-Regular" size:12.0] andWidth:width];
+    height += [self getHeightForText:feedback.text withFont:[UIFont systemFontOfSize:12.0] andWidth:width];
     height += 19;
     height += 20;
     
@@ -66,15 +66,15 @@
     _baseView.layer.cornerRadius = 8.0;
     _baseView.layer.masksToBounds = YES;
     
-    _nameLabel.font = [UIFont fontWithName:@".SFUIText-Bold" size:15.0];
+    _nameLabel.font = [UIFont systemFontOfSize:15.0 weight:UIFontWeightBold];
     _nameLabel.textColor = [UIColor colorWithHue:240.0/360.0 saturation:0.02 brightness:0.96 alpha:1.0];
     
-    _textLbl.font = [UIFont fontWithName:@".SFUIText-Regular" size:12.0];
+    _textLbl.font = [UIFont systemFontOfSize:12.0 weight:UIFontWeightRegular];
     _textLbl.textColor = [UIColor colorWithHue:240.0/360.0 saturation:0.02 brightness:0.96 alpha:1.0];
     _textLbl.textAlignment = NSTextAlignmentJustified;
     _textLbl.numberOfLines = 0;
     
-    _dateLabel.font = [UIFont fontWithName:@".SFUIText-Regular" size:9.0];
+    _dateLabel.font = [UIFont systemFontOfSize:9.0 weight:UIFontWeightRegular];
     _dateLabel.textColor = [UIColor colorWithWhite:1.0 alpha:0.5];
 }
 

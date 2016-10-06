@@ -88,7 +88,7 @@ static CGFloat const tipWidth = 20.0;
     
     //Text Label View
     UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 110, 144, 13)];
-    textLabel.font = [UIFont fontWithName:@".SFUIDisplay-Semibold" size:11.0];
+    textLabel.font = [UIFont systemFontOfSize:11.0 weight:UIFontWeightSemibold];
     textLabel.textColor = [UIColor whiteColor];
     textLabel.text = route.title;
     textLabel.textAlignment = NSTextAlignmentCenter;
@@ -106,7 +106,7 @@ static CGFloat const tipWidth = 20.0;
     UILabel *timerLabel = [[UILabel alloc] initWithFrame:CGRectMake(timerView.frame.origin.x + timerView.bounds.size.width + 5,
                                                                     _mainBody.bounds.size.height - hSize - 11.0,
                                                                     wSize, hSize)];
-    timerLabel.font = [UIFont fontWithName:@".SFUIDisplay-Heavy" size:11.0];
+    timerLabel.font = [UIFont systemFontOfSize:11.0 weight:UIFontWeightHeavy];
     timerLabel.textColor = [UIColor whiteColor];
     timerLabel.text = route.time;
     [_mainBody addSubview:timerLabel];
@@ -123,7 +123,7 @@ static CGFloat const tipWidth = 20.0;
     wSize = 41.0; hSize = 13.0;
     UILabel *distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(distanceView.frame.origin.x + distanceView.bounds.size.width + 5,
                                                                        _mainBody.bounds.size.height - hSize - 11, wSize, hSize)];
-    distanceLabel.font = [UIFont fontWithName:@".SFUIDisplay-Heavy" size:11.0];
+    distanceLabel.font = [UIFont systemFontOfSize:11.0 weight:UIFontWeightHeavy];
     distanceLabel.textColor = [UIColor whiteColor];
     distanceLabel.text = route.distance;
     [_mainBody addSubview:distanceLabel];
@@ -209,7 +209,9 @@ static CGFloat const tipWidth = 20.0;
 }
 
 - (UIColor *)gradientColor {
-    return [UIColor colorWithHue:242.0/360.0 saturation:0.47 brightness:100 alpha:1.0];
+    NSLog(@"GradientColor: %@", [UIColor colorWithHue:242.0/360.0 saturation:0.47 brightness:100 alpha:1.0]);
+//    return [UIColor colorWithRed:139.0 green:135.0 blue:255.0 alpha:1.0];
+    return [UIColor colorWithRed:139.0/256.0 green:135.0/256.0 blue:255.0/256.0 alpha:1.0];
 }
 
 - (void)drawRect:(CGRect)rect

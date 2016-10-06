@@ -26,32 +26,46 @@
     CGFloat height = 0;
     height = 90;
     int width = screenWidth - 8*2;
+//    UIFont *font = [UIFont fontWithName:@".SFUIText-Regular" size:15.0];
+    UIFont *font = [UIFont systemFontOfSize:15.0];
+    NSLog(@"font: %@", font);
     float textHeight = [self getHeightForText:route.text
-                                     withFont:[UIFont fontWithName:@".SFUIText-Regular" size:15.0]
+                                     withFont:font
                                      andWidth:width];
     height +=textHeight;
     height +=18;
     
-//    NSLog(@"Height: %f", height);
+    NSLog(@"heightForRoute returning Height: %f", height);
     return height;
 
 }
 +(float) getHeightForText:(NSString*) text withFont:(UIFont*) font andWidth:(float) width{
+    NSLog(@"getHeightForText...");
+////----------------------------------------------------------------------------------------
+//    for (NSString *familyName in [UIFont familyNames]){
+//        NSLog(@"Family name: %@", familyName);
+//        for (NSString *fontName in [UIFont fontNamesForFamilyName:familyName]) {
+//            NSLog(@"--Font name: %@", fontName);
+//        }
+//    }
+////----------------------------------------------------------------------------------------
     CGSize constraint = CGSizeMake(width , 20000.0f);
     CGSize title_size;
     float totalHeight;
-    
     SEL selector = @selector(boundingRectWithSize:options:attributes:context:);
     if ([text respondsToSelector:selector]) {
+        NSLog(@"font: %@", font);
+        NSDictionary *dict = [NSDictionary dictionaryWithObject:font forKey:NSFontAttributeName];
         title_size = [text boundingRectWithSize:constraint
                                         options:NSStringDrawingUsesLineFragmentOrigin
-                                     attributes:@{ NSFontAttributeName : font }
+                                     attributes:dict
                                         context:nil].size;
         
         totalHeight = ceil(title_size.height);
     }
     
     CGFloat height = MAX(totalHeight, 40.0f);
+    NSLog(@"height: %f", height);
     return height;
 }
 
@@ -69,8 +83,8 @@
     self.backgroundColor = [UIColor colorWithHue:240/360.0 saturation:0.13 brightness:0.24 alpha:1.0];
     
     //Labels & Subtitles
-    UIFont *labelFont = [UIFont fontWithName:@".SFUIDisplay-Regular" size:18.0];
-    UIFont *subtitleFont = [UIFont fontWithName:@".SFUIText-Light" size:14.0];
+    UIFont *labelFont = [UIFont systemFontOfSize:18.0 weight:UIFontWeightRegular];
+    UIFont *subtitleFont = [UIFont systemFontOfSize:14.0 weight:UIFontWeightMedium];
     
     _timeLabel.font = labelFont;
     _distanceLabel.font = labelFont;
@@ -81,7 +95,7 @@
     _ratingSubtitle.font = subtitleFont;
     
     //Text
-    _text.font = [UIFont fontWithName:@".SFUIText-Regular" size:15.0];
+    _text.font = [UIFont systemFontOfSize:15.0 weight:UIFontWeightRegular];
     _text.textColor = [UIColor colorWithWhite:1.0 alpha:0.8];
     _text.textAlignment = NSTextAlignmentJustified;
     _text.numberOfLines = 0;
