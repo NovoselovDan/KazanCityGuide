@@ -11,7 +11,7 @@
 
 @interface RouteHintAnnotation : MGLPointAnnotation
 @property (nonatomic, weak) RoutePoint *routePoint;
-@property (nonatomic, assign) float actionRadius;
+@property (nonatomic, assign) float activeRadius;
 @property (nonatomic, strong) NSString *text;
 
 -(instancetype)initWithRoutePoint:(RoutePoint *)routePoint andCoordinate:(CLLocationCoordinate2D)coord;

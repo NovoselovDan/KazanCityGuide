@@ -14,7 +14,7 @@
     if (self) {
         self.coordinate = coord;
         self.routePoint = routePoint;
-        self.actionRadius = 20.0;
+        self.activeRadius = 20.0;
         
         return self;
     }

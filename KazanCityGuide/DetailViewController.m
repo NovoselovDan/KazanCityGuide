@@ -111,6 +111,7 @@ typedef NS_ENUM(NSInteger, RoutingState) {
     state = Started;
 }
 - (IBAction)exitPressed:(id)sender {
+    [self hideAnnotation];
     [self showMenuElements];
     state = Stopped;
 }
@@ -133,16 +134,9 @@ typedef NS_ENUM(NSInteger, RoutingState) {
 }
 - (IBAction)plusPresse:(id)sender {
     [_mapView setZoomLevel:_mapView.zoomLevel+0.5 animated:YES];
-    [self hideAnnotation];
 }
 - (IBAction)minusPressed:(id)sender {
     [_mapView setZoomLevel:_mapView.zoomLevel-0.5 animated:YES];
-    for (RoutePoint *p in _route.points) {
-        if (p.hints.count > 0) {
-            NSLog(@"FOUNDED!");
-            [self showAnnotation:[p.hints firstObject]];
-        }
-    }
 //    [self pushPointViewControllerWithAnnotation:routePointAnnotation];
 }
 
@@ -188,9 +182,19 @@ typedef NS_ENUM(NSInteger, RoutingState) {
     [_mapView.attributionButton setAlpha:0.0];
     [_mapView.logoView setAlpha:0.5];
 
-    RoutePointAnnotation *pointAnnotation = [[RoutePointAnnotation alloc] initWithRoutePoint:[_route firstPoint]];
+    RoutePointAnnotation *pointAnnotation = currentRoutePointAnnotation;
     _mapView.centerCoordinate = pointAnnotation.coordinate;
+    [self addToMapRoutePointAnnotation:pointAnnotation];
+    
+}
+- (void)addToMapRoutePointAnnotation:(RoutePointAnnotation *)pointAnnotation {
     [_mapView addAnnotation:pointAnnotation];
+    
+    if (pointAnnotation.routePoint.hints.count > 0) {
+        for (RouteHintAnnotation *hintAnnotation in pointAnnotation.routePoint.hints) {
+            [_mapView addAnnotation:hintAnnotation];
+        }
+    }
 }
 - (void)adjustCamera {
     [_mapView resetNorth];
@@ -365,7 +369,8 @@ typedef NS_ENUM(NSInteger, RoutingState) {
     if (currentPointIndex < _route.points.count - 1) {
         currentPointIndex+=1;
         currentRoutePointAnnotation = [[RoutePointAnnotation alloc] initWithRoutePoint:[_route.points objectAtIndex:currentPointIndex]];
-        [_mapView addAnnotation:currentRoutePointAnnotation];
+        [self addToMapRoutePointAnnotation:currentRoutePointAnnotation];
+//        [_mapView addAnnotation:currentRoutePointAnnotation];
         [self drawPolyline];
         canShowAnnotationView = NO;
         pointViewShowed = NO;
@@ -384,19 +389,33 @@ typedef NS_ENUM(NSInteger, RoutingState) {
 //    return YES;
     return NO;
 }
-//-(MGLAnnotationView *)mapView:(MGLMapView *)mapView viewForAnnotation:(id<MGLAnnotation>)annotation {
-//    [self pushPointViewControllerWithAnnotation:annotation];
-//    return nil;
-//}
 - (void)mapView:(MGLMapView *)mapView didUpdateUserLocation:(MGLUserLocation *)userLocation {
     dispatch_once(&token, ^{
         [self adjustCamera];
     });
+    
     [self drawPolyline];
+    //map Subtitle Label update
     float distance = [self distanceFromCoordinate:currentRoutePointAnnotation.coordinate];
-    _subtitleLabel.text = _mapSubtitleLabel.text = [NSString stringWithFormat:@"До начала маршрута %.1fм",
+    _subtitleLabel.text = _mapSubtitleLabel.text = [NSString stringWithFormat:@"До %@ маршрута %.1fм",
+                                                    (currentPointIndex == 0)?@"начала":@"следующей точки",
                                                     distance];
-    if (distance < 5.0 && !pointViewShowed && state == Started) {
+    //hint annotations check
+    NSLog(@"searching hint annotation");
+    for (id<MGLAnnotation> ann in _mapView.annotations) {
+        if ([ann isKindOfClass:[RouteHintAnnotation class]]) {
+            NSLog(@"FAOUNDOOOD HINT ANNOTATION AT THE MAP!");
+            RouteHintAnnotation *hintAnnotation = ann;
+            float distanceToHint = [self distanceFromCoordinate:hintAnnotation.coordinate];
+            if (distanceToHint < hintAnnotation.activeRadius) {
+                [self showAnnotation:hintAnnotation];
+            } else if (distanceToHint >= hintAnnotation.activeRadius && [hintAnnotation isEqual:currentHintAnnotation]) {
+                [self hideAnnotation];
+            }
+        }
+    }
+    //Route Point reaching check
+    if (distance < currentRoutePointAnnotation.routePoint.reachRadius && !pointViewShowed && state == Started) {
         [self pushPointViewControllerWithAnnotation:currentRoutePointAnnotation];
         pointViewShowed = YES;
         canShowAnnotationView = YES;
@@ -405,6 +424,9 @@ typedef NS_ENUM(NSInteger, RoutingState) {
 - (MGLAnnotationView *)mapView:(MGLMapView *)mapView viewForAnnotation:(id<MGLAnnotation>)annotation {
     // This example is only concerned with point annotations.
     if (![annotation isKindOfClass:[MGLPointAnnotation class]]) {
+        return nil;
+    }
+    if ([annotation isKindOfClass:[RouteHintAnnotation class]]) {
         return nil;
     }
     
@@ -577,14 +599,6 @@ CGFloat padding = 8.0;
                              _hintAnnotationView = hintV;
                          }];
     }
-//    hintV.translatesAutoresizingMaskIntoConstraints = NO;
-//    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:hintV
-//                                                          attribute:NSLayoutAttributeCenterX
-//                                                          relatedBy:NSLayoutRelationEqual
-//                                                             toItem:hintV
-//                                                          attribute:NSLayoutAttributeCenterX
-//                                                         multiplier:1.0
-//                                                           constant:0]];
 }
 - (void)hideAnnotation {
     if (_hintAnnotationView) {
