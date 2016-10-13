@@ -14,6 +14,7 @@
 		E1346AA11D867367005A29E4 /* MapComponentsView.m in Sources */ = {isa = PBXBuildFile; fileRef = E1346AA01D867367005A29E4 /* MapComponentsView.m */; };
 		E1346AAA1D87258F005A29E4 /* PointViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E1346AA81D87258F005A29E4 /* PointViewController.m */; };
 		E1346AAB1D87258F005A29E4 /* PointViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1346AA91D87258F005A29E4 /* PointViewController.xib */; };
+		E147922F1DAEC06200C14282 /* RouteHintAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = E147922E1DAEC06100C14282 /* RouteHintAnnotation.m */; };
 		E179248C1D83872500478827 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E179248B1D83872500478827 /* MenuViewController.m */; };
 		E17924901D83E8C400478827 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E179248F1D83E8C400478827 /* DetailViewController.m */; };
 		E1800FBB1D835D790095F5EF /* Route.m in Sources */ = {isa = PBXBuildFile; fileRef = E1800FBA1D835D790095F5EF /* Route.m */; };
@@ -70,6 +71,8 @@
 		E1346AA71D87258F005A29E4 /* PointViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PointViewController.h; sourceTree = "<group>"; };
 		E1346AA81D87258F005A29E4 /* PointViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PointViewController.m; sourceTree = "<group>"; };
 		E1346AA91D87258F005A29E4 /* PointViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PointViewController.xib; sourceTree = "<group>"; };
+		E147922D1DAEC06100C14282 /* RouteHintAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteHintAnnotation.h; sourceTree = "<group>"; };
+		E147922E1DAEC06100C14282 /* RouteHintAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RouteHintAnnotation.m; sourceTree = "<group>"; };
 		E179248A1D83872500478827 /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
 		E179248B1D83872500478827 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
 		E179248E1D83E8C400478827 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
@@ -172,6 +175,8 @@
 				E1800FBD1D8364400095F5EF /* RoutePointAnnotation.m */,
 				E1AAECFC1D86224E00A1ECEF /* RouteFeedback.h */,
 				E1AAECFD1D86224E00A1ECEF /* RouteFeedback.m */,
+				E147922D1DAEC06100C14282 /* RouteHintAnnotation.h */,
+				E147922E1DAEC06100C14282 /* RouteHintAnnotation.m */,
 			);
 			name = Route;
 			sourceTree = "<group>";
@@ -501,6 +506,7 @@
 				E1A28E831D8309F9007724F1 /* CustomAnnotationView.m in Sources */,
 				E1EC40101D6D865600F364F9 /* AppDelegate.m in Sources */,
 				E1800FBE1D8364400095F5EF /* RoutePointAnnotation.m in Sources */,
+				E147922F1DAEC06200C14282 /* RouteHintAnnotation.m in Sources */,
 				E1AAECF61D8601A700A1ECEF /* FixedNavigationViewController.m in Sources */,
 				E1A28E6F1D82F8BC007724F1 /* NetManager.m in Sources */,
 				E1346A9E1D864433005A29E4 /* RatingVIew.m in Sources */,

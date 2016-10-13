@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "RoutePoint.h"
+#import "DetailViewController.h"
 
 @interface PointViewController : UIViewController
+@property (nonatomic, weak) DetailViewController *detailVC;
 
 - (void)configureWithRoutePoint:(RoutePoint *)routePoint;
 

@@ -7,6 +7,7 @@
 //
 
 #import "PointViewController.h"
+#import "RoutePointAnnotation.h"
 
 @interface PointViewController () <UIGestureRecognizerDelegate>
 
@@ -25,6 +26,7 @@
 }
 
 - (void)configureWithRoutePoint:(RoutePoint *)routePoint {
+    _routePoint = routePoint;
     self.view.backgroundColor = [UIColor clearColor];
     [self addBlurBackground];
     [self buildInterface];
@@ -116,39 +118,60 @@
     
     
     //Title
+    CGFloat titleHeight = 40.0;
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0,
+                                                                    popupView.frame.size.width,
+                                                                    titleHeight)];
+    titleLabel.text = _routePoint.title;
+    titleLabel.textColor = [UIColor whiteColor];
+    titleLabel.font = [UIFont systemFontOfSize:20.0 weight:UIFontWeightLight];
+    titleLabel.textAlignment = NSTextAlignmentCenter;
     
-    //Text block
+    [popupView addSubview:titleLabel];
     
+    //Top Divide line
+    padding = 8;
+    UIView *topLine = [[UIView alloc] initWithFrame:CGRectMake(padding, titleLabel.frame.origin.y + titleLabel.frame.size.height,
+                                                               popupView.frame.size.width - padding*2, 1)];
+    topLine.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
+    [popupView addSubview:topLine];
+
     //Action button
-    CGFloat height = 50.0;
+    CGFloat buttonHeight = 50.0;
     UIButton *actionButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    actionButton.frame = CGRectMake(0, popupView.bounds.size.height - height, popupView.bounds.size.width, height);
+    actionButton.frame = CGRectMake(0, popupView.bounds.size.height - buttonHeight, popupView.bounds.size.width, buttonHeight);
     actionButton.backgroundColor = [UIColor clearColor];
-    [actionButton setTitle:@"Задание" forState:UIControlStateNormal];
+    [actionButton setTitle:@"Далее" forState:UIControlStateNormal];
     [actionButton setTitleColor:[UIColor colorWithHue:242/360.0 saturation:0.47 brightness:1.0 alpha:1.0] forState:UIControlStateNormal];
     actionButton.titleLabel.bounds = CGRectMake(0, 0, 140, 20);
-//    actionButton.titleLabel.text = @"Задание";
     actionButton.titleLabel.textColor = [UIColor colorWithHue:242/360.0 saturation:0.47 brightness:1.0 alpha:1.0];
-    actionButton.titleLabel.font = [UIFont fontWithName:@".SFUIText-Regular" size:17.0];
+    actionButton.titleLabel.font = [UIFont systemFontOfSize:17.0 weight:UIFontWeightRegular];
     actionButton.titleLabel.textAlignment = NSTextAlignmentCenter;
     [actionButton addTarget:self action:@selector(buttonPressed) forControlEvents:UIControlEventTouchUpInside];
     
     UIView *line = [[UIView alloc] initWithFrame:CGRectMake(1, 0, actionButton.frame.size.width - 2, 1)];
     line.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
     [actionButton addSubview:line];
-    
+
     [popupView addSubview:actionButton];
     
+    //Text block
+    UITextView *textView = [[UITextView alloc] initWithFrame:CGRectMake(padding, topLine.frame.origin.y + 1,
+                                                                        popupView.frame.size.width - padding*2,
+                                                                        popupView.frame.size.height - buttonHeight - titleHeight)];
+    textView.text = _routePoint.text;
+    textView.textColor = [UIColor whiteColor];
+    textView.font = [UIFont systemFontOfSize:14.0 weight:UIFontWeightRegular];
+    textView.textAlignment = NSTextAlignmentJustified;
+    textView.backgroundColor = [UIColor clearColor];
+    textView.editable = NO;
+    textView.showsVerticalScrollIndicator = NO;
+    
+    [popupView addSubview:textView];
 }
 
 - (UIColor *)tintColor {
     return [UIColor whiteColor];
-}
-
-- (CGFloat)textBlockHeight {
-    CGFloat height = 0;
-    
-    return height;
 }
 
 #pragma mark - UIGestureRecognizer Delegate methods 
@@ -182,7 +205,9 @@
 //        
 //    }];
     }
+    NSLog(@"Parent VC: %@", self.parentViewController);
     NSLog(@"Dismissing Point View Controller");
+    [_detailVC openNextRoutePoint];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

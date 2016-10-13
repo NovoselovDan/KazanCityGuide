@@ -32,7 +32,7 @@
     
     return height;
 }
-+(float) getHeightForText:(NSString*) text withFont:(UIFont*) font andWidth:(float) width{
++(float) getHeightForText:(NSString*)text withFont:(UIFont*)font andWidth:(float)width{
     CGSize constraint = CGSizeMake(width , 20000.0f);
     CGSize title_size;
     float totalHeight;

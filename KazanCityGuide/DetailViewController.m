@@ -19,6 +19,12 @@
 #define ToRadian(x) ((x) * M_PI/180)
 #define ToDegrees(x) ((x) * 180/M_PI)
 
+typedef NS_ENUM(NSInteger, RoutingState) {
+    Stopped,
+    Started,
+    Ended
+};
+
 @interface DetailViewController () <MGLMapViewDelegate, UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong)Route *route;
 @property (weak, nonatomic) IBOutlet MGLMapView *mapView;
@@ -36,25 +42,31 @@
 @property (weak, nonatomic) IBOutlet UIButton *plusButton;
 @property (weak, nonatomic) IBOutlet UIButton *minusButton;
 
+@property (strong, nonatomic) UIView *hintAnnotationView;
 
 @end
 
 
 @implementation DetailViewController {
     dispatch_once_t token;
-    CGRect tableViewInitialFrame, okButtonInitialFrame, subtitbleInitialFrame;
     NSArray *mapComponents, *detailComponents;
-    RoutePointAnnotation *routePointAnnotation;
+    RoutePointAnnotation *currentRoutePointAnnotation;
+    RouteHintAnnotation *currentHintAnnotation;
     MGLPolyline *currentPolyline;
     //Route handling
     int currentPointIndex;
-    BOOL annotationViewShowed;
+    BOOL pointViewShowed;
+    BOOL canShowAnnotationView;
+    RoutingState state;
 }
 - (void)configureWithRoute:(Route *)route {
     _route = route;
-    routePointAnnotation = [[RoutePointAnnotation alloc] initWithRoutePoint:[_route firstPoint]];
+    currentRoutePointAnnotation = [[RoutePointAnnotation alloc] initWithRoutePoint:[_route firstPoint]];
     currentPointIndex = (_route.points.count > 0) ? 0 : -1;
-    annotationViewShowed = NO;
+    pointViewShowed = NO;
+    canShowAnnotationView = NO;
+    state = Stopped;
+    _hintAnnotationView = nil;
     
     NSLog(@"DetailVC configuring completed!: %@", _route);
 }
@@ -73,6 +85,12 @@
     mapComponents = @[_exitButton, _taskLabel, _mapSubtitleLabel, _centerButton, _plusButton, _minusButton];
     detailComponents = @[_okButton, _subtitleLabel, _tableView];
     
+    if (!_mapView.hidden) {
+        for (UIView *view in mapComponents) {
+            [view setHidden:YES];
+            [view setAlpha:0.0];
+        }
+    }
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -81,12 +99,8 @@
     [self mapViewSetup];
     [self tableViewSetup];
     
-    if (!_mapView.hidden) {
-        for (UIView *view in mapComponents) {
-            [view setHidden:YES];
-            [view setAlpha:0.0];
-        }
-    }
+    NSLog(@"View will appear!!!");
+    pointViewShowed = NO;
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -94,9 +108,11 @@
 }
 - (IBAction)okPressed:(id)sender {
     [self hideMenuElements];
+    state = Started;
 }
 - (IBAction)exitPressed:(id)sender {
     [self showMenuElements];
+    state = Stopped;
 }
 - (IBAction)centerPressed:(id)sender {
 //    CLLocation *loc1 = [[CLLocation alloc] initWithLatitude:_mapView.camera.centerCoordinate.latitude
@@ -117,9 +133,16 @@
 }
 - (IBAction)plusPresse:(id)sender {
     [_mapView setZoomLevel:_mapView.zoomLevel+0.5 animated:YES];
+    [self hideAnnotation];
 }
 - (IBAction)minusPressed:(id)sender {
     [_mapView setZoomLevel:_mapView.zoomLevel-0.5 animated:YES];
+    for (RoutePoint *p in _route.points) {
+        if (p.hints.count > 0) {
+            NSLog(@"FOUNDED!");
+            [self showAnnotation:[p.hints firstObject]];
+        }
+    }
 //    [self pushPointViewControllerWithAnnotation:routePointAnnotation];
 }
 
@@ -171,7 +194,7 @@
 }
 - (void)adjustCamera {
     [_mapView resetNorth];
-    CLLocationDistance distance = [self distanceFromCoordinate:routePointAnnotation.coordinate];
+    CLLocationDistance distance = [self distanceFromCoordinate:currentRoutePointAnnotation.coordinate];
     NSLog(@"mapview insets: %@", NSStringFromUIEdgeInsets(_mapView.contentInset));
     if (_taskLabel.hidden) {
 //        [_mapView setContentInset:UIEdgeInsetsMake(self.navigationController.navigationBar.frame.size.height, 0,
@@ -187,7 +210,7 @@
     
 //    NSLog(@"adjusting distance: %f", distance);
 //    NSLog(@"user's location: %@", _mapView.userLocation);
-    CLLocationCoordinate2D midpoint = [[self class] midpointBetweenCoordinate:routePointAnnotation.coordinate
+    CLLocationCoordinate2D midpoint = [[self class] midpointBetweenCoordinate:currentRoutePointAnnotation.coordinate
                                                                 andCoordinate:_mapView.userLocation.coordinate];
     
     MGLMapCamera *camera = [MGLMapCamera cameraLookingAtCenterCoordinate:midpoint
@@ -241,13 +264,18 @@
         //                   });
     }
     CLLocationCoordinate2D coordinates[] = {
-        routePointAnnotation.coordinate,
+        currentRoutePointAnnotation.coordinate,
         _mapView.userLocation.coordinate
     };
     NSUInteger numberOfCoordinates = sizeof(coordinates) / sizeof(CLLocationCoordinate2D);
-    
+    NSLog(@"mapView annotations count: %lu", _mapView.annotations.count);
     if (self.mapView.annotations.count > 1) {
-        [self.mapView removeAnnotation:[self.mapView.annotations lastObject]];
+        for (id<MGLAnnotation> ann in self.mapView.annotations) {
+            if ([ann isKindOfClass:[MGLPolyline class]]) {
+                [self.mapView removeAnnotation:ann];
+            }
+        }
+//        [self.mapView removeAnnotation:[self.mapView.annotations lastObject]];
     }
     MGLPolyline *polyline = [MGLPolyline polylineWithCoordinates:coordinates
                                                            count:numberOfCoordinates];
@@ -332,23 +360,46 @@
 }
 
 #pragma mark - Route handling
-
+- (void)openNextRoutePoint {
+    NSLog(@"METHOD: Open Next Route Point");
+    if (currentPointIndex < _route.points.count - 1) {
+        currentPointIndex+=1;
+        currentRoutePointAnnotation = [[RoutePointAnnotation alloc] initWithRoutePoint:[_route.points objectAtIndex:currentPointIndex]];
+        [_mapView addAnnotation:currentRoutePointAnnotation];
+        [self drawPolyline];
+        canShowAnnotationView = NO;
+        pointViewShowed = NO;
+    } else {
+        state = Ended;
+    }
+    NSLog(@"State: %li", (long)state);
+}
 
 #pragma mark - MGLMapView delegate methods
 - (BOOL)mapView:(MGLMapView *)mapView annotationCanShowCallout:(id<MGLAnnotation>)annotation {
+//    RoutePointAnnotation *routeAnnotation = (RoutePointAnnotation *)annotation;
+//    if ([routeAnnotation isEqual:currentRoutePointAnnotation]) {
+//        NO;
+//    }
+//    return YES;
     return NO;
 }
+//-(MGLAnnotationView *)mapView:(MGLMapView *)mapView viewForAnnotation:(id<MGLAnnotation>)annotation {
+//    [self pushPointViewControllerWithAnnotation:annotation];
+//    return nil;
+//}
 - (void)mapView:(MGLMapView *)mapView didUpdateUserLocation:(MGLUserLocation *)userLocation {
     dispatch_once(&token, ^{
         [self adjustCamera];
     });
     [self drawPolyline];
-    float distance = [self distanceFromCoordinate:routePointAnnotation.coordinate];
-    _subtitleLabel.text = _mapSubtitleLabel.text = [NSString stringWithFormat:@"До начала маршрута %fм",
+    float distance = [self distanceFromCoordinate:currentRoutePointAnnotation.coordinate];
+    _subtitleLabel.text = _mapSubtitleLabel.text = [NSString stringWithFormat:@"До начала маршрута %.1fм",
                                                     distance];
-    if (distance < 1 && !annotationViewShowed) {
-        [self pushPointViewControllerWithAnnotation:routePointAnnotation];
-        annotationViewShowed = YES;
+    if (distance < 5.0 && !pointViewShowed && state == Started) {
+        [self pushPointViewControllerWithAnnotation:currentRoutePointAnnotation];
+        pointViewShowed = YES;
+        canShowAnnotationView = YES;
     }
 }
 - (MGLAnnotationView *)mapView:(MGLMapView *)mapView viewForAnnotation:(id<MGLAnnotation>)annotation {
@@ -433,15 +484,176 @@
 - (void)pushPointViewControllerWithAnnotation:(RoutePointAnnotation *)annotation {
 //    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     PointViewController *pointVC = [[PointViewController alloc] init];
-    [pointVC configureWithRoutePoint:routePointAnnotation.routePoint];
+    [pointVC configureWithRoutePoint:currentRoutePointAnnotation.routePoint];
+    pointVC.detailVC = self;
     self.modalPresentationStyle = UIModalPresentationOverFullScreen;
     [self presentViewController:pointVC animated:YES completion:nil];
+    
     
 //    UINavigationController *navVC = [[FixedNavigationViewController alloc] initWithRootViewController:pointVC];
 //    navVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
 //    [self presentViewController:navVC animated:YES completion:nil];
 
 }
+
+#pragma mark - Hint Annotations 
+CGFloat hintWidth = 270.0;
+CGFloat padding = 8.0;
+
+- (void)showAnnotation:(RouteHintAnnotation *)hint {
+    currentHintAnnotation = hint;
+    
+    NSLog(@"_hintAnnotationView: %@", _hintAnnotationView);
+    
+    if (_hintAnnotationView) {
+        UIView *hintV;
+        for (UIView *subview in self.view.subviews) {
+            if ([subview isEqual:_hintAnnotationView]) {
+                NSLog(@"hint subview founded");
+                hintV = subview;
+            }
+        }
+        NSLog(@"Hiding Annotation");
+        [UIView animateWithDuration:0.2
+                              delay:0
+             usingSpringWithDamping:5.0f
+              initialSpringVelocity:50.0f
+                            options:UIViewAnimationOptionCurveEaseIn
+                         animations:^{
+                             CGRect frame = hintV.frame;
+                             frame.origin.y = -10 - frame.size.height;
+                             hintV.frame = frame;
+                             
+                             _taskLabel.hidden = NO;
+                         } completion:^(BOOL finished) {
+                             //Showing new hint;
+                             UIView *hintV = [DetailViewController getHintAnnotationViewWith:currentHintAnnotation.text];
+                             hintV.center = self.view.center;
+                             CGRect frame = hintV.frame;
+                             frame.origin.y = 0 - frame.size.height;
+                             hintV.frame = frame;
+                             
+                             _hintAnnotationView = nil;
+                             [self.view addSubview:hintV];
+                             [UIView animateWithDuration:0.8
+                                                   delay:0
+                                  usingSpringWithDamping:3.0f
+                                   initialSpringVelocity:30.0f
+                                                 options:UIViewAnimationOptionCurveEaseInOut
+                                              animations:^{
+                                                  
+                                                  
+                                                  CGRect frame = hintV.frame;
+                                                  frame.origin.y = 30;
+                                                  hintV.frame = frame;
+                                                  
+                                                  _taskLabel.hidden = YES;
+                                              } completion:^(BOOL finished) {
+                                                  _hintAnnotationView = hintV;
+                                              }];
+                         }];
+    } else {
+        UIView *hintV = [DetailViewController getHintAnnotationViewWith:currentHintAnnotation.text];
+        hintV.center = self.view.center;
+        CGRect frame = hintV.frame;
+        frame.origin.y = 0 - frame.size.height;
+        hintV.frame = frame;
+        
+        [self.view addSubview:hintV];
+        [UIView animateWithDuration:0.8
+                              delay:0
+             usingSpringWithDamping:3.0f
+              initialSpringVelocity:30.0f
+                            options:UIViewAnimationOptionCurveEaseInOut
+                         animations:^{
+                             
+                             
+                             CGRect frame = hintV.frame;
+                             frame.origin.y = 30;
+                             hintV.frame = frame;
+                             
+                             _taskLabel.hidden = YES;
+                         } completion:^(BOOL finished) {
+                             _hintAnnotationView = hintV;
+                         }];
+    }
+//    hintV.translatesAutoresizingMaskIntoConstraints = NO;
+//    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:hintV
+//                                                          attribute:NSLayoutAttributeCenterX
+//                                                          relatedBy:NSLayoutRelationEqual
+//                                                             toItem:hintV
+//                                                          attribute:NSLayoutAttributeCenterX
+//                                                         multiplier:1.0
+//                                                           constant:0]];
+}
+- (void)hideAnnotation {
+    if (_hintAnnotationView) {
+        UIView *hintV = nil;
+        for (UIView *subview in self.view.subviews) {
+            if ([subview isEqual:_hintAnnotationView]) {
+                NSLog(@"hint subview founded");
+                hintV = subview;
+            }
+        }
+        
+        [UIView animateWithDuration:0.8
+                              delay:0
+             usingSpringWithDamping:5.0f
+              initialSpringVelocity:30.0f
+                            options:UIViewAnimationOptionCurveEaseInOut
+                         animations:^{
+                             CGRect frame = hintV.frame;
+                             frame.origin.y = -10 - frame.size.height;
+                             hintV.frame = frame;
+                             
+                             _taskLabel.hidden = NO;
+                         } completion:^(BOOL finished) {
+                             _hintAnnotationView = nil;
+                         }];
+    }
+}
+
++ (UIView *)getHintAnnotationViewWith:(NSString *)text {
+    UILabel *hintLabel = [[UILabel alloc] initWithFrame:CGRectMake(padding, padding, hintWidth, [self heightForText:text])];
+    hintLabel.backgroundColor = [UIColor clearColor];
+    hintLabel.text = text;
+    hintLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    hintLabel.numberOfLines = 0;
+    hintLabel.font = [self annotationFont];
+    hintLabel.textColor = [UIColor whiteColor];
+    hintLabel.textAlignment = NSTextAlignmentCenter;
+    
+    UIView *hintView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, hintWidth + 2*padding, hintLabel.bounds.size.height + 2*padding)];
+    hintView.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.5];
+    hintView.layer.cornerRadius = 10.0;
+    hintView.layer.masksToBounds = YES;
+    [hintView addSubview:hintLabel];
+    
+    return hintView;
+}
+
++ (CGFloat)heightForText:(NSString *)text {
+    CGSize constraint = CGSizeMake(hintWidth , 20000.0f);
+    CGSize title_size;
+    float totalHeight;
+    
+    SEL selector = @selector(boundingRectWithSize:options:attributes:context:);
+    if ([text respondsToSelector:selector]) {
+        title_size = [text boundingRectWithSize:constraint
+                                        options:NSStringDrawingUsesLineFragmentOrigin
+                                     attributes:@{ NSFontAttributeName : [self annotationFont] }
+                                        context:nil].size;
+        
+        totalHeight = ceil(title_size.height);
+    }
+    
+    CGFloat height = MAX(totalHeight, 40.0f);
+    return height;
+}
++ (UIFont *)annotationFont {
+    return [UIFont systemFontOfSize:17.0 weight:UIFontWeightMedium];
+}
+
 /*
 #pragma mark - Navigation
 

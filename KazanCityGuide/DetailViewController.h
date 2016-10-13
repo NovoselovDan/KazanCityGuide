@@ -7,10 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Route.h"
+//#import "Route.h"
+#import "RouteHintAnnotation.h"
 
 @interface DetailViewController : UIViewController
 
 - (void)configureWithRoute:(Route *)route;
+
+#pragma mark - Route handling
+- (void)openNextRoutePoint;
 
 @end
