@@ -159,10 +159,10 @@
                                 <exclude reference="PEg-57-a6Z"/>
                                 <exclude reference="ne6-HL-ic4"/>
                                 <exclude reference="y9g-MK-ASY"/>
-                                <exclude reference="uyb-fX-pdC"/>
                                 <exclude reference="8F8-mG-lu4"/>
                                 <exclude reference="AL2-Pw-cbq"/>
                                 <exclude reference="YtP-fk-Flp"/>
+                                <exclude reference="uyb-fX-pdC"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -182,10 +182,10 @@
                                 <include reference="PEg-57-a6Z"/>
                                 <include reference="ne6-HL-ic4"/>
                                 <include reference="y9g-MK-ASY"/>
-                                <include reference="uyb-fX-pdC"/>
                                 <include reference="8F8-mG-lu4"/>
                                 <include reference="AL2-Pw-cbq"/>
                                 <include reference="YtP-fk-Flp"/>
+                                <include reference="uyb-fX-pdC"/>
                             </mask>
                         </variation>
                     </view>
@@ -562,6 +562,12 @@
                                         <exclude reference="Pld-3u-PuF"/>
                                     </mask>
                                     <mask key="constraints">
+                                        <exclude reference="7MF-7i-3aZ"/>
+                                        <exclude reference="92d-AO-qZN"/>
+                                        <exclude reference="U6B-ij-L3D"/>
+                                        <exclude reference="gvB-wr-RUW"/>
+                                        <exclude reference="BXZ-JW-aXf"/>
+                                        <exclude reference="jhr-gc-S7K"/>
                                         <exclude reference="kjL-jN-pq3"/>
                                         <exclude reference="wtU-4v-Jfs"/>
                                         <exclude reference="7HN-ud-fUD"/>
@@ -570,12 +576,6 @@
                                         <exclude reference="Yrj-m5-c50"/>
                                         <exclude reference="Khn-5d-7lO"/>
                                         <exclude reference="ers-Ug-mRR"/>
-                                        <exclude reference="BXZ-JW-aXf"/>
-                                        <exclude reference="jhr-gc-S7K"/>
-                                        <exclude reference="7MF-7i-3aZ"/>
-                                        <exclude reference="92d-AO-qZN"/>
-                                        <exclude reference="U6B-ij-L3D"/>
-                                        <exclude reference="gvB-wr-RUW"/>
                                     </mask>
                                 </variation>
                                 <variation key="widthClass=compact">
@@ -588,6 +588,12 @@
                                         <include reference="Pld-3u-PuF"/>
                                     </mask>
                                     <mask key="constraints">
+                                        <include reference="7MF-7i-3aZ"/>
+                                        <include reference="92d-AO-qZN"/>
+                                        <include reference="U6B-ij-L3D"/>
+                                        <include reference="gvB-wr-RUW"/>
+                                        <include reference="BXZ-JW-aXf"/>
+                                        <include reference="jhr-gc-S7K"/>
                                         <include reference="kjL-jN-pq3"/>
                                         <include reference="wtU-4v-Jfs"/>
                                         <include reference="7HN-ud-fUD"/>
@@ -596,12 +602,6 @@
                                         <include reference="Yrj-m5-c50"/>
                                         <include reference="Khn-5d-7lO"/>
                                         <include reference="ers-Ug-mRR"/>
-                                        <include reference="BXZ-JW-aXf"/>
-                                        <include reference="jhr-gc-S7K"/>
-                                        <include reference="7MF-7i-3aZ"/>
-                                        <include reference="92d-AO-qZN"/>
-                                        <include reference="U6B-ij-L3D"/>
-                                        <include reference="gvB-wr-RUW"/>
                                     </mask>
                                 </variation>
                             </view>
@@ -653,7 +653,7 @@
                                     <constraint firstAttribute="height" constant="12" id="Cef-mt-WT8"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="180" id="Yxb-PJ-MIc"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="12" id="bSA-hZ-Ol5"/>
-                                    <constraint firstAttribute="width" constant="180" id="hqF-Ve-ctQ"/>
+                                    <constraint firstAttribute="width" constant="220" id="hqF-Ve-ctQ"/>
                                     <constraint firstAttribute="height" constant="12" id="pUf-gB-Iow"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
@@ -713,13 +713,13 @@
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="Lbj-1r-Nur"/>
-                                <exclude reference="O5Z-rp-rxl"/>
-                                <exclude reference="aCZ-yo-sZN"/>
-                                <exclude reference="bDa-JE-0cV"/>
                                 <exclude reference="poZ-TA-BiY"/>
                                 <exclude reference="3wc-Fc-Klb"/>
                                 <exclude reference="dER-uZ-4l1"/>
                                 <exclude reference="tnU-U1-ebL"/>
+                                <exclude reference="O5Z-rp-rxl"/>
+                                <exclude reference="aCZ-yo-sZN"/>
+                                <exclude reference="bDa-JE-0cV"/>
                                 <exclude reference="BMc-Hk-Dfk"/>
                                 <exclude reference="ErB-F7-Mba"/>
                                 <exclude reference="dc9-aC-tyc"/>
@@ -734,13 +734,13 @@
                             </mask>
                             <mask key="constraints">
                                 <include reference="Lbj-1r-Nur"/>
-                                <include reference="O5Z-rp-rxl"/>
-                                <include reference="aCZ-yo-sZN"/>
-                                <exclude reference="bDa-JE-0cV"/>
                                 <include reference="poZ-TA-BiY"/>
                                 <include reference="3wc-Fc-Klb"/>
                                 <include reference="dER-uZ-4l1"/>
                                 <include reference="tnU-U1-ebL"/>
+                                <include reference="O5Z-rp-rxl"/>
+                                <include reference="aCZ-yo-sZN"/>
+                                <exclude reference="bDa-JE-0cV"/>
                                 <include reference="BMc-Hk-Dfk"/>
                                 <include reference="ErB-F7-Mba"/>
                                 <include reference="dc9-aC-tyc"/>
@@ -764,7 +764,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rDX-fs-LRY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1837.5" y="1145"/>
+            <point key="canvasLocation" x="1836" y="1144.6776611694154"/>
         </scene>
         <!--Fixed Navigation View Controller-->
         <scene sceneID="xhk-kb-tJz">

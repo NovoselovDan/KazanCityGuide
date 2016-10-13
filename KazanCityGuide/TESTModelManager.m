@@ -39,15 +39,30 @@
     point.title = @"Часы на ул. Баумана";
     point.text = @"Двигайтесь по пешеходной улице. Это улица Баумана, кстати, пешеходной она стала в 1999 г. Тогда же, в том месте, где улица примыкает к площади, были установлены часы. Эта работа скульптора Игоря Башмакова. Но, создав её, он понял, что композиции недостаёт национального колорита, и обратился за помощью к Наджипу Наккашу – татарскому каллиграфу, принявшихся одним из первых возрождать восточный вид изобразительного искусства – шамаиль – искусство художественной каллиграфии. На циферблате Наджип Наккаш арабским шрифтом написал числительные, а по периметру – строки из стихов Габдуллы Тукая. Присмотритесь к этим символам, сможете прочитать? А хотите? Чтобы узнать их перевод Вам необходимо кое-что сделать...";
     point.route = route;
-    
-        //Hints
-        RouteHintAnnotation *hint = [[RouteHintAnnotation alloc] initWithRoutePoint:point andCoordinate:CLLocationCoordinate2DMake(55.788287, 49.119427)];
-        hint.activeRadius = 25.0;
-        hint.text = @"Высокая башня из красного кирпича - колокольня Богоявленского собора, но о ней чуть позже.";
-        point.hints = [NSArray arrayWithObject:hint];
-    
     [points addObject:point];
-
+    
+    point = [[RoutePoint alloc] init];
+    point.coord = CLLocationCoordinate2DMake(55.787909, 49.120808);
+    point.reachRadius = 15.0;
+    point.title = @"Аптека Бренинга";
+    point.text = @"Угловое здание, примыкающее к упоминаемому нами торговому центру - дом, известный как \"Аптека Бренинга\". С середины XIX в. его хозяином был Йоханнес Бренинг – немецкий переселенец и знаменитый аптекарь, содержавший свою аптеку на первом этаже этого дома. Она сохранилась, и ныне это старейшая из действующих аптек города. Его сын Арнольд Бренинг, также пошедший по стопам отца, имел одно необычное увлечение – фотографирование. Благодаря этому он оставил в память о себе большую коллекцию фотокарточек с видами города.";
+    point.route = route;
+        //Hints
+        NSMutableArray *hintsArray = [NSMutableArray new];
+        RouteHintAnnotation *hint = [[RouteHintAnnotation alloc] initWithRoutePoint:point andCoordinate:CLLocationCoordinate2DMake(55.787413, 49.121525)];
+        hint.activeRadius = 15.0;
+        hint.text = @"Теперь следуйте по улице, дойдите до перекрёстка.";
+        [hintsArray addObject:hint];
+    
+        hint = [[RouteHintAnnotation alloc] initWithRoutePoint:point andCoordinate:CLLocationCoordinate2DMake(55.787680, 49.120977)];
+        hint.activeRadius = 10.0;
+        hint.text = @"Высокая башня из красного кирпича - колокольня Богоявленского собора, но о ней чуть позже.";
+        [hintsArray addObject:hint];
+    
+        point.hints = [NSArray arrayWithArray:hintsArray];
+    [points addObject:point];
+    
+    
     route.points = [NSArray arrayWithArray:points];
     
     //Feedbacks

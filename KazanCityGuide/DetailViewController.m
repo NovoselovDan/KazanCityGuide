@@ -276,13 +276,17 @@ typedef NS_ENUM(NSInteger, RoutingState) {
     if (self.mapView.annotations.count > 1) {
         for (id<MGLAnnotation> ann in self.mapView.annotations) {
             if ([ann isKindOfClass:[MGLPolyline class]]) {
-                [self.mapView removeAnnotation:ann];
+                MGLPolyline *polyline =(MGLPolyline *) ann;
+                if ([polyline.title isEqualToString:@"direction"]) {
+                    [self.mapView removeAnnotation:ann];
+                }
             }
         }
 //        [self.mapView removeAnnotation:[self.mapView.annotations lastObject]];
     }
     MGLPolyline *polyline = [MGLPolyline polylineWithCoordinates:coordinates
                                                            count:numberOfCoordinates];
+    polyline.title = @"direction";
     [self.mapView addAnnotation:polyline];
 }
 - (float)distanceFromCoordinate:(CLLocationCoordinate2D)coordinate {
@@ -365,19 +369,46 @@ typedef NS_ENUM(NSInteger, RoutingState) {
 
 #pragma mark - Route handling
 - (void)openNextRoutePoint {
-    NSLog(@"METHOD: Open Next Route Point");
     if (currentPointIndex < _route.points.count - 1) {
         currentPointIndex+=1;
         currentRoutePointAnnotation = [[RoutePointAnnotation alloc] initWithRoutePoint:[_route.points objectAtIndex:currentPointIndex]];
         [self addToMapRoutePointAnnotation:currentRoutePointAnnotation];
 //        [_mapView addAnnotation:currentRoutePointAnnotation];
         [self drawPolyline];
+        [self drawPath];
         canShowAnnotationView = NO;
         pointViewShowed = NO;
     } else {
         state = Ended;
+        currentRoutePointAnnotation = nil;
+        [self drawPath];
     }
     NSLog(@"State: %li", (long)state);
+}
+- (void)drawPath {
+    NSMutableArray *routePtAnnotations = [NSMutableArray new];
+    for (id<MGLAnnotation> ann in self.mapView.annotations) {
+        if ([ann isKindOfClass:[MGLPolyline class]]) {
+            MGLPolyline *polyline =(MGLPolyline *) ann;
+            if ([polyline.title isEqualToString:@"path"]) {
+                [self.mapView removeAnnotation:ann];
+            }
+        } else if ([ann isKindOfClass:[RoutePointAnnotation class]] && ![ann isEqual:currentRoutePointAnnotation]) {
+            [routePtAnnotations addObject:ann];
+        }
+    }
+    
+    CLLocationCoordinate2D coordinates[routePtAnnotations.count];
+    for (int i=0; i < routePtAnnotations.count; i++) {
+        RoutePointAnnotation *ann = routePtAnnotations[i];
+        coordinates[i] = ann.coordinate;
+    }
+    
+    NSUInteger numberOfCoordinates = sizeof(coordinates) / sizeof(CLLocationCoordinate2D);
+    MGLPolyline *polyline = [MGLPolyline polylineWithCoordinates:coordinates
+                                                           count:numberOfCoordinates];
+    polyline.title = @"path";
+    [self.mapView addAnnotation:polyline];
 }
 
 #pragma mark - MGLMapView delegate methods
@@ -397,8 +428,8 @@ typedef NS_ENUM(NSInteger, RoutingState) {
     [self drawPolyline];
     //map Subtitle Label update
     float distance = [self distanceFromCoordinate:currentRoutePointAnnotation.coordinate];
-    _subtitleLabel.text = _mapSubtitleLabel.text = [NSString stringWithFormat:@"До %@ маршрута %.1fм",
-                                                    (currentPointIndex == 0)?@"начала":@"следующей точки",
+    _subtitleLabel.text = _mapSubtitleLabel.text = [NSString stringWithFormat:@"До %@ точки %.1fм",
+                                                    (currentPointIndex == 0)?@"начальной":@"следующей",
                                                     distance];
     //hint annotations check
     NSLog(@"searching hint annotation");
@@ -423,11 +454,15 @@ typedef NS_ENUM(NSInteger, RoutingState) {
 }
 - (MGLAnnotationView *)mapView:(MGLMapView *)mapView viewForAnnotation:(id<MGLAnnotation>)annotation {
     // This example is only concerned with point annotations.
+    NSLog(@"view for annotaion: class = %@", [annotation class]);
     if (![annotation isKindOfClass:[MGLPointAnnotation class]]) {
         return nil;
     }
     if ([annotation isKindOfClass:[RouteHintAnnotation class]]) {
-        return nil;
+        NSLog(@"view for annotaion: Route Hint Annotation found");
+        MGLAnnotationView *annV = [[MGLAnnotationView alloc] init];
+        annV.hidden = YES;
+        return annV;
     }
     
     // Use the point annotation’s longitude value (as a string) as the reuse identifier for its view.
@@ -444,6 +479,12 @@ typedef NS_ENUM(NSInteger, RoutingState) {
         // Set the annotation view’s background color to a value determined by its longitude.
         CGFloat hue = [annotation isKindOfClass:[RoutePointAnnotation class]] ? (242/360.0) : 0.75;
         annotationView.backgroundColor = [UIColor colorWithHue:hue saturation:0.5 brightness:1 alpha:1];
+//
+//        if ([annotation isEqual:currentRoutePointAnnotation]) {
+//            annotationView.backgroundColor = [UIColor colorWithHue:hue saturation:0.5 brightness:1 alpha:1];
+//        } else {
+//            annotationView.backgroundColor = [UIColor grayColor];
+//        }
     }
     
     return annotationView;
@@ -453,6 +494,18 @@ typedef NS_ENUM(NSInteger, RoutingState) {
         return 0.5;
     }
     return 1;
+}
+
+- (UIColor *)mapView:(MGLMapView *)mapView strokeColorForShapeAnnotation:(MGLShape *)annotation {
+    if ([annotation.title isEqualToString:@"path"])
+    {
+        // Mapbox cyan
+//        return [UIColor colorWithRed:59.0f/255.0f green:178.0f/255.0f blue:208.0f/255.0f alpha:1.0f];
+        return [UIColor darkGrayColor];
+    }
+    else {
+        return [UIColor colorWithRed:59.0f/255.0f green:178.0f/255.0f blue:208.0f/255.0f alpha:1.0f];
+    }
 }
 
 #pragma mark - UITableView methods
@@ -638,7 +691,7 @@ CGFloat padding = 8.0;
     hintLabel.textAlignment = NSTextAlignmentCenter;
     
     UIView *hintView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, hintWidth + 2*padding, hintLabel.bounds.size.height + 2*padding)];
-    hintView.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.5];
+    hintView.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.3];
     hintView.layer.cornerRadius = 10.0;
     hintView.layer.masksToBounds = YES;
     [hintView addSubview:hintLabel];
