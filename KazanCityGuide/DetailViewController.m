@@ -6,6 +6,7 @@
 //  Copyright © 2016 Daniil Novoselov. All rights reserved.
 //
 
+#import <AudioToolbox/AudioToolbox.h>
 #import "DetailViewController.h"
 #import "PointViewController.h"
 #import "FixedNavigationViewController.h"
@@ -94,11 +95,12 @@ typedef NS_ENUM(NSInteger, RoutingState) {
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    NSLog(@"Hello vc");
-    [self navigationItemSetup];
-    [self mapViewSetup];
-    [self tableViewSetup];
-    
+    if (state == Stopped) {
+        NSLog(@"Hello vc");
+        [self navigationItemSetup];
+        [self mapViewSetup];
+        [self tableViewSetup];
+    }
     NSLog(@"View will appear!!!");
     pointViewShowed = NO;
 }
@@ -367,16 +369,21 @@ typedef NS_ENUM(NSInteger, RoutingState) {
 
 }
 
+
+-(void)vibrate {
+    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+}
+
 #pragma mark - Route handling
 - (void)openNextRoutePoint {
     if (currentPointIndex < _route.points.count - 1) {
         currentPointIndex+=1;
         currentRoutePointAnnotation = [[RoutePointAnnotation alloc] initWithRoutePoint:[_route.points objectAtIndex:currentPointIndex]];
         [self addToMapRoutePointAnnotation:currentRoutePointAnnotation];
-//        [_mapView addAnnotation:currentRoutePointAnnotation];
+        [_mapView addAnnotation:currentRoutePointAnnotation];
         [self drawPolyline];
         [self drawPath];
-        canShowAnnotationView = NO;
+        canShowAnnotationView = YES;
         pointViewShowed = NO;
     } else {
         state = Ended;
@@ -435,11 +442,13 @@ typedef NS_ENUM(NSInteger, RoutingState) {
     NSLog(@"searching hint annotation");
     for (id<MGLAnnotation> ann in _mapView.annotations) {
         if ([ann isKindOfClass:[RouteHintAnnotation class]]) {
-            NSLog(@"FAOUNDOOOD HINT ANNOTATION AT THE MAP!");
+//            NSLog(@"FAOUNDOOOD HINT ANNOTATION AT THE MAP!");
             RouteHintAnnotation *hintAnnotation = ann;
             float distanceToHint = [self distanceFromCoordinate:hintAnnotation.coordinate];
             if (distanceToHint < hintAnnotation.activeRadius) {
-                [self showAnnotation:hintAnnotation];
+                if (canShowAnnotationView) {
+                    [self showAnnotation:hintAnnotation];
+                }
             } else if (distanceToHint >= hintAnnotation.activeRadius && [hintAnnotation isEqual:currentHintAnnotation]) {
                 [self hideAnnotation];
             }
@@ -576,6 +585,7 @@ CGFloat hintWidth = 270.0;
 CGFloat padding = 8.0;
 
 - (void)showAnnotation:(RouteHintAnnotation *)hint {
+    canShowAnnotationView = NO;
     currentHintAnnotation = hint;
     
     NSLog(@"_hintAnnotationView: %@", _hintAnnotationView);
@@ -625,6 +635,7 @@ CGFloat padding = 8.0;
                                                   _taskLabel.hidden = YES;
                                               } completion:^(BOOL finished) {
                                                   _hintAnnotationView = hintV;
+                                                  [self vibrate];
                                               }];
                          }];
     } else {
@@ -650,6 +661,7 @@ CGFloat padding = 8.0;
                              _taskLabel.hidden = YES;
                          } completion:^(BOOL finished) {
                              _hintAnnotationView = hintV;
+                             [self vibrate];
                          }];
     }
 }
@@ -676,6 +688,7 @@ CGFloat padding = 8.0;
                              _taskLabel.hidden = NO;
                          } completion:^(BOOL finished) {
                              _hintAnnotationView = nil;
+                             canShowAnnotationView = YES;
                          }];
     }
 }

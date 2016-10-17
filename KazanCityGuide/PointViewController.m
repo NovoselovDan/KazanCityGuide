@@ -8,15 +8,22 @@
 
 #import "PointViewController.h"
 #import "RoutePointAnnotation.h"
+#import "RouteQuizz.h"
 
-@interface PointViewController () <UIGestureRecognizerDelegate>
+@interface PointViewController () <UIGestureRecognizerDelegate, UIPageViewControllerDelegate, UIPageViewControllerDataSource>
 
+@property (strong, nonatomic) UIPageViewController *pageVC;
+@property (strong, nonatomic) UIView *popupView;
+@property (strong, nonatomic) UILabel *titleLabel;
+@property (strong, nonatomic) UITextView *textView;
+@property (strong, nonatomic) UIButton *actionButton;
 //@property (nonatomic, strong) UIScrollView *scrollView;
 //@property (nonatomic, strong) UILabel *titleLabel;
 //@property (nonatomic, strong) UILabel *textBlockLabel;
 //@property (nonatomic, strong) UIButton *actionButton;
 
 @property (nonatomic, strong) RoutePoint *routePoint;
+@property (nonatomic, strong) RouteQuizz *routeQuizz;
 @end
 
 @implementation PointViewController
@@ -95,18 +102,17 @@
 - (void)buildInterface {
     //UIScrollview
     CGFloat padding = 44.0;
-    UIView *popupView = [[UIView alloc] initWithFrame:CGRectMake(padding, 64,
+    _popupView = [[UIView alloc] initWithFrame:CGRectMake(padding, 64,
                                                                           [UIScreen mainScreen].bounds.size.width - padding*2,
                                                                           [UIScreen mainScreen].bounds.size.height - padding - 64)];
-    popupView.layer.cornerRadius = 8.0;
-    popupView.layer.masksToBounds = YES;
-    popupView.layer.borderColor = [UIColor colorWithWhite:1.0 alpha:0.2].CGColor;
-    popupView.layer.borderWidth = 1.0;
-    popupView.backgroundColor = [UIColor colorWithHue:240/360.0 saturation:0.13 brightness:0.24 alpha:1.0];
+    _popupView.layer.cornerRadius = 8.0;
+    _popupView.layer.masksToBounds = YES;
+    _popupView.layer.borderColor = [UIColor colorWithWhite:1.0 alpha:0.2].CGColor;
+    _popupView.layer.borderWidth = 1.0;
+    _popupView.backgroundColor = [UIColor colorWithHue:240/360.0 saturation:0.13 brightness:0.24 alpha:1.0];
     
-
-    [self.view addSubview:popupView];
-    popupView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:_popupView];
+    _popupView.translatesAutoresizingMaskIntoConstraints = NO;
 //    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(padding)-[popupView]-(padding)-|"
 //                                                                      options:0
 //                                                                      metrics:@{@"padding" : [NSNumber numberWithDouble:padding]}
@@ -119,55 +125,69 @@
     
     //Title
     CGFloat titleHeight = 40.0;
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0,
-                                                                    popupView.frame.size.width,
+    _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0,
+                                                                    _popupView.frame.size.width,
                                                                     titleHeight)];
-    titleLabel.text = _routePoint.title;
-    titleLabel.textColor = [UIColor whiteColor];
-    titleLabel.font = [UIFont systemFontOfSize:20.0 weight:UIFontWeightLight];
-    titleLabel.textAlignment = NSTextAlignmentCenter;
+    _titleLabel.text = _routePoint.title;
+    _titleLabel.textColor = [UIColor whiteColor];
+    _titleLabel.font = [UIFont systemFontOfSize:20.0 weight:UIFontWeightLight];
+    _titleLabel.textAlignment = NSTextAlignmentCenter;
     
-    [popupView addSubview:titleLabel];
+    [_popupView addSubview:_titleLabel];
     
     //Top Divide line
     padding = 8;
-    UIView *topLine = [[UIView alloc] initWithFrame:CGRectMake(padding, titleLabel.frame.origin.y + titleLabel.frame.size.height,
-                                                               popupView.frame.size.width - padding*2, 1)];
+    UIView *topLine = [[UIView alloc] initWithFrame:CGRectMake(padding, _titleLabel.frame.origin.y + _titleLabel.frame.size.height,
+                                                               _popupView.frame.size.width - padding*2, 1)];
     topLine.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
-    [popupView addSubview:topLine];
+    [_popupView addSubview:topLine];
 
     //Action button
     CGFloat buttonHeight = 50.0;
-    UIButton *actionButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    actionButton.frame = CGRectMake(0, popupView.bounds.size.height - buttonHeight, popupView.bounds.size.width, buttonHeight);
-    actionButton.backgroundColor = [UIColor clearColor];
-    [actionButton setTitle:@"Далее" forState:UIControlStateNormal];
-    [actionButton setTitleColor:[UIColor colorWithHue:242/360.0 saturation:0.47 brightness:1.0 alpha:1.0] forState:UIControlStateNormal];
-    actionButton.titleLabel.bounds = CGRectMake(0, 0, 140, 20);
-    actionButton.titleLabel.textColor = [UIColor colorWithHue:242/360.0 saturation:0.47 brightness:1.0 alpha:1.0];
-    actionButton.titleLabel.font = [UIFont systemFontOfSize:17.0 weight:UIFontWeightRegular];
-    actionButton.titleLabel.textAlignment = NSTextAlignmentCenter;
-    [actionButton addTarget:self action:@selector(buttonPressed) forControlEvents:UIControlEventTouchUpInside];
+    _actionButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    _actionButton.frame = CGRectMake(0, _popupView.bounds.size.height - buttonHeight, _popupView.bounds.size.width, buttonHeight);
+    _actionButton.backgroundColor = [UIColor clearColor];
+    [_actionButton setTitle:@"Далее" forState:UIControlStateNormal];
+    [_actionButton setTitleColor:[UIColor colorWithHue:242/360.0 saturation:0.47 brightness:1.0 alpha:1.0] forState:UIControlStateNormal];
+    _actionButton.titleLabel.bounds = CGRectMake(0, 0, 140, 20);
+    _actionButton.titleLabel.textColor = [UIColor colorWithHue:242/360.0 saturation:0.47 brightness:1.0 alpha:1.0];
+    _actionButton.titleLabel.font = [UIFont systemFontOfSize:17.0 weight:UIFontWeightRegular];
+    _actionButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+    [_actionButton addTarget:self action:@selector(buttonPressed) forControlEvents:UIControlEventTouchUpInside];
     
-    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(1, 0, actionButton.frame.size.width - 2, 1)];
+    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(1, 0, _actionButton.frame.size.width - 2, 1)];
     line.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
-    [actionButton addSubview:line];
-
-    [popupView addSubview:actionButton];
+    [_actionButton addSubview:line];
+    
+    [_popupView addSubview:_actionButton];
     
     //Text block
-    UITextView *textView = [[UITextView alloc] initWithFrame:CGRectMake(padding, topLine.frame.origin.y + 1,
-                                                                        popupView.frame.size.width - padding*2,
-                                                                        popupView.frame.size.height - buttonHeight - titleHeight)];
-    textView.text = _routePoint.text;
-    textView.textColor = [UIColor whiteColor];
-    textView.font = [UIFont systemFontOfSize:14.0 weight:UIFontWeightRegular];
-    textView.textAlignment = NSTextAlignmentJustified;
-    textView.backgroundColor = [UIColor clearColor];
-    textView.editable = NO;
-    textView.showsVerticalScrollIndicator = NO;
+    _textView = [[UITextView alloc] initWithFrame:CGRectMake(padding, topLine.frame.origin.y + 1,
+                                                                        _popupView.frame.size.width - padding*2,
+                                                                        _popupView.frame.size.height - buttonHeight - titleHeight)];
+    _textView.text = _routePoint.text;
+    _textView.textColor = [UIColor whiteColor];
+    _textView.font = [UIFont systemFontOfSize:14.0 weight:UIFontWeightRegular];
+    _textView.textAlignment = NSTextAlignmentJustified;
+    _textView.backgroundColor = [UIColor clearColor];
+    _textView.editable = NO;
+    _textView.showsVerticalScrollIndicator = NO;
     
-    [popupView addSubview:textView];
+    [_popupView addSubview:_textView];
+}
+- (void)initPageViewController {
+    _pageVC = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
+                                              navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal
+                                                            options:nil];
+    _pageVC.dataSource = self;
+    _pageVC.delegate = self;
+    
+    CGFloat areaHeight = _actionButton.frame.origin.y - (_titleLabel.frame.origin.y + _titleLabel.frame.size.height);
+    [_pageVC.view setFrame:CGRectMake(0, areaHeight - _popupView.frame.size.width,
+                                      _popupView.frame.size.width, _popupView.frame.size.width)];
+    
+    
+    
 }
 
 - (UIColor *)tintColor {
@@ -211,6 +231,25 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+#pragma mark - UIPageViewController methods
+- (NSInteger)presentationCountForPageViewController:(UIPageViewController *)pageViewController {
+    return _routeQuizz.imageSet.count;
+}
+
+- (NSInteger)presentationIndexForPageViewController:(UIPageViewController *)pageViewController {
+    return 0;
+}
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController {
+    return nil;
+}
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController {
+    return nil;
+}
+- (UIViewController *)viewControllerAtIndex:(NSUInteger)index {
+    UIViewController *vc = [[UIViewController alloc] init];
+    //to be continued..
+    return nil;
+}
 /*
 #pragma mark - Navigation
 

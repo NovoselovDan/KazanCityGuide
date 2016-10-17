@@ -22,10 +22,6 @@
     self.view.backgroundColor = [UIColor clearColor];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    
-}
-
 - (void)addBlurBackground {
     UIBlurEffect *blurEffcet = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
     UIVisualEffectView *blurEffView = [[UIVisualEffectView alloc] initWithEffect:blurEffcet];

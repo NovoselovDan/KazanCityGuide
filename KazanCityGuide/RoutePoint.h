@@ -19,6 +19,7 @@
 @property (strong, nonatomic) NSString *title;
 @property (strong, nonatomic) NSString *text;
 @property (strong, nonatomic) NSArray *hints;
+@property (strong, nonatomic) id quizz;
 @property (weak, nonatomic) Route *route;
 
 @end
