@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		DAC2740154FBF212DDBF033A /* libPods-KazanCityGuide.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B7D0AE873DA08655D29CD3 /* libPods-KazanCityGuide.a */; };
+		E1143ED51DB60ED600866E30 /* QuizzChildViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E1143ED41DB60ED600866E30 /* QuizzChildViewController.m */; };
 		E127FC721DB0CC5B0009AE4F /* RouteQuizz.m in Sources */ = {isa = PBXBuildFile; fileRef = E127FC711DB0CC5B0009AE4F /* RouteQuizz.m */; };
 		E1346A9A1D8642C6005A29E4 /* FeedbackTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E1346A981D8642C6005A29E4 /* FeedbackTableViewCell.m */; };
 		E1346A9B1D8642C6005A29E4 /* FeedbackTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1346A991D8642C6005A29E4 /* FeedbackTableViewCell.xib */; };
@@ -62,6 +63,8 @@
 /* Begin PBXFileReference section */
 		14E4DEA684BC3DACC2B2E115 /* Pods-KazanCityGuide.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KazanCityGuide.release.xcconfig"; path = "Pods/Target Support Files/Pods-KazanCityGuide/Pods-KazanCityGuide.release.xcconfig"; sourceTree = "<group>"; };
 		91B7D0AE873DA08655D29CD3 /* libPods-KazanCityGuide.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-KazanCityGuide.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E1143ED31DB60ED600866E30 /* QuizzChildViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuizzChildViewController.h; sourceTree = "<group>"; };
+		E1143ED41DB60ED600866E30 /* QuizzChildViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuizzChildViewController.m; sourceTree = "<group>"; };
 		E127FC701DB0CC5B0009AE4F /* RouteQuizz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteQuizz.h; sourceTree = "<group>"; };
 		E127FC711DB0CC5B0009AE4F /* RouteQuizz.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RouteQuizz.m; sourceTree = "<group>"; };
 		E1346A971D8642C6005A29E4 /* FeedbackTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedbackTableViewCell.h; sourceTree = "<group>"; };
@@ -251,6 +254,8 @@
 				E1346A9D1D864433005A29E4 /* RatingVIew.m */,
 				E1346A9F1D867367005A29E4 /* MapComponentsView.h */,
 				E1346AA01D867367005A29E4 /* MapComponentsView.m */,
+				E1143ED31DB60ED600866E30 /* QuizzChildViewController.h */,
+				E1143ED41DB60ED600866E30 /* QuizzChildViewController.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -511,6 +516,7 @@
 				E1A28E831D8309F9007724F1 /* CustomAnnotationView.m in Sources */,
 				E1EC40101D6D865600F364F9 /* AppDelegate.m in Sources */,
 				E1800FBE1D8364400095F5EF /* RoutePointAnnotation.m in Sources */,
+				E1143ED51DB60ED600866E30 /* QuizzChildViewController.m in Sources */,
 				E147922F1DAEC06200C14282 /* RouteHintAnnotation.m in Sources */,
 				E1AAECF61D8601A700A1ECEF /* FixedNavigationViewController.m in Sources */,
 				E1A28E6F1D82F8BC007724F1 /* NetManager.m in Sources */,
