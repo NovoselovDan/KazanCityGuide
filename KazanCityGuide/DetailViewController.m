@@ -400,7 +400,8 @@ typedef NS_ENUM(NSInteger, RoutingState) {
             if ([polyline.title isEqualToString:@"path"]) {
                 [self.mapView removeAnnotation:ann];
             }
-        } else if ([ann isKindOfClass:[RoutePointAnnotation class]] && ![ann isEqual:currentRoutePointAnnotation]) {
+//        } else if ([ann isKindOfClass:[RoutePointAnnotation class]] && ![ann isEqual:currentRoutePointAnnotation]) {
+        } else if ([ann isKindOfClass:[RoutePointAnnotation class]]) {
             [routePtAnnotations addObject:ann];
         }
     }
